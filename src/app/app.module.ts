@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
   MatFormFieldModule,
   MatInputModule,
@@ -19,12 +20,20 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
+import { ChatListsComponent } from './components/chat-main/chat-lists/chat-lists.component';
+import { ChatMainComponent } from './components/chat-main/chat-main.component';
+import { ChatMessagesComponent } from './components/chat-main/chat-messages/chat-messages.component';
+import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-preview/chat-preview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ChatListsComponent,
+    ChatMainComponent,
+    ChatMessagesComponent,
+    ChatPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +45,8 @@ import { RegistrationComponent } from './components/registration/registration.co
     MatButtonModule,
     MatDialogModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ScrollingModule
   ],
   providers: [
     CookieService

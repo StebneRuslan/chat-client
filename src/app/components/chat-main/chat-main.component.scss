@@ -1,0 +1,11 @@
+.chat-main {
+  display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+app-chat-lists {
+  width: 30%;
+  border-right: 1px solid #8fbcff;
+}

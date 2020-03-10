@@ -1,0 +1,11 @@
+<div class="chat-preview">
+  <img [src]="chat.avatar" alt="avatar">
+  <div class="chat-data">
+    <div class="chat-info">
+      <span class="chat-name">{{chat.name}}</span>
+      <span class="chat-date">{{chat.lastMessageDate}}</span>
+    </div>
+    <p class="chat-message">{{chat.lastMessageAuthor}}: {{chat.lastMessage}}</p>
+  </div>
+</div>
+

@@ -1,0 +1,31 @@
+import { Component, OnInit } from '@angular/core';
+
+import { ChatPreviewModel } from './chat-preview/chat-preview.model';
+import { chatListMock } from './chat-list.mock';
+
+import { RequestsService } from '../../../services/requests/requests.service';
+
+@Component({
+  selector: 'app-chat-lists',
+  templateUrl: './chat-lists.component.html',
+  styleUrls: ['./chat-lists.component.scss']
+})
+export class ChatListsComponent implements OnInit {
+
+  public chatLists = chatListMock;
+  public selectedChatId;
+
+  constructor(private api: RequestsService) { }
+
+  public ngOnInit(): void {
+    // this.api.get({url: '/user/chats'})
+    //   .then((res) => {
+    //     this.chatLists = res.data;
+    //   });
+  }
+
+  public openChat(id): void {
+    this.selectedChatId = id;
+  }
+
+}
