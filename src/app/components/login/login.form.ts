@@ -15,7 +15,7 @@ export default class LoginForm {
   public createForm() {
     this.formGroup = this.formBuilder.group({
       username: new FormControl(this.model.username, {validators: [Validators.required]}),
-      password: new FormControl(this.model.password, {validators: [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)]}),
+      password: new FormControl(this.model.password, {validators: [Validators.required]}),
     });
 
     this.formGroup.valueChanges.subscribe((data: any) => {
