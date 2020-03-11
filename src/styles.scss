@@ -10,6 +10,10 @@ body {
   background-color: rgb(240, 242, 245);
 }
 
+p {
+  margin: 0;
+}
+
 ul, li {
   padding: 0;
   list-style: none;
@@ -48,4 +52,8 @@ a, a:active, a:visited {
 
 .mat-form-field {
   margin-bottom: 10px;
+}
+
+.cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
+  width: 100% !important;
 }

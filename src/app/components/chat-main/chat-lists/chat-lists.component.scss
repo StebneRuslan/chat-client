@@ -1,9 +1,13 @@
 .scroll-viewport {
-  height: 80vh;
+  height: 100%;
+}
+
+li:hover {
+  background-color: rgba(174, 174, 189, 0.5);
 }
 
 .active-chat {
-  background-color: #8fbcff;
+  background-color: rgba(174, 174, 189, 1) !important;
 }
 
 /* width */
@@ -13,17 +17,12 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
+  background: #dcdce8;
   border-radius: 2px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #4287f5;
+  background: #717178;
   border-radius: 2px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #b6d1fc;
 }

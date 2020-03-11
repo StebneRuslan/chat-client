@@ -1,5 +1,6 @@
 <div class="chat-preview">
-  <img [src]="chat.avatar" alt="avatar">
+  <img *ngIf="chat.avatar" [src]="chat.avatar" class="avatar" alt="avatar">
+  <div *ngIf="!chat.avatar" class="avatar"><span>{{chat.name[0]}}</span></div>
   <div class="chat-data">
     <div class="chat-info">
       <span class="chat-name">{{chat.name}}</span>

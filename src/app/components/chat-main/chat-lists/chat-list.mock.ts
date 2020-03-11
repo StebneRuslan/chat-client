@@ -4,7 +4,7 @@ export const chatListMock = [
     name: 'Test1',
     avatar: '',
     lastMessageDate: '02.03.2020',
-    lastMessage: 'TestTest',
+    lastMessage: 'TestTest TestTest TestTest TestTest TestTest',
     lastMessageAuthor: 'Test'
   },
   {
@@ -20,7 +20,7 @@ export const chatListMock = [
     name: 'Test3',
     avatar: '',
     lastMessageDate: '05.03.2020',
-    lastMessage: 'TestTest2',
+    lastMessage: 'TestTest2 TestTest TestTest TestTest',
     lastMessageAuthor: 'Test'
   },
   {
