@@ -1,6 +1,7 @@
+<input type="text" class="input-search" placeholder="Search" (input)="search($event.target.value)">
 <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
   <ul>
-    <li *cdkVirtualFor="let chat of chatLists"
+    <li *cdkVirtualFor="let chat of filterLists"
         (click)="openChat(chat.id)"
         [ngClass]="{'active-chat': selectedChatId === chat.id}">
       <app-chat-preview [chat]="chat"></app-chat-preview>

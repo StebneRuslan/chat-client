@@ -1,0 +1,16 @@
+.users-chat-list {
+  li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 15px;
+      .delete-user {
+        cursor: pointer;
+      }
+    }
+  }
+}

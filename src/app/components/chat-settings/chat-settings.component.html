@@ -1,0 +1,13 @@
+<p>Add member</p>
+<ul class="users-chat-list">
+  <li *ngFor="let user of chatUsers">
+    <app-user-avatar [avatarUrl]="user.avatar" [chatName]="user.name"></app-user-avatar>
+    <div class="user-info">
+      <p (click)="openProfile(user.id)">{{user.name}}</p>
+      <p *ngIf="userData.role === 'admin' && userData.id !== user.id"
+         (click)="removeUser(user.id, false)" class="delete-user">Remove</p>
+      <p *ngIf="userData.id === user.id"
+         (click)="removeUser(user.id, true)" class="delete-user">Delete and exit</p>
+    </div>
+  </li>
+</ul>

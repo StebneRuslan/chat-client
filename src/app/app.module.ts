@@ -30,6 +30,8 @@ import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-pre
 import { HeaderComponent } from './components/header/header.component';
 import { ProfileComponent } from './components/modals/profile/profile.component';
 import { MenuComponent } from './components/header/menu/menu.component';
+import { ChatSettingsComponent } from './components/chat-settings/chat-settings.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { MenuComponent } from './components/header/menu/menu.component';
     ChatPreviewComponent,
     HeaderComponent,
     MenuComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatSettingsComponent,
+    UserAvatarComponent
   ],
   imports: [
     BrowserModule,

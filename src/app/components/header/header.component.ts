@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileComponent } from '../modals/profile/profile.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
+  public ngOnInit() {
+  }
+
+  public openChatSetting(): void {
+    this.dialog.open(ProfileComponent, {
+      width: '450px'
+    });
   }
 
 }
