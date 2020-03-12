@@ -1,10 +1,12 @@
-.chat-main {
-  display: flex;
+.chat-container {
   max-width: 900px;
-  height: 80vh;
   margin: 0 auto;
-  background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  .chat-main {
+    display: flex;
+    height: 80vh;
+    background-color: white;
+  }
 }
 
 app-chat-lists {
