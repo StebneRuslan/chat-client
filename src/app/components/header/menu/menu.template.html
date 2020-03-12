@@ -1,0 +1,13 @@
+<div class="header-menu-container">
+  <button class="header-menu-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu class="header-menu" #menu [overlapTrigger]="false">
+    <button mat-menu-item (click)="openProfile()">
+      <mat-icon>group</mat-icon>
+      <span>New group</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
+    </button>
+  </mat-menu>
+</div>

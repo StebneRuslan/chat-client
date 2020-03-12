@@ -11,6 +11,9 @@ import {
   MatInputModule,
   MatButtonModule,
   MatDialogModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatMenuModule
 } from '@angular/material';
 
 // Services
@@ -24,6 +27,9 @@ import { ChatListsComponent } from './components/chat-main/chat-lists/chat-lists
 import { ChatMainComponent } from './components/chat-main/chat-main.component';
 import { ChatMessagesComponent } from './components/chat-main/chat-messages/chat-messages.component';
 import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-preview/chat-preview.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ProfileComponent } from './components/modals/profile/profile.component';
+import { MenuComponent } from './components/header/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,10 @@ import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-pre
     ChatListsComponent,
     ChatMainComponent,
     ChatMessagesComponent,
-    ChatPreviewComponent
+    ChatPreviewComponent,
+    HeaderComponent,
+    MenuComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -44,12 +53,18 @@ import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-pre
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule
   ],
   providers: [
     CookieService
+  ],
+  entryComponents: [
+    ProfileComponent
   ],
   bootstrap: [AppComponent]
 })
