@@ -20,4 +20,8 @@ export class AuthService {
     this.cookieService.set('token', token);
   }
 
+  public getToken(): any {
+    return this.cookieService.get('token');
+  }
+
 }
