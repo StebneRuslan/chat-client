@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {
   MatFormFieldModule,
   MatInputModule,
@@ -13,7 +14,10 @@ import {
   MatDialogModule,
   MatIconModule,
   MatToolbarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatFormFieldModule
 } from '@angular/material';
 
 // Services
@@ -29,6 +33,8 @@ import { ChatMessagesComponent } from './components/chat-main/chat-messages/chat
 import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-preview/chat-preview.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProfileComponent } from './components/modals/profile/profile.component';
+import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
+import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { MenuComponent } from './components/header/menu/menu.component';
 
 @NgModule({
@@ -42,7 +48,9 @@ import { MenuComponent } from './components/header/menu/menu.component';
     ChatPreviewComponent,
     HeaderComponent,
     MenuComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileHeaderComponent,
+    ProfileSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +64,10 @@ import { MenuComponent } from './components/header/menu/menu.component';
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MaterialFileInputModule,
+    MatFormFieldModule
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule

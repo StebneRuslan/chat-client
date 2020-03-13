@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-  }
+  public ngOnInit(): void {}
 
+  public closeModel(): void {
+    this.dialogRef.close();
+  }
 }
