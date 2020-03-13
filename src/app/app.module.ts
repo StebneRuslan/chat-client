@@ -14,10 +14,7 @@ import {
   MatDialogModule,
   MatIconModule,
   MatToolbarModule,
-  MatMenuModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatFormFieldModule
+  MatMenuModule
 } from '@angular/material';
 
 // Services
@@ -64,10 +61,7 @@ import { MenuComponent } from './components/header/menu/menu.component';
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
     MaterialFileInputModule,
-    MatFormFieldModule
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule
