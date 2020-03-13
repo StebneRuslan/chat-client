@@ -3,20 +3,6 @@
   align-items: center;
   padding: 15px 10px;
   cursor: pointer;
-  .avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 37px;
-    height: 37px;
-    border-radius: 50%;
-    margin-right: 10px;
-    background-color: #737391;
-    span {
-      font-size: 25px;
-      color: white;
-    }
-  }
   .chat-data {
     width: 80%;
   }

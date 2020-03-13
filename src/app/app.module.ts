@@ -33,6 +33,8 @@ import { ProfileComponent } from './components/modals/profile/profile.component'
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
 import { MenuComponent } from './components/header/menu/menu.component';
+import { ChatSettingsComponent } from './components/chat-settings/chat-settings.component';
+import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { MenuComponent } from './components/header/menu/menu.component';
     MenuComponent,
     ProfileComponent,
     ProfileHeaderComponent,
-    ProfileSettingsComponent
+    ProfileSettingsComponent,
+    ChatSettingsComponent,
+    UserAvatarComponent
   ],
   imports: [
     BrowserModule,

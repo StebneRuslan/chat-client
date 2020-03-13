@@ -13,18 +13,27 @@ import { RequestsService } from '../../../services/requests/requests.service';
 export class ChatListsComponent implements OnInit {
 
   public chatLists = chatListMock;
+  public filterLists = chatListMock;
   public selectedChatId;
+  public searchTimeout = null;
 
   constructor(private api: RequestsService) { }
 
   public ngOnInit(): void {
     // this.api.get({url: '/user/chats'})
     //   .then((res) => {
-    //     this.chatLists = res.data;
+    //     this.chatLists = this.filterLists = res.data;
     //   });
   }
 
-  public openChat(id): void {
+  public search(value: string): void {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.filterLists = this.chatLists.filter(el => el.name.toLowerCase().startsWith(value.toLowerCase()));
+    }, 100);
+  }
+
+  public openChat(id: number): void {
     this.selectedChatId = id;
   }
 
