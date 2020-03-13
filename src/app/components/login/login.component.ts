@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { RequestsService } from '../../services/requests/requests.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { EncryptDecryptService } from '../../services/enrcypt-decrypt/encrypt-decrypt.service';
 
 import { LoginModel } from './login.model';
 import LoginForm from './login.form';
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private api: RequestsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private encryptDecryptService: EncryptDecryptService,
   ) {
     this.model = new LoginModel();
     this.form = new LoginForm(this.model);
@@ -31,7 +33,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {}
 
   public login() {
-    this.loginRequest$ = this.api.post({url: '/login', body: this.model})
+    this.loginRequest$ = this.api.post({
+      url: '/login',
+      body: { username: this.model.username, password: this.encryptDecryptService.encrypt(this.model.password) }
+    })
       .subscribe(
         res => {
           this.authService.setToken(res.apiKey);

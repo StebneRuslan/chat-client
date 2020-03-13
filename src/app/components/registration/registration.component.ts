@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { RequestsService } from '../../services/requests/requests.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { EncryptDecryptService } from '../../services/enrcypt-decrypt/encrypt-decrypt.service';
 
 import { RegistrationModel } from './registration.model';
 import RegistrationForm from './registration.form';
@@ -22,7 +23,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private api: RequestsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private encryptDecryptService: EncryptDecryptService,
   ) {
     this.model = new RegistrationModel();
     this.form = new RegistrationForm(this.model);
@@ -36,7 +38,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     } else {
       this.registerRequest$ = this.api.post({
         url: '/registration',
-        body: { username: this.model.username, password: this.model.password}
+        body: { username: this.model.username, password: this.encryptDecryptService.encrypt(this.model.password)}
       })
         .subscribe(
           res => {
