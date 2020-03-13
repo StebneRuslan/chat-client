@@ -16,7 +16,10 @@ export class HeaderComponent implements OnInit {
 
   public openChatSetting(): void {
     this.dialog.open(ProfileComponent, {
-      width: '450px'
+      width: '450px',
+      data: {
+        showChatSettings: true
+      }
     });
   }
 
