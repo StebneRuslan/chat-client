@@ -1,0 +1,20 @@
+.header {
+  color: #ffffff;
+  background-color: #5580a3;
+  display: flex;
+  margin: auto;
+  max-width: 1010px;
+  padding: 0 !important;
+  .header-menu {
+    flex-grow: 1;
+    height: 100%;
+    margin: auto 0;
+  }
+  .chat-name {
+    flex-grow: 3;
+    margin: auto;
+    cursor: pointer;
+    height: 100%;
+    font: 500 20px/32px Roboto,"Helvetica Neue",sans-serif;
+  }
+}

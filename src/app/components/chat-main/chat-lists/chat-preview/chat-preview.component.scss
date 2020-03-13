@@ -1,0 +1,25 @@
+.chat-preview {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  cursor: pointer;
+  .chat-data {
+    width: 80%;
+  }
+  .chat-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 12px;
+    .chat-name {
+      font-weight: bold;
+    }
+  }
+  .chat-message {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    font-size: 14px;
+  }
+}

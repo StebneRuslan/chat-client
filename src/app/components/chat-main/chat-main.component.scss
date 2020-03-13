@@ -1,0 +1,18 @@
+.chat-container {
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  .chat-main {
+    display: flex;
+    height: 80vh;
+    background-color: white;
+  }
+}
+
+app-chat-lists {
+  width: 30%;
+}
+
+app-chat-messages {
+  width: 70%;
+}
