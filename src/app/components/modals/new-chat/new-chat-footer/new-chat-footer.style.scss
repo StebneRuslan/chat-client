@@ -1,0 +1,13 @@
+.new-chat-footer-container {
+  display: flex;
+  margin: 10px 20px;
+  .new-chat-footer-button {
+    width: 80px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  .cancel {
+    margin: 0 0 0 auto;
+  }
+}

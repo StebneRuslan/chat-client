@@ -30,11 +30,20 @@ import { ChatMessagesComponent } from './components/chat-main/chat-messages/chat
 import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-preview/chat-preview.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProfileComponent } from './components/modals/profile/profile.component';
-import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
-import { ProfileSettingsComponent } from './components/profile-settings/profile-settings.component';
+import { HeaderInfoComponent } from './components/modals/header-info/header-info.component';
+import { ProfileSettingsComponent } from './components/modals/profile/profile-settings/profile-settings.component';
 import { MenuComponent } from './components/header/menu/menu.component';
 import { ChatSettingsComponent } from './components/chat-settings/chat-settings.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
+import { ModalHeaderComponent } from './components/modals/modals-header/modal-header.component';
+import { EditorComponent } from './components/chat-main/editor/editor.component';
+import { ModalMainComponent } from './components/modals/modal-main/modal-main.component';
+import { NewChatComponent } from './components/modals/new-chat/new-chat.component';
+import { SelectUsersComponent } from './components/modals/new-chat/select-users/select-users.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { UserComponent } from './components/users-list/user/user.component';
+import { NewChatFooterComponent } from './components/modals/new-chat/new-chat-footer/new-chat-footer.component';
+import { EditNameComponent } from './components/modals/edit-name/edit-name.component';
 
 @NgModule({
   declarations: [
@@ -48,10 +57,19 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
     HeaderComponent,
     MenuComponent,
     ProfileComponent,
-    ProfileHeaderComponent,
+    HeaderInfoComponent,
     ProfileSettingsComponent,
     ChatSettingsComponent,
-    UserAvatarComponent
+    UserAvatarComponent,
+    ModalHeaderComponent,
+    EditorComponent,
+    ModalMainComponent,
+    NewChatComponent,
+    SelectUsersComponent,
+    UsersListComponent,
+    UserComponent,
+    NewChatFooterComponent,
+    EditNameComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +92,9 @@ import { UserAvatarComponent } from './components/user-avatar/user-avatar.compon
     CookieService
   ],
   entryComponents: [
-    ProfileComponent
+    ProfileComponent,
+    ModalMainComponent,
+    EditNameComponent
   ],
   bootstrap: [AppComponent]
 })

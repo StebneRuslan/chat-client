@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./user-avatar.component.scss']
 })
 export class UserAvatarComponent implements OnInit {
-
+  @Input() type: string;
   @Input() avatarUrl: string;
   @Input() chatName: string;
 

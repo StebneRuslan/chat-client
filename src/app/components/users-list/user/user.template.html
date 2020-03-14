@@ -1,0 +1,6 @@
+<div class="single-user" [ngClass]="{'selected': user.selected}">
+  <app-user-avatar [chatName]="user.username" [avatarUrl]="user.avatarUrl" [type]="'chat'"></app-user-avatar>
+  <div class="username-container">
+    <span class="username">{{user.username}}</span>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="select-users-container">
+  <div class="search-container">
+    <input type="text" class="input-search" placeholder="Search" (input)="search($event.target.value)">
+  </div>
+  <div class="users-list-container">
+    <app-users-list (selectUser)="selectUser($event)" [users]="usersFilter"></app-users-list>
+  </div>
+  <app-new-chat-footer></app-new-chat-footer>
+</div>

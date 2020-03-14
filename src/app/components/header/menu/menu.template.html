@@ -1,11 +1,19 @@
 <div class="header-menu-container">
   <button class="header-menu-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
   <mat-menu class="header-menu" #menu [overlapTrigger]="false">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="openModal('group')">
       <mat-icon>group</mat-icon>
       <span>New group</span>
     </button>
-    <button mat-menu-item (click)="openProfile()">
+    <button mat-menu-item (click)="openModal('singleChat')">
+      <mat-icon>chat</mat-icon>
+      <span>New single chat</span>
+    </button>
+    <button mat-menu-item (click)="openModal('channel')">
+      <mat-icon>record_voice_over</mat-icon>
+      <span>New channel</span>
+    </button>
+  <button mat-menu-item (click)="openModal('profile')">
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
