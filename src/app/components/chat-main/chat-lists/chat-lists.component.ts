@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { ChatPreviewModel } from './chat-preview/chat-preview.model';
 import { chatListMock } from './chat-list.mock';
+import { SELECT_CHAT } from '../../../actions/main.action';
 
 import { RequestsService } from '../../../services/requests/requests.service';
+import { BusService } from '../../../services/bus/bus.service';
+import { ChatService } from '../../../services/chat/chat.service';
 
 @Component({
   selector: 'app-chat-lists',
@@ -12,12 +15,15 @@ import { RequestsService } from '../../../services/requests/requests.service';
 })
 export class ChatListsComponent implements OnInit {
 
-  public chatLists = chatListMock;
-  public filterLists = chatListMock;
+  public chatLists: ChatPreviewModel[] = chatListMock;
+  public filterLists: ChatPreviewModel[] = this.chatLists;
   public selectedChatId;
-  public searchTimeout = null;
 
-  constructor(private api: RequestsService) { }
+  constructor(
+    private api: RequestsService,
+    private bus: BusService,
+    private chatService: ChatService
+  ) { }
 
   public ngOnInit(): void {
     // this.api.get({url: '/user/chats'})
@@ -26,15 +32,10 @@ export class ChatListsComponent implements OnInit {
     //   });
   }
 
-  public search(value: string): void {
-    clearTimeout(this.searchTimeout);
-    this.searchTimeout = setTimeout(() => {
-      this.filterLists = this.chatLists.filter(el => el.name.toLowerCase().startsWith(value.toLowerCase()));
-    }, 100);
-  }
-
   public openChat(id: number): void {
     this.selectedChatId = id;
+    this.chatService.setActiveChat({id, type: 'type'});
+    this.bus.publish(SELECT_CHAT, id);
   }
 
 }

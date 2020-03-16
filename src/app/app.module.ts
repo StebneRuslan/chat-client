@@ -19,6 +19,7 @@ import {
 
 // Services
 import { CookieService } from 'ngx-cookie-service';
+import { BusService } from './services/bus/bus.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UserComponent } from './components/users-list/user/user.component';
 import { NewChatFooterComponent } from './components/modals/new-chat/new-chat-footer/new-chat-footer.component';
 import { EditNameComponent } from './components/modals/edit-name/edit-name.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { EditNameComponent } from './components/modals/edit-name/edit-name.compo
     UserComponent,
     NewChatFooterComponent,
     EditNameComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,7 +92,8 @@ import { EditNameComponent } from './components/modals/edit-name/edit-name.compo
     ScrollingModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    BusService
   ],
   entryComponents: [
     ProfileComponent,

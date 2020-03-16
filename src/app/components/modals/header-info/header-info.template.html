@@ -2,11 +2,7 @@
   <div class="profile-header-info-container">
     <div class="profile-image-container">
       <div class="img-container">
-        <app-user-avatar *ngIf="!imageSrc"
-        [chatName]="name"
-        [type]="'profile'">
-        </app-user-avatar>
-        <img *ngIf="imageSrc" [src]="imageSrc || 'http://images.unsplash.com/photo-1562887284-8ba6b7c90fd8?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjExNzQzMn0'">
+        <app-user-avatar [chatName]="name" [avatarUrl]="imageSrc" [type]="'profile'"></app-user-avatar>
       </div>
     </div>
     <div class="profile-name-container">

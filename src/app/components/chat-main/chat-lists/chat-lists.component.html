@@ -1,4 +1,4 @@
-<input type="text" class="input-search" placeholder="Search" (input)="search($event.target.value)">
+<app-search [data]="chatLists" [fieldToFilter]="'name'" (filterData)="filterLists = $event"></app-search>
 <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
   <ul>
     <li *cdkVirtualFor="let chat of filterLists"
