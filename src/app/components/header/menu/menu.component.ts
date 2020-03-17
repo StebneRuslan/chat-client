@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileComponent } from '../../modals/profile/profile.component';
+import { ModalMainComponent } from '../../modals/modal-main/modal-main.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -13,9 +13,12 @@ export class MenuComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public openProfile(): void {
-    this.dialog.open(ProfileComponent, {
+  public openModal(type: string): void {
+    this.dialog.open(ModalMainComponent, {
       width: '450px',
+      data: {
+        activeModal: type
+      }
     });
   }
 

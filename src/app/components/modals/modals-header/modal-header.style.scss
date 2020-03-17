@@ -1,0 +1,16 @@
+.modal-header-container {
+  background-color: #5580a3;
+  color: #ffffff;
+  display: flex;
+  padding: 30px 20px;
+  .modal-header-title {
+    cursor: default;
+    display: flex;
+    flex-grow: 1;
+  }
+  .modal-header-close {
+    display: flex;
+    cursor: pointer;
+    justify-content: flex-end;
+  }
+}

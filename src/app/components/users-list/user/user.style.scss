@@ -1,0 +1,15 @@
+.single-user {
+  display: flex;
+  padding: 15px 20px;
+  cursor: pointer;
+  .username-container {
+    margin: auto 0;
+    .username {
+    }
+  }
+}
+
+.selected {
+  background-color: #5580a3;
+  color: #ffffff;
+}

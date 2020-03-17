@@ -1,0 +1,5 @@
+<div class="search-users-container">
+  <cdk-virtual-scroll-viewport itemSize="50" class="search-user-scroll-viewport">
+  <app-user *ngFor="let user of users" [user]="user" (click)="select(user.id)"></app-user>
+  </cdk-virtual-scroll-viewport>
+</div>

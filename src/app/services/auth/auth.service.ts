@@ -20,6 +20,10 @@ export class AuthService {
     this.cookieService.set('token', token);
   }
 
+  public logOut(): void {
+    this.cookieService.delete('token');
+  }
+
   public getToken(): any {
     return this.cookieService.get('token');
   }

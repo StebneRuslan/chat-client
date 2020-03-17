@@ -1,0 +1,15 @@
+<div class="edit-name-container">
+  <h1>Edit {{data.nameType}}</h1>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [value]="data.oldTitle">
+  </mat-form-field>
+  <div class="edit-name-controls">
+    <button class="cancel edit-name-button" mat-menu-item>
+      <span>Cancel</span>
+    </button>
+    <button class="edit-name-button" mat-menu-item>
+      <span>Save</span>
+    </button>
+  </div>
+</div>
