@@ -1,27 +1,27 @@
 export const ChatUsersMock = [
   {
-    id: 1,
-    name: 'Test1',
+    id: '1',
+    username: 'Test1',
     avatar: ''
   },
   {
-    id: 2,
-    name: 'Test2',
+    id: '2',
+    username: 'Test2',
     avatar: ''
   },
   {
-    id: 3,
-    name: 'Test3',
+    id: '3',
+    username: 'Test3',
     avatar: ''
   },
   {
-    id: 4,
-    name: 'Test4',
+    id: '4',
+    username: 'Test4',
     avatar: ''
   },
   {
-    id: 5,
-    name: 'Test5',
+    id: '5',
+    username: 'Test5',
     avatar: ''
   }
 ]

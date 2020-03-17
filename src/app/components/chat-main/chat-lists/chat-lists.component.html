@@ -1,8 +1,7 @@
 <app-search [data]="chatLists" [fieldToFilter]="'name'" (filterData)="filterLists = $event"></app-search>
 <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
   <ul>
-    <li *cdkVirtualFor="let chat of filterLists"
-        (click)="openChat(chat.id)"
+    <li *cdkVirtualFor="let chat of filterLists" (click)="openChat(chat)"
         [ngClass]="{'active-chat': selectedChatId === chat.id}">
       <app-chat-preview [chat]="chat"></app-chat-preview>
     </li>

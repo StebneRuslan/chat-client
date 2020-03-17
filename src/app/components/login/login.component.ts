@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.authService.setToken(res.apiKey);
+          this.authService.setUserId(res.userId);
           this.router.navigate(['']);
         },
         err => this.loginError = err.error.message

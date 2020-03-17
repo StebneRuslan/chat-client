@@ -46,6 +46,7 @@ import { UserComponent } from './components/users-list/user/user.component';
 import { NewChatFooterComponent } from './components/modals/new-chat/new-chat-footer/new-chat-footer.component';
 import { EditNameComponent } from './components/modals/edit-name/edit-name.component';
 import { SearchComponent } from './components/search/search.component';
+import { ContactSettingsComponent } from './components/modals/profile/contact-settings/contact-settings.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { SearchComponent } from './components/search/search.component';
     NewChatFooterComponent,
     EditNameComponent,
     SearchComponent,
+    ContactSettingsComponent,
   ],
   imports: [
     BrowserModule,

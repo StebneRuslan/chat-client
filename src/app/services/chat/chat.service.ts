@@ -7,13 +7,18 @@ export class ChatService {
 
   constructor() { }
 
-  private activeChat = {};
+  private activeChat = {
+    id: '1',
+    type: 'contact',
+    role: 'admin',
+    name: 'Chat name'
+  };
 
-  public setActiveChat({id, type}) {
-    this.activeChat = { id, type };
+  public setActiveChat({id, type, role, name}) {
+    this.activeChat = { id, type, role, name };
   }
 
-  public getAvtiveChat() {
+  public getActiveChat() {
     return this.activeChat;
   }
 

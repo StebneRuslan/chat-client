@@ -12,6 +12,16 @@ export class AuthService {
     private cookieService: CookieService,
   ) { }
 
+  private userId = '1';
+
+  public getUserId(): string {
+    return this.userId;
+  }
+
+  public setUserId(id): void {
+    this.userId = id;
+  }
+
   public loggedIn(): boolean {
     return this.cookieService.check('token');
   }

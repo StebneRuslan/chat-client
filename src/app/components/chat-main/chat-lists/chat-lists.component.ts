@@ -32,10 +32,15 @@ export class ChatListsComponent implements OnInit {
     //   });
   }
 
-  public openChat(id: number): void {
-    this.selectedChatId = id;
-    this.chatService.setActiveChat({id, type: 'type'});
-    this.bus.publish(SELECT_CHAT, id);
+  public openChat(chat: any): void {
+    this.selectedChatId = chat.id;
+    this.chatService.setActiveChat({
+      id: chat.id,
+      type: 'type',
+      role: 'admin',
+      name: 'chat name'
+    });
+    this.bus.publish(SELECT_CHAT, chat.id);
   }
 
 }

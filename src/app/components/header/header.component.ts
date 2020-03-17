@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ProfileComponent } from '../modals/profile/profile.component';
+
+import { ChatService } from '../../services/chat/chat.service';
+
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -9,7 +13,10 @@ import { MatDialog } from '@angular/material';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private chatService: ChatService
+  ) { }
 
   public ngOnInit() {
   }
@@ -18,7 +25,8 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(ProfileComponent, {
       width: '450px',
       data: {
-        showChatSettings: true
+        showChatSettings: true,
+        type: 'chat'
       }
     });
   }

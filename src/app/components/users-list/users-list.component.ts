@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserModel } from './user/user.model';
 
 @Component({
@@ -7,8 +7,10 @@ import { UserModel } from './user/user.model';
   styleUrls: ['./users-list.style.scss']
 })
 export class UsersListComponent implements OnInit {
+
   @Input() users: UserModel[];
   @Output() selectUser = new EventEmitter();
+
   constructor() { }
 
   public ngOnInit(): void {}

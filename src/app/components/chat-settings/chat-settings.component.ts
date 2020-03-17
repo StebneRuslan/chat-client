@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { RequestsService } from '../../services/requests/requests.service';
+
+import { AuthService } from '../../services/auth/auth.service';
+import { ChatService } from '../../services/chat/chat.service';
+
 import { ProfileComponent } from '../modals/profile/profile.component';
+import { ModalMainComponent } from '../modals/modal-main/modal-main.component';
 
 import { ChatUsersMock } from './char-users.mock';
-import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-chat-settings',
@@ -14,13 +19,11 @@ import {MatDialog} from "@angular/material";
 export class ChatSettingsComponent implements OnInit {
 
   public chatUsers = ChatUsersMock;
-  public userData = {
-    role: 'admin',
-    id: 1
-  };
 
   constructor(
     private api: RequestsService,
+    private authService: AuthService,
+    public chatService: ChatService,
     public dialog: MatDialog
   ) { }
 
@@ -28,7 +31,19 @@ export class ChatSettingsComponent implements OnInit {
 
   public openProfile(id): void {
     this.dialog.open(ProfileComponent, {
-      width: '450px'
+      width: '450px',
+      data: {
+        type: this.authService.getUserId() === id ? 'profile' : 'contact'
+      }
+    });
+  }
+
+  public openContacts() {
+    this.dialog.open(ModalMainComponent, {
+      width: '450px',
+      data: {
+        activeModal: 'singleChat'
+      }
     });
   }
 

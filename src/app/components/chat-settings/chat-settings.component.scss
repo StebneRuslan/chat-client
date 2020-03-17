@@ -1,15 +1,38 @@
-.users-chat-list {
-  li {
+.chat-settings {
+  padding: 15px;
+  .material-icons {
+    font-size: 30px;
+    margin-right: 20px;
+  }
+  .add-member {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-    .user-info {
-      display: flex;
-      justify-content: space-between;
+    margin-bottom: 25px;
+    span {
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  }
+  .users-chat {
+    display: flex;
+    .users-chat-list {
       width: 100%;
-      font-size: 15px;
-      .delete-user {
-        cursor: pointer;
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        .user-info {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          font-size: 15px;
+          .username, .delete-user {
+            cursor: pointer;
+            &:hover {
+              color: #5580A3;
+            }
+          }
+        }
       }
     }
   }

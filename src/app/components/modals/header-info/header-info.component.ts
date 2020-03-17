@@ -8,9 +8,12 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
   styleUrls: ['./header-info.style.scss']
 })
 export class HeaderInfoComponent implements OnInit {
+
   @Input() name: string;
+
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
+
   constructor(public dialog: MatDialog) {}
 
   public ngOnInit(): void {}
