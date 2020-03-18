@@ -44,6 +44,8 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UserComponent } from './components/users-list/user/user.component';
 import { NewChatFooterComponent } from './components/modals/new-chat/new-chat-footer/new-chat-footer.component';
 import { EditNameComponent } from './components/modals/edit-name/edit-name.component';
+import { MessagesListComponent } from './components/chat-main/chat-messages/messages-list/messages-list.component';
+import { MessageComponent } from './components/chat-main/chat-messages/messages-list/message/message.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { EditNameComponent } from './components/modals/edit-name/edit-name.compo
     UserComponent,
     NewChatFooterComponent,
     EditNameComponent,
+    MessagesListComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
