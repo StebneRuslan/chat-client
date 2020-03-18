@@ -1,0 +1,32 @@
+.single-message-container {
+  display: flex;
+  margin: 15px 0;
+  .message-selector-container {
+    width: 30px;
+    .hover {
+      display: none;
+    }
+  }
+  .message-details-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    .author-container {
+      .author {
+        display: flex;
+        flex-grow: 1;
+        font-size: 16px;
+        margin: auto;
+      }
+      .date {
+        display: flex;
+        font-size: 12px;
+        margin: auto;
+      }
+      display: flex;
+    }
+    .message-container {
+      display: flex;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BusService } from '../../../services/bus/bus.service';
 
+import { MessageModel } from './messages-list/message/message.model';
+import { MessagesListModel } from './messages-list/messages-list.model';
 import { SELECT_CHAT } from '../../../actions/main.action';
 
 @Component({
@@ -9,6 +11,8 @@ import { SELECT_CHAT } from '../../../actions/main.action';
   styleUrls: ['./chat-messages.component.scss']
 })
 export class ChatMessagesComponent implements OnInit, OnDestroy {
+
+  public messages: MessageModel[] = new MessagesListModel().messages;
 
   constructor(private bus: BusService) { }
 
@@ -22,4 +26,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
   }
 
+  public selectMessage(messageId: string): void {
+    console.log('Selected users', this.messages.filter(message => message.id === messageId));
+  }
 }
