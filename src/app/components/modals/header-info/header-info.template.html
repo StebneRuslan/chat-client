@@ -9,10 +9,13 @@
       <span class="profile-username" (click)="openEditTitleWindow()">Username</span>
     </div>
   </div>
-  <div class="select-image-container">
+  <div *ngIf="photoChange" class="select-image-container">
     <mat-icon>add_a_photo</mat-icon>
     <mat-form-field class="select-image-field" (change)="selectImage($event)">
       <ngx-mat-file-input></ngx-mat-file-input>
     </mat-form-field>
+  </div>
+  <div *ngIf="!photoChange" class="select-chat-container">
+    <mat-icon (click)="closeSettingsModal()">chat</mat-icon>
   </div>
 </div>

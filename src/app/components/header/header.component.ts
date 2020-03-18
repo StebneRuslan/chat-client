@@ -26,7 +26,9 @@ export class HeaderComponent implements OnInit {
       width: '450px',
       data: {
         showChatSettings: true,
-        type: 'chat'
+        type: 'chat',
+        title: 'Group info',
+        photoChange: true
       }
     });
   }

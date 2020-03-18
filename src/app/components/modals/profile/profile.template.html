@@ -1,5 +1,5 @@
-<app-modal-header [title]="'Settings'" (closeDialog)="closeModel()"></app-modal-header>
-<app-header-info [name]="'Test'"></app-header-info>
+<app-modal-header [title]="data.title" (closeDialog)="closeModel()"></app-modal-header>
+<app-header-info [name]="'Test'" [photoChange]="data.photoChange" [modalRef]="dialogRef"></app-header-info>
 
 <app-profile-settings *ngIf="!data.type || data.type === 'profile'" [modalRef]="dialogRef"></app-profile-settings>
 <app-contact-settings *ngIf="data.type === 'contact'"></app-contact-settings>

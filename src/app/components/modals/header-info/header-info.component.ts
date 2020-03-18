@@ -10,6 +10,8 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
 export class HeaderInfoComponent implements OnInit {
 
   @Input() name: string;
+  @Input() photoChange: boolean;
+  @Input() modalRef: MatDialogRef<any>;
 
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
@@ -35,5 +37,9 @@ export class HeaderInfoComponent implements OnInit {
         nameType: 'profile'
       }
     });
+  }
+
+  public closeSettingsModal() {
+    this.modalRef.close();
   }
 }

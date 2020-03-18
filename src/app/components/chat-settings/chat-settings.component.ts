@@ -30,10 +30,13 @@ export class ChatSettingsComponent implements OnInit {
   public ngOnInit(): void {}
 
   public openProfile(id): void {
+    const user = this.authService.getUserId() === id;
     this.dialog.open(ProfileComponent, {
       width: '450px',
       data: {
-        type: this.authService.getUserId() === id ? 'profile' : 'contact'
+        title: 'Contact info',
+        type: user ? 'profile' : 'contact',
+        photoChange: user
       }
     });
   }
@@ -42,7 +45,7 @@ export class ChatSettingsComponent implements OnInit {
     this.dialog.open(ModalMainComponent, {
       width: '450px',
       data: {
-        activeModal: 'singleChat'
+        activeModal: 'Contacts'
       }
     });
   }
