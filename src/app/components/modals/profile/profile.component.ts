@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ModalMainComponent } from '../modal-main/modal-main.component';
+
+import { ProfileModel } from './profile.model';
+import { CHAT_TYPES } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-profile',
@@ -9,9 +11,11 @@ import { ModalMainComponent } from '../modal-main/modal-main.component';
 })
 export class ProfileComponent implements OnInit {
 
+  public chatTypes = CHAT_TYPES;
+
   constructor(
-    public dialogRef: MatDialogRef<ModalMainComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    public dialogRef: MatDialogRef<ProfileComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ProfileModel
   ) {}
 
   public ngOnInit(): void {}

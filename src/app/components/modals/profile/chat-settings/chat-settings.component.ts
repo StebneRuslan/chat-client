@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { RequestsService } from '../../services/requests/requests.service';
+import { RequestsService } from '../../../../services/requests/requests.service';
 
-import { AuthService } from '../../services/auth/auth.service';
-import { ChatService } from '../../services/chat/chat.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { ChatService } from '../../../../services/chat/chat.service';
 
-import { ProfileComponent } from '../modals/profile/profile.component';
-import { ModalMainComponent } from '../modals/modal-main/modal-main.component';
+import { ProfileComponent } from '../profile.component';
+import { NewChatComponent } from '../../new-chat/new-chat.component';
 
 import { ChatUsersMock } from './char-users.mock';
+import { CHAT_TYPES } from '../../../../actions/main.action';
+import { ProfileModel } from '../profile.model';
 
 @Component({
   selector: 'app-chat-settings',
@@ -30,22 +32,18 @@ export class ChatSettingsComponent implements OnInit {
   public ngOnInit(): void {}
 
   public openProfile(id): void {
-    const user = this.authService.getUserId() === id;
+    const ifProfile = this.authService.getUserId() === id;
     this.dialog.open(ProfileComponent, {
       width: '450px',
-      data: {
-        title: 'Contact info',
-        type: user ? 'profile' : 'contact',
-        photoChange: user
-      }
+      data: new ProfileModel(ifProfile ? CHAT_TYPES.profile : CHAT_TYPES.contact, ifProfile, id)
     });
   }
 
   public openContacts() {
-    this.dialog.open(ModalMainComponent, {
+    this.dialog.open(NewChatComponent, {
       width: '450px',
       data: {
-        activeModal: 'Contacts'
+        type: 'Contacts'
       }
     });
   }

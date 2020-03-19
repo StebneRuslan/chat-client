@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
 import { ProfileComponent } from '../modals/profile/profile.component';
 
 import { ChatService } from '../../services/chat/chat.service';
 
-import { MatDialog } from '@angular/material';
+import { CHAT_TYPES } from '../../actions/main.action';
+import { ProfileModel } from '../modals/profile/profile.model';
 
 @Component({
   selector: 'app-header',
@@ -24,12 +26,7 @@ export class HeaderComponent implements OnInit {
   public openChatSetting(): void {
     this.dialog.open(ProfileComponent, {
       width: '450px',
-      data: {
-        showChatSettings: true,
-        type: 'chat',
-        title: 'Group info',
-        photoChange: true
-      }
+      data: new ProfileModel(CHAT_TYPES.chat, true)
     });
   }
 

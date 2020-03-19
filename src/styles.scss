@@ -58,3 +58,10 @@ a, a:active, a:visited {
 .cdk-virtual-scroll-orientation-vertical .cdk-virtual-scroll-content-wrapper {
   width: 100% !important;
 }
+
+.link {
+  cursor: pointer;
+  &:hover {
+    color: #5580A3;
+  }
+}

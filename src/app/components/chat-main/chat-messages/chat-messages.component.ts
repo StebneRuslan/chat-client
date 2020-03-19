@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { BusService } from '../../../services/bus/bus.service';
 
 import { MessageModel } from './messages-list/message/message.model';
@@ -20,13 +21,15 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
   }
 
-  public getChatData(data) {}
-
-  public ngOnDestroy() {
-    this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
+  public getChatData(chatId: string) {
+    console.log('getChatData', chatId);
   }
 
   public selectMessage(messageId: string): void {
     console.log('Selected users', this.messages.filter(message => message.id === messageId));
+  }
+
+  public ngOnDestroy(): void {
+    this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
   }
 }

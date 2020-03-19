@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalMainComponent } from './modal-main.component';
+import { ChanelSettingsComponent } from './chanel-settings.component';
 
-describe('ModalMainComponent', () => {
-  let component: ModalMainComponent;
-  let fixture: ComponentFixture<ModalMainComponent>;
+describe('ChanelSettingsComponent', () => {
+  let component: ChanelSettingsComponent;
+  let fixture: ComponentFixture<ChanelSettingsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalMainComponent ]
+      declarations: [ ChanelSettingsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalMainComponent);
+    fixture = TestBed.createComponent(ChanelSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

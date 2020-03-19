@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog} from '@angular/material/dialog';
+
 import { AuthService } from '../../../../services/auth/auth.service';
-import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile-settings',
@@ -9,10 +10,11 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./profile-settings.style.scss']
 })
 export class ProfileSettingsComponent implements OnInit {
-  @Input() modalRef: MatDialogRef<any>;
+
   constructor(
     private router: Router,
     private authService: AuthService,
+    private dialogRef: MatDialog,
   ) { }
 
   public ngOnInit(): void {}
@@ -20,6 +22,6 @@ export class ProfileSettingsComponent implements OnInit {
   public logOut(): void {
     this.authService.logOut();
     this.router.navigate(['login']);
-    this.modalRef.close();
+    this.dialogRef.closeAll();
   }
 }

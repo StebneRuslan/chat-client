@@ -6,16 +6,16 @@
       </div>
     </div>
     <div class="profile-name-container">
-      <span class="profile-username" (click)="openEditTitleWindow()">Username</span>
+      <span class="profile-username">Username</span>
     </div>
   </div>
-  <div *ngIf="photoChange" class="select-image-container">
+  <div *ngIf="editProfile" class="select-image-container">
     <mat-icon>add_a_photo</mat-icon>
     <mat-form-field class="select-image-field" (change)="selectImage($event)">
       <ngx-mat-file-input></ngx-mat-file-input>
     </mat-form-field>
   </div>
-  <div *ngIf="!photoChange" class="select-chat-container">
-    <mat-icon (click)="closeSettingsModal()">chat</mat-icon>
+  <div *ngIf="!editProfile" class="select-chat-container">
+    <mat-icon (click)="openChat()">chat</mat-icon>
   </div>
 </div>

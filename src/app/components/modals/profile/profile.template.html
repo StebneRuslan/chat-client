@@ -1,6 +1,7 @@
-<app-modal-header [title]="data.title" (closeDialog)="closeModel()"></app-modal-header>
-<app-header-info [name]="'Test'" [photoChange]="data.photoChange" [modalRef]="dialogRef"></app-header-info>
+<app-modal-header [name]="'Test'" [editProfile]="data.editProfile" [title]="data.title" (closeDialog)="closeModel()"></app-modal-header>
+<app-header-info [name]="'Test'" [editProfile]="data.editProfile" [chatId]="data.chatId"></app-header-info>
 
-<app-profile-settings *ngIf="!data.type || data.type === 'profile'" [modalRef]="dialogRef"></app-profile-settings>
-<app-contact-settings *ngIf="data.type === 'contact'"></app-contact-settings>
-<app-chat-settings *ngIf="data.type === 'chat'"></app-chat-settings>
+<app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
+<app-contact-settings *ngIf="data.type === chatTypes.contact"></app-contact-settings>
+<app-chat-settings *ngIf="data.type === chatTypes.chat"></app-chat-settings>
+<app-chanel-settings *ngIf="data.type === chatTypes.channel"></app-chanel-settings>

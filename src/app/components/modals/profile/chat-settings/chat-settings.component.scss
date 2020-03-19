@@ -1,6 +1,6 @@
 .chat-settings {
   padding: 15px;
-  .material-icons {
+  mat-icon {
     font-size: 30px;
     margin-right: 20px;
   }
@@ -26,12 +26,6 @@
           justify-content: space-between;
           width: 100%;
           font-size: 15px;
-          .username, .delete-user {
-            cursor: pointer;
-            &:hover {
-              color: #5580A3;
-            }
-          }
         }
       }
     }
