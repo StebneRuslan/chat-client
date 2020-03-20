@@ -1,7 +1,7 @@
 <div class="modal-header-container">
-  <span class="modal-header-title">{{title}}</span>
+  <span class="modal-header-title">{{data.title}}</span>
   <div class="modal-header-actions">
-    <span *ngIf="editProfile" (click)="editProfileData()">Edit</span>
+    <span *ngIf="data.editChat" (click)="editProfileData()">Edit</span>
     <span (click)="closeProfile()">Close</span>
   </div>
 </div>

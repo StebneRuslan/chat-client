@@ -3,8 +3,9 @@
     <mat-icon>info</mat-icon>
     <p>This channel will serve you daily programmer jokes. Feel free to laugh :) Suggestions? Contact</p>
   </div>
-  <div class="channel-actions">
+  <div *ngIf="!editChat" class="channel-actions">
     <mat-icon>reorder</mat-icon>
-    <span class="link">Leave channel</span>
+    <span class="link" (click)="leaveChannel()">Leave channel</span>
   </div>
+  <app-chat-settings *ngIf="editChat"></app-chat-settings>
 </div>

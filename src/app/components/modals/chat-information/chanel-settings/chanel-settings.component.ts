@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-chanel-settings',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChanelSettingsComponent implements OnInit {
 
+  @Input() editChat: boolean;
+
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
+  }
+
+  public leaveChannel() {
+
   }
 
 }

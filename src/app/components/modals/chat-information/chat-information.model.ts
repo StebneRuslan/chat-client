@@ -1,14 +1,14 @@
 import { CHAT_TYPES } from '../../../actions/main.action';
 
-export class ProfileModel {
+export class ChatInformationModel {
   public type: string;
   public title: string;
   public chatId: string;
-  public editProfile: boolean;
+  public editChat: boolean;
 
-  constructor(type: string, editProfile: boolean, chatId?: string) {
+  constructor(type: string, editChat: boolean, chatId?: string) {
     this.type = type;
-    this.editProfile = editProfile;
+    this.editChat = editChat;
     this.chatId = chatId;
     this.title = type === CHAT_TYPES.profile ? 'Settings' : this.type + ' info';
   }

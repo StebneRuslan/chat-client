@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { RequestsService } from '../../../../services/requests/requests.service';
@@ -6,12 +6,12 @@ import { RequestsService } from '../../../../services/requests/requests.service'
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ChatService } from '../../../../services/chat/chat.service';
 
-import { ProfileComponent } from '../profile.component';
+import { ChatInformationComponent } from '../chat-information.component';
 import { NewChatComponent } from '../../new-chat/new-chat.component';
 
-import { ChatUsersMock } from './char-users.mock';
+import { ChatUsersMock } from './chat-users.mock';
 import { CHAT_TYPES } from '../../../../actions/main.action';
-import { ProfileModel } from '../profile.model';
+import { ChatInformationModel } from '../chat-information.model';
 
 @Component({
   selector: 'app-chat-settings',
@@ -19,6 +19,8 @@ import { ProfileModel } from '../profile.model';
   styleUrls: ['./chat-settings.component.scss']
 })
 export class ChatSettingsComponent implements OnInit {
+
+  @Input() editChat: boolean;
 
   public chatUsers = ChatUsersMock;
 
@@ -33,9 +35,9 @@ export class ChatSettingsComponent implements OnInit {
 
   public openProfile(id): void {
     const ifProfile = this.authService.getUserId() === id;
-    this.dialog.open(ProfileComponent, {
+    this.dialog.open(ChatInformationComponent, {
       width: '450px',
-      data: new ProfileModel(ifProfile ? CHAT_TYPES.profile : CHAT_TYPES.contact, ifProfile, id)
+      data: new ChatInformationModel(ifProfile ? CHAT_TYPES.profile : CHAT_TYPES.contact, ifProfile, id)
     });
   }
 

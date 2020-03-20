@@ -1,8 +1,12 @@
 <div class="edit-name-container">
-  <h1>Edit {{data.nameType}}</h1>
+  <h1>Edit {{data.type}}</h1>
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [value]="data.oldTitle">
+    <input matInput [value]="data.oldName">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.type === chatTypes.channel">
+    <mat-label>Description</mat-label>
+    <input matInput [value]="data.oldDescription">
   </mat-form-field>
   <div class="edit-name-controls">
     <button class="cancel edit-name-button" mat-menu-item>

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { NewChatComponent } from '../../modals/new-chat/new-chat.component';
-import { ProfileComponent } from '../../modals/profile/profile.component';
+import { ChatInformationComponent } from '../../modals/chat-information/chat-information.component';
 
 import { CHAT_TYPES } from '../../../actions/main.action';
-import { ProfileModel } from '../../modals/profile/profile.model';
+import { ChatInformationModel } from '../../modals/chat-information/chat-information.model';
 
 @Component({
   selector: 'app-menu',
@@ -20,9 +20,9 @@ export class MenuComponent implements OnInit {
 
   public openModal(type: string): void {
     if (type === 'Settings') {
-      this.dialog.open(ProfileComponent, {
+      this.dialog.open(ChatInformationComponent, {
         width: '450px',
-        data: new ProfileModel(CHAT_TYPES.profile, true)
+        data: new ChatInformationModel(CHAT_TYPES.profile, true)
       });
     } else {
       this.dialog.open(NewChatComponent, {

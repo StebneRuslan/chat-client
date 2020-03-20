@@ -10,13 +10,10 @@ import { EditNameComponent} from '../edit-name/edit-name.component';
 })
 export class ModalHeaderComponent implements OnInit {
 
-  @Input() title: string;
+  @Input() data: any;
   @Output() closeDialog = new EventEmitter();
 
-  constructor( public dialog: MatDialog ) { }
-
-  @Input() name: string;
-  @Input() editProfile: boolean;
+  constructor(public dialog: MatDialog) { }
 
   public ngOnInit(): void {}
 
@@ -24,8 +21,9 @@ export class ModalHeaderComponent implements OnInit {
     this.dialog.open(EditNameComponent, {
       width: '450px',
       data: {
-        oldTitle: this.name,
-        nameType: 'profile'
+        oldName: this.data.name,
+        oldDescription: this.data.description,
+        type: this.data.type
       }
     });
   }

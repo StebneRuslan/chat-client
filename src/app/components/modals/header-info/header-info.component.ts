@@ -16,7 +16,7 @@ import { SELECT_CHAT } from '../../../actions/main.action';
 export class HeaderInfoComponent implements OnInit {
 
   @Input() name: string;
-  @Input() editProfile: boolean;
+  @Input() editChat: boolean;
   @Input() chatId: string;
 
   private fr: FileReader;

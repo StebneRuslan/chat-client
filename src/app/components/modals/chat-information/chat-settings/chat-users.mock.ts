@@ -24,4 +24,4 @@ export const ChatUsersMock = [
     username: 'Test5',
     avatar: ''
   }
-]
+];
