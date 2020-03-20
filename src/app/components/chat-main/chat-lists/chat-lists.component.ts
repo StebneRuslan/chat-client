@@ -10,8 +10,8 @@ import { ChatService } from '../../../services/chat/chat.service';
 
 @Component({
   selector: 'app-chat-lists',
-  templateUrl: './chat-lists.component.html',
-  styleUrls: ['./chat-lists.component.scss']
+  templateUrl: './chat-lists.template.html',
+  styleUrls: ['./chat-lists.style.scss']
 })
 export class ChatListsComponent implements OnInit {
 

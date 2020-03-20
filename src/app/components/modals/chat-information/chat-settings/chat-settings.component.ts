@@ -15,8 +15,8 @@ import { ChatInformationModel } from '../chat-information.model';
 
 @Component({
   selector: 'app-chat-settings',
-  templateUrl: './chat-settings.component.html',
-  styleUrls: ['./chat-settings.component.scss']
+  templateUrl: './chat-settings.template.html',
+  styleUrls: ['./chat-settings.style.scss']
 })
 export class ChatSettingsComponent implements OnInit {
 

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-contact-settings',
-  templateUrl: './contact-settings.component.html',
-  styleUrls: ['./contact-settings.component.scss']
+  templateUrl: './contact-settings.template.html',
+  styleUrls: ['./contact-settings.style.scss']
 })
 export class ContactSettingsComponent implements OnInit {
 

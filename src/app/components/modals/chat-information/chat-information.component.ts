@@ -8,8 +8,8 @@ import { CHAT_TYPES } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-chat-information',
-  templateUrl: './chat-information.component.html',
-  styleUrls: ['./chat-information.component.scss']
+  templateUrl: './chat-information.template.html',
+  styleUrls: ['./chat-information.style.scss']
 })
 export class ChatInformationComponent implements OnInit {
 

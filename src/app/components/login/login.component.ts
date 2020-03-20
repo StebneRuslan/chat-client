@@ -10,8 +10,8 @@ import LoginForm from './login.form';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.template.html',
+  styleUrls: ['./login.style.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
 

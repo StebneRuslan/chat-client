@@ -8,8 +8,8 @@ import { SELECT_CHAT } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-chat-messages',
-  templateUrl: './chat-messages.component.html',
-  styleUrls: ['./chat-messages.component.scss']
+  templateUrl: './chat-messages.template.html',
+  styleUrls: ['./chat-messages.style.scss']
 })
 export class ChatMessagesComponent implements OnInit, OnDestroy {
 
