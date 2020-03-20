@@ -12,11 +12,7 @@ export class MessageComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public showCheckBox(): void {
-    this.message.hover = true;
-  }
-
-  public hideCheckBox(): void {
-    this.message.hover = false;
+  public changeSelectStatus(status: boolean): void {
+    this.message.hover = status;
   }
 }

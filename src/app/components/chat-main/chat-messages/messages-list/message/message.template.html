@@ -1,4 +1,4 @@
-<div class="single-message-container" (mouseenter)="showCheckBox()" (mouseleave)="hideCheckBox()">
+<div class="single-message-container" (mouseenter)="changeSelectStatus(true)" (mouseleave)="changeSelectStatus(false)">
   <div class="message-selector-container">
     <mat-icon [ngClass]="{'hover': !message.hover}">check_box</mat-icon>
   </div>
