@@ -1,0 +1,19 @@
+<div class="chat-settings">
+  <div class="add-member">
+    <mat-icon>person</mat-icon>
+    <span (click)="openContacts()">Add member</span>
+  </div>
+  <div class="users-chat">
+    <mat-icon>reorder</mat-icon>
+    <ul class="users-chat-list">
+      <li *ngFor="let user of chatUsers">
+        <app-user-avatar [avatarUrl]="user.avatar" [chatName]="user.username" [type]="'chat'"></app-user-avatar>
+        <div class="user-info">
+          <p class="link" (click)="openProfile(user.id)">{{user.username}}</p>
+          <p *ngIf="editChat && authService.getUserId() !== user.id" (click)="removeUser(user.id, false)" class="link">Remove</p>
+          <p *ngIf="authService.getUserId() === user.id" (click)="removeUser(user.id, true)" class="link">Delete and exit</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

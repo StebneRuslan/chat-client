@@ -10,8 +10,8 @@ import RegistrationForm from './registration.form';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  templateUrl: './registration.template.html',
+  styleUrls: ['./registration.style.scss']
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
 

@@ -1,6 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+
 import { EditNameComponent } from '../edit-name/edit-name.component';
+
+import { ChatService } from '../../../services/chat/chat.service';
+import { BusService } from '../../../services/bus/bus.service';
+
+import { SELECT_CHAT } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-header-info',
@@ -8,10 +14,19 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
   styleUrls: ['./header-info.style.scss']
 })
 export class HeaderInfoComponent implements OnInit {
+
   @Input() name: string;
+  @Input() editChat: boolean;
+  @Input() chatId: string;
+
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
-  constructor(public dialog: MatDialog) {}
+
+  constructor(
+    private dialogRef: MatDialog,
+    private chatService: ChatService,
+    private bus: BusService
+  ) {}
 
   public ngOnInit(): void {}
 
@@ -24,13 +39,10 @@ export class HeaderInfoComponent implements OnInit {
     }
   }
 
-  public openEditTitleWindow(): void {
-    this.dialog.open(EditNameComponent, {
-      width: '450px',
-      data: {
-        oldTitle: this.name,
-        nameType: 'profile'
-      }
-    });
+  public openChat() {
+    if (this.chatId && this.chatId !== this.chatService.getActiveChat().id) {
+      this.bus.publish(SELECT_CHAT, this.chatId);
+    }
+    this.dialogRef.closeAll();
   }
 }

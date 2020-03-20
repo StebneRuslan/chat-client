@@ -10,8 +10,8 @@ import LoginForm from './login.form';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  templateUrl: './login.template.html',
+  styleUrls: ['./login.style.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(
         res => {
           this.authService.setToken(res.apiKey);
+          this.authService.setUserId(res.userId);
           this.router.navigate(['']);
         },
         err => this.loginError = err.error.message

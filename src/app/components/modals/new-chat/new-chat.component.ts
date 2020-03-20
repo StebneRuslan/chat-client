@@ -1,6 +1,5 @@
-import { MatDialogRef } from '@angular/material/dialog';
-import { ModalMainComponent } from '../modal-main/modal-main.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-new-chat',
@@ -8,8 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./new-chat.style.scss']
 })
 export class NewChatComponent implements OnInit {
-  @Input() title: string;
-  constructor(public dialogRef: MatDialogRef<ModalMainComponent>) { }
+
+  constructor(
+    public dialogRef: MatDialogRef<NewChatComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   public ngOnInit(): void {}
 

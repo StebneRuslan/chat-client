@@ -7,7 +7,9 @@ import { UserModel } from './user.model';
   styleUrls: ['./user.style.scss']
 })
 export class UserComponent implements OnInit {
-  @Input() user: UserModel
+
+  @Input() user: UserModel;
+
   constructor() { }
 
   public ngOnInit() {}

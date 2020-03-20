@@ -1,5 +1,7 @@
-import { Component, Inject, OnInit, Input } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
+import { CHAT_TYPES } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-edit-name',
@@ -7,6 +9,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./edit-name.style.scss']
 })
 export class EditNameComponent implements OnInit {
+
+  public chatTypes = CHAT_TYPES;
+
   // todo create model for data
   constructor(
     public dialogRef: MatDialogRef<EditNameComponent>,

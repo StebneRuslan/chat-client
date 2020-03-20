@@ -1,0 +1,33 @@
+.chat-settings {
+  padding: 15px;
+  mat-icon {
+    font-size: 30px;
+    margin-right: 20px;
+  }
+  .add-member {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    span {
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  }
+  .users-chat {
+    display: flex;
+    .users-chat-list {
+      width: 100%;
+      li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+        .user-info {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}

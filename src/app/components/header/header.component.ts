@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileComponent } from '../modals/profile/profile.component';
 import { MatDialog } from '@angular/material';
+
+import { ChatInformationComponent } from '../modals/chat-information/chat-information.component';
+
+import { ChatService } from '../../services/chat/chat.service';
+
+import { CHAT_TYPES } from '../../actions/main.action';
+import { ChatInformationModel } from '../modals/chat-information/chat-information.model';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +15,18 @@ import { MatDialog } from '@angular/material';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private chatService: ChatService
+  ) { }
 
   public ngOnInit() {
   }
 
   public openChatSetting(): void {
-    this.dialog.open(ProfileComponent, {
+    this.dialog.open(ChatInformationComponent, {
       width: '450px',
-      data: {
-        showChatSettings: true
-      }
+      data: new ChatInformationModel(CHAT_TYPES.chat, true)
     });
   }
 

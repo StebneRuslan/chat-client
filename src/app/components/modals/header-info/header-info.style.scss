@@ -30,7 +30,7 @@
       }
     }
   }
-  .select-image-container {
+  .select-image-container, .select-chat-container {
     z-index: 1;
     background-color: #ffffff;
     border-radius: 50%;
@@ -58,6 +58,11 @@
       width: 35px;
       transform: translate(50%, 50%);
       margin: auto;
+    }
+  }
+  .select-chat-container {
+    mat-icon {
+      transform: translate(55%, 60%);
     }
   }
 }

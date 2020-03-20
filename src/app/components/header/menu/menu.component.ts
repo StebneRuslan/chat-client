@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalMainComponent } from '../../modals/modal-main/modal-main.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+
+import { NewChatComponent } from '../../modals/new-chat/new-chat.component';
+import { ChatInformationComponent } from '../../modals/chat-information/chat-information.component';
+
+import { CHAT_TYPES } from '../../../actions/main.action';
+import { ChatInformationModel } from '../../modals/chat-information/chat-information.model';
 
 @Component({
   selector: 'app-menu',
@@ -14,12 +19,17 @@ export class MenuComponent implements OnInit {
   public ngOnInit(): void {}
 
   public openModal(type: string): void {
-    this.dialog.open(ModalMainComponent, {
-      width: '450px',
-      data: {
-        activeModal: type
-      }
-    });
+    if (type === 'Settings') {
+      this.dialog.open(ChatInformationComponent, {
+        width: '450px',
+        data: new ChatInformationModel(CHAT_TYPES.profile, true)
+      });
+    } else {
+      this.dialog.open(NewChatComponent, {
+        width: '450px',
+        data: { type }
+      });
+    }
   }
 
 }

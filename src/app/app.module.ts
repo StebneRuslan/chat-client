@@ -19,6 +19,7 @@ import {
 
 // Services
 import { CookieService } from 'ngx-cookie-service';
+import { BusService } from './services/bus/bus.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -29,15 +30,13 @@ import { ChatMainComponent } from './components/chat-main/chat-main.component';
 import { ChatMessagesComponent } from './components/chat-main/chat-messages/chat-messages.component';
 import { ChatPreviewComponent } from './components/chat-main/chat-lists/chat-preview/chat-preview.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ProfileComponent } from './components/modals/profile/profile.component';
 import { HeaderInfoComponent } from './components/modals/header-info/header-info.component';
-import { ProfileSettingsComponent } from './components/modals/profile/profile-settings/profile-settings.component';
+import { ProfileSettingsComponent } from './components/modals/chat-information/profile-settings/profile-settings.component';
 import { MenuComponent } from './components/header/menu/menu.component';
-import { ChatSettingsComponent } from './components/chat-settings/chat-settings.component';
+import { ChatSettingsComponent } from './components/modals/chat-information/chat-settings/chat-settings.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { ModalHeaderComponent } from './components/modals/modals-header/modal-header.component';
 import { EditorComponent } from './components/chat-main/editor/editor.component';
-import { ModalMainComponent } from './components/modals/modal-main/modal-main.component';
 import { NewChatComponent } from './components/modals/new-chat/new-chat.component';
 import { SelectUsersComponent } from './components/modals/new-chat/select-users/select-users.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
@@ -46,6 +45,10 @@ import { NewChatFooterComponent } from './components/modals/new-chat/new-chat-fo
 import { EditNameComponent } from './components/modals/edit-name/edit-name.component';
 import { MessagesListComponent } from './components/chat-main/chat-messages/messages-list/messages-list.component';
 import { MessageComponent } from './components/chat-main/chat-messages/messages-list/message/message.component';
+import { SearchComponent } from './components/search/search.component';
+import { ContactSettingsComponent } from './components/modals/chat-information/contact-settings/contact-settings.component';
+import { ChanelSettingsComponent } from './components/modals/chat-information/chanel-settings/chanel-settings.component';
+import { ChatInformationComponent } from './components/modals/chat-information/chat-information.component';
 
 @NgModule({
   declarations: [
@@ -58,14 +61,12 @@ import { MessageComponent } from './components/chat-main/chat-messages/messages-
     ChatPreviewComponent,
     HeaderComponent,
     MenuComponent,
-    ProfileComponent,
     HeaderInfoComponent,
     ProfileSettingsComponent,
     ChatSettingsComponent,
     UserAvatarComponent,
     ModalHeaderComponent,
     EditorComponent,
-    ModalMainComponent,
     NewChatComponent,
     SelectUsersComponent,
     UsersListComponent,
@@ -74,6 +75,10 @@ import { MessageComponent } from './components/chat-main/chat-messages/messages-
     EditNameComponent,
     MessagesListComponent,
     MessageComponent,
+    SearchComponent,
+    ContactSettingsComponent,
+    ChanelSettingsComponent,
+    ChatInformationComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,11 +98,12 @@ import { MessageComponent } from './components/chat-main/chat-messages/messages-
     ScrollingModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    BusService
   ],
   entryComponents: [
-    ProfileComponent,
-    ModalMainComponent,
+    ChatInformationComponent,
+    NewChatComponent,
     EditNameComponent
   ],
   bootstrap: [AppComponent]
