@@ -1,1 +1,3 @@
 <app-messages-list (selectMessage)="selectMessage($event)" [messages]="messages"></app-messages-list>
+<app-editor *ngIf="!selectedMessages.length"></app-editor>
+<app-message-select *ngIf="selectedMessages.length" [messages]="selectedMessages"></app-message-select>

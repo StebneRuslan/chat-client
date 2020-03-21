@@ -1,8 +1,10 @@
-<div class="single-message-container" (mouseenter)="changeSelectStatus(true)" (mouseleave)="changeSelectStatus(false)">
+<div class="single-message-container"
+     (mouseenter)="changeSelectStatus(true)"
+     (mouseleave)="changeSelectStatus(false)" [ngClass]="{'hover': message.hover}">
   <div class="message-selector-container">
-    <mat-icon [ngClass]="{'hover': !message.hover}">check_box</mat-icon>
+    <mat-icon [ngClass]="{'hover': !(message.selected)}">check_box</mat-icon>
   </div>
-  <app-user-avatar [chatName]="message.user.username" [avatarUrl]="message.user.avatarUrl" [type]="'chat'"></app-user-avatar>
+  <app-user-avatar (click)="openProfile($event)" [chatName]="message.user.username" [avatarUrl]="message.user.avatarUrl" [type]="'chat'"></app-user-avatar>
   <div class="message-details-container">
     <div class="author-container">
       <h1 class="author">{{message.user.username}}</h1>

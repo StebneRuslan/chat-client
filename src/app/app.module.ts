@@ -36,7 +36,7 @@ import { MenuComponent } from './components/header/menu/menu.component';
 import { ChatSettingsComponent } from './components/modals/chat-information/chat-settings/chat-settings.component';
 import { UserAvatarComponent } from './components/user-avatar/user-avatar.component';
 import { ModalHeaderComponent } from './components/modals/modals-header/modal-header.component';
-import { EditorComponent } from './components/chat-main/editor/editor.component';
+import { EditorComponent } from './components/chat-main/chat-messages/editor/editor.component';
 import { NewChatComponent } from './components/modals/new-chat/new-chat.component';
 import { SelectUsersComponent } from './components/modals/new-chat/select-users/select-users.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
@@ -49,6 +49,9 @@ import { SearchComponent } from './components/search/search.component';
 import { ContactSettingsComponent } from './components/modals/chat-information/contact-settings/contact-settings.component';
 import { ChanelSettingsComponent } from './components/modals/chat-information/chanel-settings/chanel-settings.component';
 import { ChatInformationComponent } from './components/modals/chat-information/chat-information.component';
+import { MessageSelectComponent } from './components/chat-main/chat-messages/message-select/message-select.component';
+import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
+import { NewContactComponent } from './components/modals/new-contact/new-contact.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +82,9 @@ import { ChatInformationComponent } from './components/modals/chat-information/c
     ContactSettingsComponent,
     ChanelSettingsComponent,
     ChatInformationComponent,
+    MessageSelectComponent,
+    MessageModalComponent,
+    NewContactComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +110,9 @@ import { ChatInformationComponent } from './components/modals/chat-information/c
   entryComponents: [
     ChatInformationComponent,
     NewChatComponent,
-    EditNameComponent
+    EditNameComponent,
+    MessageModalComponent,
+    NewContactComponent
   ],
   bootstrap: [AppComponent]
 })
