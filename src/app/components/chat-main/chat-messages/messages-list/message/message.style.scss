@@ -3,6 +3,7 @@
   margin: 15px 0;
   .message-selector-container {
     width: 30px;
+    margin: auto;
     .hover {
       display: none;
     }
@@ -29,4 +30,8 @@
       display: flex;
     }
   }
+}
+
+.hover {
+  opacity: 0.8;
 }

@@ -1,2 +1,7 @@
 <app-modal-header  [data]="{title: data.type}" (closeDialog)="closeModel()"></app-modal-header>
 <app-select-users></app-select-users>
+<div class="new-contact" *ngIf="data.type === 'Contacts'">
+  <button class="new-contact-button" mat-menu-item (click)="openAddContactWindow()">
+    <span>Add New Contact</span>
+  </button>
+</div>

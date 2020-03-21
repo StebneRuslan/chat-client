@@ -12,7 +12,7 @@ import { SELECT_CHAT } from '../../../actions/main.action';
   styleUrls: ['./chat-messages.style.scss']
 })
 export class ChatMessagesComponent implements OnInit, OnDestroy {
-
+  public selectedMessages = [];
   public messages: MessageModel[] = new MessagesListModel().messages;
 
   constructor(private bus: BusService) { }
@@ -26,7 +26,9 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   }
 
   public selectMessage(messageId: string): void {
-    console.log('Selected users', this.messages.filter(message => message.id === messageId));
+    const selectedMessage = this.messages.find(message => message.id === messageId);
+    selectedMessage.selected = !selectedMessage.selected;
+    this.selectedMessages = this.messages.filter(message => message.selected);
   }
 
   public ngOnDestroy(): void {

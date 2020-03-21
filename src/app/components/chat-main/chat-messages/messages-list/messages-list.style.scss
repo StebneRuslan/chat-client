@@ -1,6 +1,24 @@
 .message-list-container {
+  height: 100%;
   width: 100%;
   .scroll-viewport {
-    height: 60vh;
+    height: 100%;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dcdce8;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #717178;
+  border-radius: 2px;
 }
