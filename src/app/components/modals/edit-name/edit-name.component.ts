@@ -32,14 +32,10 @@ export class EditNameComponent implements OnInit {
   }
 
   public save() {
-    console.log('!', this.data.oldName)
+    const url = this.chatData.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
     // TODO: do request for other chat data
-
     if (this.chatData.type === this.chatTypes.profile) {
-      this.api.put({
-        url: `/users/update/${this.chatData.id}`,
-        body: { username: this.data.oldName}
-      })
+      this.api.put({url, body: { username: this.data.oldName}})
         .subscribe(
           () => {
             this.bus.publish(UPDATE_CHAT_INFO, {name: this.data.oldName});

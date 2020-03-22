@@ -27,15 +27,13 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.chatService.setSelectedChat({id: this.data.chatId, type:  this.data.type});
     const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
-
     // TODO: do request for other chat data
     if (this.data.type === this.chatTypes.profile) {
       this.api.get({ url })
         .subscribe(res => this.chatName = res.username);
     }
-
+    this.chatService.setSelectedChat({id: this.data.chatId, type:  this.data.type});
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
   }
 
