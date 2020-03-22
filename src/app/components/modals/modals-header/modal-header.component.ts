@@ -22,8 +22,7 @@ export class ModalHeaderComponent implements OnInit {
       width: '450px',
       data: {
         oldName: this.data.name,
-        oldDescription: this.data.description,
-        type: this.data.type
+        oldDescription: this.data.description
       }
     });
   }

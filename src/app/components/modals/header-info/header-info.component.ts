@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { EditNameComponent } from '../edit-name/edit-name.component';
-
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
 
@@ -17,15 +15,14 @@ export class HeaderInfoComponent implements OnInit {
 
   @Input() name: string;
   @Input() editChat: boolean;
-  @Input() chatId: string;
 
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
 
   constructor(
+    private bus: BusService,
     private dialogRef: MatDialog,
     private chatService: ChatService,
-    private bus: BusService
   ) {}
 
   public ngOnInit(): void {}
@@ -40,9 +37,11 @@ export class HeaderInfoComponent implements OnInit {
   }
 
   public openChat() {
-    if (this.chatId && this.chatId !== this.chatService.getActiveChat().id) {
-      this.bus.publish(SELECT_CHAT, this.chatId);
+    const chatId = this.chatService.getSelectedChat().id;
+    if (chatId && chatId !== this.chatService.getActiveChat().id) {
+      this.bus.publish(SELECT_CHAT, chatId);
     }
     this.dialogRef.closeAll();
   }
+
 }

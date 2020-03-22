@@ -1,8 +1,8 @@
 <app-modal-header
-  [data]="{ type: data.type, editChat: data.editChat, title: data.title, name: 'Test name', description: 'Test description'}"
+  [data]="{ editChat: data.editChat, title: data.title, name: chatName, description: 'Test description'}"
   (closeDialog)="closeModel()">
 </app-modal-header>
-<app-header-info [name]="'Test'" [editChat]="data.editChat" [chatId]="data.chatId"></app-header-info>
+<app-header-info [name]="chatName" [editChat]="data.editChat"></app-header-info>
 
 <app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
 <app-contact-settings *ngIf="data.type === chatTypes.contact"></app-contact-settings>

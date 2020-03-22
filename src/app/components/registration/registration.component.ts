@@ -37,14 +37,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registerError = 'Passwords are not equal';
     } else {
       this.registerRequest$ = this.api.post({
-        url: '/registration',
+        url: '/users/create',
         body: { username: this.model.username, password: this.encryptDecryptService.encrypt(this.model.password)}
       })
         .subscribe(
-          res => {
-            this.authService.setToken(res.apiKey);
-            this.router.navigate(['']);
-          },
+          res => this.authService.setUserData(res),
           err => this.registerError = err.error.message
         );
     }
