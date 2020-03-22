@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { AuthService } from '../../../services/auth/auth.service';
+
 import { NewChatComponent } from '../../modals/new-chat/new-chat.component';
 import { ChatInformationComponent } from '../../modals/chat-information/chat-information.component';
 
@@ -14,7 +16,10 @@ import { ChatInformationModel } from '../../modals/chat-information/chat-informa
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService
+  ) { }
 
   public ngOnInit(): void {}
 
@@ -22,7 +27,7 @@ export class MenuComponent implements OnInit {
     if (type === 'Settings') {
       this.dialog.open(ChatInformationComponent, {
         width: '450px',
-        data: new ChatInformationModel(CHAT_TYPES.profile, true)
+        data: new ChatInformationModel(CHAT_TYPES.profile, true, this.authService.getUserId())
       });
     } else {
       this.dialog.open(NewChatComponent, {

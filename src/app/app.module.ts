@@ -17,6 +17,9 @@ import {
   MatMenuModule
 } from '@angular/material';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+
 // Services
 import { CookieService } from 'ngx-cookie-service';
 import { BusService } from './services/bus/bus.service';
@@ -105,7 +108,12 @@ import { NewContactComponent } from './components/modals/new-contact/new-contact
   ],
   providers: [
     CookieService,
-    BusService
+    BusService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [
     ChatInformationComponent,

@@ -2,18 +2,19 @@
   <h1>Edit {{data.type}}</h1>
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput [value]="data.oldName">
+    <input matInput [(ngModel)]="data.oldName">
   </mat-form-field>
-  <mat-form-field *ngIf="data.type === chatTypes.channel">
+  <mat-form-field *ngIf="chatData.type === chatTypes.channel">
     <mat-label>Description</mat-label>
-    <input matInput [value]="data.oldDescription">
+    <input matInput [(ngModel)]="data.oldDescription">
   </mat-form-field>
+  <p class="error-message">{{updateError}}</p>
   <div class="edit-name-controls">
     <button class="cancel edit-name-button" mat-menu-item>
-      <span>Cancel</span>
+      <span (click)="close()">Cancel</span>
     </button>
     <button class="edit-name-button" mat-menu-item>
-      <span>Save</span>
+      <span (click)="save()">Save</span>
     </button>
   </div>
 </div>
