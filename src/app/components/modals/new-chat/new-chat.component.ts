@@ -1,6 +1,5 @@
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
-import { NewContactComponent } from '../new-contact/new-contact.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-chat',
@@ -10,7 +9,6 @@ import { NewContactComponent } from '../new-contact/new-contact.component';
 export class NewChatComponent implements OnInit {
 
   constructor(
-    public dialog: MatDialog,
     public dialogRef: MatDialogRef<NewChatComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -21,9 +19,4 @@ export class NewChatComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public openAddContactWindow(): void {
-    this.dialog.open(NewContactComponent, {
-      width: '400px'
-    });
-  }
 }

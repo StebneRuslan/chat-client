@@ -5,6 +5,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 
 import { NewChatComponent } from '../../modals/new-chat/new-chat.component';
 import { ChatInformationComponent } from '../../modals/chat-information/chat-information.component';
+import { UserContactsComponent } from '../../modals/user-contacts/user-contacts.component';
 
 import { CHAT_TYPES } from '../../../actions/main.action';
 import { ChatInformationModel } from '../../modals/chat-information/chat-information.model';
@@ -28,6 +29,10 @@ export class MenuComponent implements OnInit {
       this.dialog.open(ChatInformationComponent, {
         width: '450px',
         data: new ChatInformationModel(CHAT_TYPES.profile, true, this.authService.getUserId())
+      });
+    } else if (type === 'Contacts') {
+      this.dialog.open(UserContactsComponent, {
+        width: '450px',
       });
     } else {
       this.dialog.open(NewChatComponent, {

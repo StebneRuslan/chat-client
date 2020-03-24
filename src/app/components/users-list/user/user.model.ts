@@ -1,5 +1,5 @@
 export class UserModel {
-  public id = '';
+  public '_id' = '';
   public username = '';
   public avatarUrl = '';
   public selected = false;

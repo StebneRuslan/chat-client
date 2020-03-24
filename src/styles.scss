@@ -32,18 +32,12 @@ a, a:active, a:visited {
   text-align: center;
 }
 
-.text-error {
-  margin: 10px 0;
+.error-message {
+  margin: 5px 0;
   font-weight: 500;
   font-size: 18px;
   color: darkred;
   text-align: center;
-}
-
-.error-message {
-  font-weight: 500;
-  font-size: 18px;
-  color: darkred;
 }
 
 .auth-form {
