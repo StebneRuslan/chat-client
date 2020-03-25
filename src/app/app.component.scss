@@ -10,15 +10,4 @@
 
 mat-dialog-container {
   padding: 0 !important;
-  .mat-form-field-underline {
-    display: none !important;
-  }
-
-  .mat-form-field-infix {
-    cursor: pointer;
-    padding: 0 !important;
-    margin: 0;
-    height: 80px;
-    border: 0;
-  }
 }

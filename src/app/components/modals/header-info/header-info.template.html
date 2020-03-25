@@ -1,8 +1,9 @@
 <div class="profile-header-container">
   <div class="profile-header-info-container">
-    <div class="profile-image-container">
+    <div class="profile-image-container" [ngClass]="{'with-remove-icon': showRemoveIcon}" (mouseover)="handleRemoveIcon(true)" (mouseout)="handleRemoveIcon(false)">
       <div class="img-container">
-        <app-user-avatar [chatName]="name" [avatarUrl]="imageSrc" [type]="'profile'"></app-user-avatar>
+        <div class="remove-image" (click)="removeImage()">x</div>
+        <app-user-avatar [chatName]="name" [avatarUrl]="imageSrc || image" [type]="'profile'"></app-user-avatar>
       </div>
     </div>
     <div class="profile-name-container">
