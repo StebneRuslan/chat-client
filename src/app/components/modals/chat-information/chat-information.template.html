@@ -5,7 +5,7 @@
 <app-header-info [name]="chatName" [editChat]="data.editChat"></app-header-info>
 
 <app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
-<app-contact-settings *ngIf="data.type === chatTypes.contact"></app-contact-settings>
+<app-contact-settings *ngIf="data.type === chatTypes.contact" [contactId]="data.chatId"></app-contact-settings>
 <app-chat-settings *ngIf="data.type === chatTypes.chat" [editChat]="data.editChat"></app-chat-settings>
 <app-chanel-settings *ngIf="data.type === chatTypes.channel" [editChat]="data.editChat"></app-chanel-settings>
 

@@ -9,7 +9,10 @@ export class NewChatFooterComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  public ngOnInit() {}
+
+  public addContacts() {}
+
+  public close() {}
 
 }

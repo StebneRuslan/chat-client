@@ -10,11 +10,7 @@
   </mat-form-field>
   <p class="error-message">{{updateError}}</p>
   <div class="edit-name-controls">
-    <button class="cancel edit-name-button" mat-menu-item>
-      <span (click)="close()">Cancel</span>
-    </button>
-    <button class="edit-name-button" mat-menu-item>
-      <span (click)="save()">Save</span>
-    </button>
+    <button class="cancel edit-name-button" mat-menu-item (click)="close()">Cancel</button>
+    <button class="edit-name-button" mat-menu-item (click)="save()">Save</button>
   </div>
 </div>

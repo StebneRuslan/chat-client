@@ -18,7 +18,7 @@ export class SelectUsersComponent implements OnInit {
   public ngOnInit(): void {}
 
   public selectUser(userId: string): void {
-    const selectedUser = this.users.find(user => user.id === userId);
+    const selectedUser = this.users.find(user => user._id === userId);
     selectedUser.selected = !selectedUser.selected;
     console.log('Selected users', this.users.filter(user => user.selected));
   }

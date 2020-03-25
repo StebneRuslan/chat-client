@@ -22,7 +22,7 @@
         Confirm password is required
       </mat-error>
     </mat-form-field>
-    <p class="text-error">{{registerError}}</p>
+    <p class="error-message">{{registerError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
     <button routerLink="/login" mat-raised-button color="primary">Go to login</button>
   </form>

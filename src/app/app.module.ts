@@ -54,7 +54,8 @@ import { ChanelSettingsComponent } from './components/modals/chat-information/ch
 import { ChatInformationComponent } from './components/modals/chat-information/chat-information.component';
 import { MessageSelectComponent } from './components/chat-main/chat-messages/message-select/message-select.component';
 import { MessageModalComponent } from './components/modals/message-modal/message-modal.component';
-import { NewContactComponent } from './components/modals/new-contact/new-contact.component';
+import { NewContactComponent } from './components/modals/user-contacts/new-contact/new-contact.component';
+import { UserContactsComponent } from './components/modals/user-contacts/user-contacts.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { NewContactComponent } from './components/modals/new-contact/new-contact
     ChatInformationComponent,
     MessageSelectComponent,
     MessageModalComponent,
-    NewContactComponent
+    NewContactComponent,
+    UserContactsComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +120,7 @@ import { NewContactComponent } from './components/modals/new-contact/new-contact
   entryComponents: [
     ChatInformationComponent,
     NewChatComponent,
+    UserContactsComponent,
     EditNameComponent,
     MessageModalComponent,
     NewContactComponent

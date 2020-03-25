@@ -6,7 +6,7 @@ export class MessagesListModel {
       id: '1',
       text: 'test text',
       user: {
-        id: '1',
+        _id: '1',
         username: 'test1',
         avatarUrl: '',
         selected: false
@@ -18,7 +18,7 @@ export class MessagesListModel {
       id: '2',
       text: 'test text',
       user: {
-        id: '1',
+        _id: '1',
         username: 'test1',
         avatarUrl: '',
         selected: false
@@ -30,7 +30,7 @@ export class MessagesListModel {
       id: '3',
       text: 'test text',
       user: {
-        id: '3',
+        _id: '3',
         username: 'test3',
         avatarUrl: '',
         selected: false
@@ -42,7 +42,7 @@ export class MessagesListModel {
       id: '4',
       text: 'test text',
       user: {
-        id: '4',
+        _id: '4',
         username: 'test4',
         avatarUrl: '',
         selected: false
@@ -54,7 +54,7 @@ export class MessagesListModel {
       id: '5',
       text: 'test text',
       user: {
-        id: '5',
+        _id: '5',
         username: 'test5',
         avatarUrl: '',
         selected: false
@@ -66,7 +66,7 @@ export class MessagesListModel {
       id: '6',
       text: 'test text',
       user: {
-        id: '1',
+        _id: '1',
         username: 'test1',
         avatarUrl: '',
         selected: false
@@ -78,7 +78,7 @@ export class MessagesListModel {
       id: '7',
       text: 'test text',
       user: {
-        id: '1',
+        _id: '1',
         username: 'test1',
         avatarUrl: '',
         selected: false
@@ -90,7 +90,7 @@ export class MessagesListModel {
       id: '8',
       text: 'test text',
       user: {
-        id: '3',
+        _id: '3',
         username: 'test3',
         avatarUrl: '',
         selected: false
@@ -102,7 +102,7 @@ export class MessagesListModel {
       id: '9',
       text: 'test text',
       user: {
-        id: '4',
+        _id: '4',
         username: 'test4',
         avatarUrl: '',
         selected: false
@@ -114,7 +114,7 @@ export class MessagesListModel {
       id: '10',
       text: 'test text',
       user: {
-        id: '5',
+        _id: '5',
         username: 'test5',
         avatarUrl: '',
         selected: false
