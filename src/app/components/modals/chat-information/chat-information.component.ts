@@ -17,6 +17,7 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
 
   public chatTypes = CHAT_TYPES;
   public chatName = 'Test';
+  public image = '';
 
   constructor(
     private api: RequestsService,
@@ -31,7 +32,10 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
     // TODO: do request for other chat data
     if (this.data.type === this.chatTypes.profile) {
       this.api.get({ url })
-        .subscribe(res => this.chatName = res.username);
+        .subscribe(res => {
+          this.image = res.avatar ? res.avatar.url : '';
+          this.chatName = res.username;
+        });
     }
     this.chatService.setSelectedChat({id: this.data.chatId, type:  this.data.type});
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);

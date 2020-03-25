@@ -2,7 +2,7 @@
   [data]="{ editChat: data.editChat, title: data.title, name: chatName, description: 'Test description'}"
   (closeDialog)="closeModel()">
 </app-modal-header>
-<app-header-info [name]="chatName" [editChat]="data.editChat"></app-header-info>
+<app-header-info [name]="chatName" [image]="image" [editChat]="data.editChat"></app-header-info>
 
 <app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
 <app-contact-settings *ngIf="data.type === chatTypes.contact" [contactId]="data.chatId"></app-contact-settings>

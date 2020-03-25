@@ -20,7 +20,21 @@
           position: absolute;
           object-fit: cover;
         }
+        .remove-image {
+          display: none;
+          width: 15px;
+          font-size: 20px;
+          height: 0;
+          top: -10px;
+          text-align: center;
+          margin: 0 0 0 auto;
+          position: relative;
+          cursor: pointer;
+        }
       }
+    }
+    .with-remove-icon .remove-image {
+      display: block !important;
     }
     .profile-name-container {
       display: flex;
@@ -52,6 +66,7 @@
       position: absolute;
       left: 0;
       top: 0;
+      opacity: 0;
     }
     mat-icon {
       height: 30px;

@@ -32,7 +32,9 @@ export class RequestsService {
 
   public put<TRequestBody, TResponseBody>(options: PutOptions<TRequestBody, TResponseBody>): any {
     return this.httpClient
-      .put<TResponseBody>( this.apiUrl + options.url, options.body);
+      .put<TResponseBody>( this.apiUrl + options.url, options.body, {
+        headers: options.headers
+      });
   }
 
   public delete<TResponseBody>(options: DeleteOptions<TResponseBody>): any {
