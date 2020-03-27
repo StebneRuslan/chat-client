@@ -16,25 +16,21 @@ export class EditNameComponent implements OnInit {
 
   public chatTypes = CHAT_TYPES;
   public updateError = '';
-  public chatData;
 
   // todo create model for data
   constructor(
     private api: RequestsService,
     private bus: BusService,
-    private chatService: ChatService,
     public dialogRef: MatDialogRef<EditNameComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
-  public ngOnInit(): void {
-    this.chatData = this.chatService.getSelectedChat();
-  }
+  public ngOnInit(): void {}
 
   public save() {
-    const url = this.chatData.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
+    const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
     // TODO: do request for other chat data
-    if (this.chatData.type === this.chatTypes.profile) {
+    if (this.data.type === this.chatTypes.profile) {
       this.api.put({url, body: { username: this.data.oldName}})
         .subscribe(
           () => {

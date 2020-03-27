@@ -22,7 +22,9 @@ export class ModalHeaderComponent implements OnInit {
       width: '450px',
       data: {
         oldName: this.data.name,
-        oldDescription: this.data.description
+        oldDescription: this.data.description,
+        type: this.data.type,
+        chatId: this.data.chatId
       }
     });
   }

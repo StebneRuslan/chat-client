@@ -4,7 +4,7 @@
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.oldName">
   </mat-form-field>
-  <mat-form-field *ngIf="chatData.type === chatTypes.channel">
+  <mat-form-field *ngIf="data.type === chatTypes.channel">
     <mat-label>Description</mat-label>
     <input matInput [(ngModel)]="data.oldDescription">
   </mat-form-field>

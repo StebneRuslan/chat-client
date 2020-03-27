@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpHeaders } from '@angular/common/http';
 
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
-import { UploadService } from '../../../services/upload/upload.service';
+import { RequestsService } from '../../../services/requests/requests.service';
 
 import { SELECT_CHAT } from '../../../actions/main.action';
 
@@ -13,9 +14,7 @@ import { SELECT_CHAT } from '../../../actions/main.action';
   styleUrls: ['./header-info.style.scss']
 })
 export class HeaderInfoComponent implements OnInit {
-  @Input() image: string;
-  @Input() name: string;
-  @Input() editChat: boolean;
+  @Input() data: any;
 
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
@@ -25,7 +24,7 @@ export class HeaderInfoComponent implements OnInit {
     private bus: BusService,
     private dialogRef: MatDialog,
     private chatService: ChatService,
-    private uploadService: UploadService
+    private api: RequestsService
   ) {}
 
   public ngOnInit(): void {}
@@ -36,33 +35,33 @@ export class HeaderInfoComponent implements OnInit {
       this.fr = new FileReader();
       this.fr.onload = () => this.imageSrc = this.fr.result;
       this.fr.readAsDataURL(file);
-      this.uploadService.uploadFile(event.target.files[0].name, event.target.files[0])
-        .subscribe(
-          data => {
-            this.image = data.url;
-          },
-          error => console.log(error));
+      this.api.put({
+        url: `/avatars/${this.data.chatId}?type=${this.data.type}`,
+        headers: new HttpHeaders({'x-file-name': event.target.files[0].name}),
+        body: event.target.files[0]
+      })
+      .subscribe(
+          data => this.data.image = data.url,
+          error => console.log(error)
+      );
     }
   }
 
   public removeImage(): void {
-    // TODO separate user and chat
-    this.uploadService.removeAvatar()
+    this.api.delete({ url: `/avatars/${this.data.chatId}?type=${this.data.chatId}`})
       .subscribe(
-        () => {
-          this.image = '';
-        },
-        error => console.log(error));
+        () => this.data.image = this.imageSrc = '',
+        error => console.log(error)
+      );
   }
 
   public handleRemoveIcon(status: boolean): void {
-    this.showRemoveIcon = (this.image || this.imageSrc) && status;
+    this.showRemoveIcon = (this.data.image || this.imageSrc) && status;
   }
 
   public openChat() {
-    const chatId = this.chatService.getSelectedChat().id;
-    if (chatId && chatId !== this.chatService.getActiveChat().id) {
-      this.bus.publish(SELECT_CHAT, chatId);
+    if (this.data.chatId !== this.chatService.getActiveChat().id) {
+      this.bus.publish(SELECT_CHAT, this.data.chatId);
     }
     this.dialogRef.closeAll();
   }
