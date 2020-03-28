@@ -52,9 +52,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.dialog.open(ChatInformationComponent, {
       width: '450px',
       data: new ChatInformationModel(
-        type === 'profile' ? CHAT_TYPES.profile : activeChat.type,
+        type === 'profile' ? CHAT_TYPES.profile : activeChat.chatType,
         type === 'profile' || activeChat.role === 'admin',
-        type === 'profile' ? this.authService.getUserId() : activeChat.id
+        type === 'profile' ? this.authService.getUserId() : activeChat._id
       )
     });
   }
@@ -78,7 +78,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
     this.socket.emit('message', {
       authorId: this.authService.getUserId(),
-      chatId: this.chatService.getActiveChat().id,
+      chatId: this.chatService.getActiveChat()._id,
       message: this.message
     });
     this.message = '';

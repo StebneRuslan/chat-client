@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { RequestsService } from '../requests/requests.service';
 
 import { ChatTypes } from '../interfaces/chat-types.interfaces';
+import { ChatPreviewModel } from '../../components/chat-main/chat-lists/chat-preview/chat-preview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,7 @@ export class ChatService {
 
   constructor(private api: RequestsService) { }
 
-  private activeChat = {
-    _id: '1',
-    type: 'contact',
-    role: 'admin',
-    name: 'Chat name',
-    chatName: ''
-  };
+  private activeChat: ChatPreviewModel = new ChatPreviewModel();
 
   public setActiveChat(chat) {
     this.activeChat = chat;

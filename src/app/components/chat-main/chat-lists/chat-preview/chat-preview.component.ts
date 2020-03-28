@@ -6,8 +6,10 @@ import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces
   styleUrls: ['./chat-preview.style.scss']
 })
 export class ChatPreviewComponent implements OnInit {
+
   public chatName = '';
   public activeChat: null;
+
   @Input() activeUser;
   @Input() set chat(chat) {
     this.activeChat = chat;

@@ -1,11 +1,12 @@
-.scroll-viewport {
+.chat-lists {
+  overflow-y: auto;
   height: calc(100% - 40px);
-}
-
-li:hover {
-  background-color: rgba(174, 174, 189, 0.5);
-}
-
-.active-chat {
-  background-color: rgba(174, 174, 189, 1) !important;
+  li {
+    &.active-chat {
+      background-color: rgba(174, 174, 189, 1) !important;
+    }
+    &:hover {
+      background-color: rgba(174, 174, 189, 0.5);
+    }
+  }
 }

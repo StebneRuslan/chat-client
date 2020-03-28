@@ -1,13 +1,12 @@
-import {Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ChatPreviewModel } from './chat-preview/chat-preview.model';
-import { chatListMock } from './chat-list.mock';
 import { CREATE_NEW_DIALOG, SELECT_CHAT } from '../../../actions/main.action';
 
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
-import {AuthService} from '../../../services/auth/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-chat-lists',
@@ -16,8 +15,8 @@ import {AuthService} from '../../../services/auth/auth.service';
 })
 export class ChatListsComponent implements OnInit, OnDestroy {
   public activeUser = null;
-  public chatLists: ChatPreviewModel[] = chatListMock;
-  public filterLists: ChatPreviewModel[] = this.chatLists;
+  public chatLists: ChatPreviewModel[] = [];
+  public filterLists: ChatPreviewModel[] = [];
   public selectedChatId;
 
   constructor(
@@ -32,8 +31,9 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);
     this.activeUser = this.userService.getUserId();
     this.api.get({url: '/chats'})
-      .subscribe((res) => {
-        this.chatLists = this.filterLists = res;
+      .subscribe(res => {
+        this.chatLists = [...res];
+        this.filterLists = [...res];
       });
   }
 

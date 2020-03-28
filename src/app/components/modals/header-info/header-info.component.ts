@@ -60,7 +60,7 @@ export class HeaderInfoComponent implements OnInit {
   }
 
   public openChat() {
-    if (this.data.chatId !== this.chatService.getActiveChat().id) {
+    if (this.data.chatId !== this.chatService.getActiveChat()._id) {
       this.bus.publish(SELECT_CHAT, this.data.chatId);
     }
     this.dialogRef.closeAll();
