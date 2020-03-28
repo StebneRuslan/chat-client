@@ -14,7 +14,7 @@ export class NewChatFooterComponent implements OnInit {
   public ngOnInit() {}
 
   public createChat() {
-    this.type === 'Contacts' ? this.bus.publish(ADD_MEMBERS) : this.bus.publish(CREATE_NEW_CHAT);
+    this.bus.publish(this.type === 'Contacts' ? ADD_MEMBERS : CREATE_NEW_CHAT);
   }
 
   public close() {}

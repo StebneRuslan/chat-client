@@ -48,7 +48,7 @@ export class UserContactsComponent implements OnInit, OnDestroy {
           this.dialogRef.close();
         },
         err => {
-          console.log('resresresres', err);
+          console.log('error', err);
         }
       );
   }

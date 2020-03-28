@@ -1,14 +1,17 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { EditNameComponent } from '../edit-name/edit-name.component';
+
+// configs
 import { UserModel } from '../../users-list/user/user.model';
 import { UsersListModel } from '../../users-list/users-list.model';
-import { BusService } from '../../../services/bus/bus.service';
-import { CREATE_NEW_CHAT, CHAT_TYPES, CREATE_NEW_DIALOG, ADD_MEMBERS } from '../../../actions/main.action';
-import { RequestsService } from '../../../services/requests/requests.service';
-import { EditNameComponent } from '../edit-name/edit-name.component';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
-import {error} from 'util';
-import {ChatService} from '../../../services/chat/chat.service';
+import { CREATE_NEW_CHAT, CHAT_TYPES, CREATE_NEW_DIALOG, ADD_MEMBERS } from '../../../actions/main.action';
+
+// services
+import { RequestsService } from '../../../services/requests/requests.service';
+import { ChatService } from '../../../services/chat/chat.service';
+import { BusService } from '../../../services/bus/bus.service';
 
 @Component({
   selector: 'app-new-chat',
@@ -86,7 +89,7 @@ export class NewChatComponent implements OnInit, OnDestroy {
           this.bus.publish(CREATE_NEW_DIALOG, data.chat);
         },
           err => {
-          console.log('#####', err);
+          console.log('error', err);
         });
   }
 

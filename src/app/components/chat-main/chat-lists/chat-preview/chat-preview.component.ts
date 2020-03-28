@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
 @Component({
   selector: 'app-chat-preview',
   templateUrl: './chat-preview.template.html',
@@ -11,7 +11,7 @@ export class ChatPreviewComponent implements OnInit {
   @Input() activeUser;
   @Input() set chat(chat) {
     this.activeChat = chat;
-    this.chatName = chat.chatType === 'DIALOG'
+    this.chatName = chat.chatType === ChatTypes.DIALOG
       ? (chat.author === this.activeUser
         ? chat.users
           ? chat.users[0].username
