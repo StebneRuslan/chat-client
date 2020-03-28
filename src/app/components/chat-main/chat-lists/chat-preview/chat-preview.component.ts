@@ -6,8 +6,21 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./chat-preview.style.scss']
 })
 export class ChatPreviewComponent implements OnInit {
-
-  @Input() chat;
+  public chatName = '';
+  public activeChat: null;
+  @Input() activeUser;
+  @Input() set chat(chat) {
+    this.activeChat = chat;
+    this.chatName = chat.chatType === 'DIALOG'
+      ? (chat.author === this.activeUser
+        ? chat.users
+          ? chat.users[0].username
+          : 'Test'
+        : chat.users
+          ? chat.users[1].username
+          : 'Test')
+      : chat.chatName;
+  }
 
   constructor() { }
 

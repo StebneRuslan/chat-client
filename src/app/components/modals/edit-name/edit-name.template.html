@@ -1,5 +1,5 @@
 <div class="edit-name-container">
-  <h1>Edit {{data.type}}</h1>
+  <h1>{{(data.action === 'create' ? 'Create ' : 'Edit ') + data.type}}</h1>
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="data.oldName">
@@ -11,6 +11,6 @@
   <p class="error-message">{{updateError}}</p>
   <div class="edit-name-controls">
     <button class="cancel edit-name-button" mat-menu-item (click)="close()">Cancel</button>
-    <button class="edit-name-button" mat-menu-item (click)="save()">Save</button>
+    <button class="edit-name-button" mat-menu-item (click)="create()">Save</button>
   </div>
 </div>
