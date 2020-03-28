@@ -1,11 +1,11 @@
 <div class="chat-preview">
-  <app-user-avatar [avatarUrl]="chat.avatar" [chatName]="chat.name" [type]="'chat'"></app-user-avatar>
+  <app-user-avatar [avatarUrl]="activeChat.avatar" [chatName]="chatName" [type]="'chat'"></app-user-avatar>
   <div class="chat-data">
     <div class="chat-info">
-      <span class="chat-name">{{chat.name}}</span>
-      <span class="chat-date">{{chat.lastMessageDate}}</span>
+      <span class="chat-name">{{chatName}}</span>
+      <span class="chat-date">{{activeChat.createdAt | date:'shortTime'}}</span>
     </div>
-    <p class="chat-message">{{chat.lastMessageAuthor}}: {{chat.lastMessage}}</p>
+    <p class="chat-message">{{activeChat.lastMessage ? (activeChat.lastMessageAuthor + ': ' + activeChat.lastMessage) : 'This chat is empty.'}}</p>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 import { UsersListModel } from '../../../users-list/users-list.model';
 import { UserModel } from '../../../users-list/user/user.model';
@@ -9,17 +9,15 @@ import { UserModel } from '../../../users-list/user/user.model';
   styleUrls: ['./select-users.style.scss']
 })
 export class SelectUsersComponent implements OnInit {
-
-  public users: UserModel[] = new UsersListModel().users;
-  public usersFilter: UserModel[] = this.users;
-
+  @Input() type: string;
+  @Input() users: UserModel[];
+  @Input() usersFilter: UserModel[];
+  @Output() selectUser = new EventEmitter();
   constructor() { }
 
   public ngOnInit(): void {}
 
-  public selectUser(userId: string): void {
-    const selectedUser = this.users.find(user => user._id === userId);
-    selectedUser.selected = !selectedUser.selected;
-    console.log('Selected users', this.users.filter(user => user.selected));
+  public select(userId: string): void {
+    this.selectUser.emit(userId);
   }
 }

@@ -27,19 +27,8 @@ export class EditNameComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public save() {
-    const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
-    // TODO: do request for other chat data
-    if (this.data.type === this.chatTypes.profile) {
-      this.api.put({url, body: { username: this.data.oldName}})
-        .subscribe(
-          () => {
-            this.bus.publish(UPDATE_CHAT_INFO, {name: this.data.oldName});
-            this.close();
-          },
-          err => this.updateError = err.error.message
-        );
-    }
+  public create(): void {
+    this.data.callback(this.data.oldName, this.data.oldDescription, this.dialogRef);
   }
 
   public close() {
