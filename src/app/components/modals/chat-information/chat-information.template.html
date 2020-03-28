@@ -1,11 +1,26 @@
 <app-modal-header
-  [data]="{ editChat: data.editChat, title: data.title, name: chatName, description: 'Test description'}"
+  [data]="{
+    editChat: data.editChat,
+    title: data.title,
+    name: chatName,
+    description: 'Test description',
+    type: data.type,
+    chatId: data.chatId
+  }"
   (closeDialog)="closeModel()">
 </app-modal-header>
-<app-header-info [name]="chatName" [image]="image" [editChat]="data.editChat"></app-header-info>
+<app-header-info
+  [data] = "{
+    name: chatName,
+    image: image,
+    editChat: data.editChat,
+    type: data.type,
+    chatId: data.chatId
+  }">
+</app-header-info>
 
 <app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
-<app-contact-settings *ngIf="data.type === chatTypes.contact" [contactId]="data.chatId"></app-contact-settings>
+<app-contact-settings *ngIf="data.type === chatTypes.contact" [contactId]="data.chatId" [username]="chatName"></app-contact-settings>
 <app-chat-settings *ngIf="data.type === chatTypes.chat" [editChat]="data.editChat"></app-chat-settings>
 <app-chanel-settings *ngIf="data.type === chatTypes.channel" [editChat]="data.editChat"></app-chanel-settings>
 

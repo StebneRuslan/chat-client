@@ -37,7 +37,6 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
           this.chatName = res.username;
         });
     }
-    this.chatService.setSelectedChat({id: this.data.chatId, type:  this.data.type});
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
   }
 
@@ -51,7 +50,6 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.bus.unsubscribe(UPDATE_CHAT_INFO, this.changeChatInfo);
-    this.chatService.setSelectedChat({id: '', type: ''});
   }
 
 }
