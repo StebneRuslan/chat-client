@@ -48,7 +48,7 @@ export class HeaderInfoComponent implements OnInit {
   }
 
   public removeImage(): void {
-    this.api.delete({ url: `/avatars/${this.data.chatId}?type=${this.data.chatId}`})
+    this.api.delete({ url: `/avatars/${this.data.chatId}?type=${this.data.type}`})
       .subscribe(
         () => this.data.image = this.imageSrc = '',
         error => console.log(error)

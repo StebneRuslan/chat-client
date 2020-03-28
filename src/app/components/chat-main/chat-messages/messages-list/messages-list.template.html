@@ -1,5 +1,3 @@
 <div class="message-list-container">
-  <cdk-virtual-scroll-viewport itemSize="50" class="scroll-viewport">
-    <app-message *cdkVirtualFor="let message of messages" [message]="message" (click)="select(message.id)"></app-message>
-  </cdk-virtual-scroll-viewport>
+  <app-message *ngFor="let message of messages" [message]="message" (click)="select(message._id)"></app-message>
 </div>

@@ -5,32 +5,32 @@ export class UsersListModel {
     {
       _id: '1',
       username: 'test1',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     }, {
       _id: '2',
       username: 'test2',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     }, {
       _id: '3',
       username: 'test3',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     }, {
       _id: '4',
       username: 'test4',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     }, {
       _id: '5',
       username: 'test5',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     }, {
       _id: '6',
       username: 'test6',
-      avatarUrl: '',
+      avatar: '',
       selected: false
     },
   ];

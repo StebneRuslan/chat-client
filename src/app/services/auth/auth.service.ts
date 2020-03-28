@@ -19,10 +19,12 @@ export class AuthService {
     private api: RequestsService
   ) { }
 
-  private userId = '1';
+  private userId = '';
+  public username = '';
 
   public setUserData(res: any): void {
     this.userId = res._id;
+    this.username = res.username;
     this.cookieService.set('token', res.apiKey);
     this.router.navigate(['']);
   }
@@ -49,6 +51,7 @@ export class AuthService {
 
   public clearUserData(): void {
     this.userId = '';
+    this.username = '';
     this.cookieService.delete('token');
     this.dialogRef.closeAll();
     this.router.navigate(['/login']);

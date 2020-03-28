@@ -1,4 +1,14 @@
-app-messages-list {
-  width: 100%;
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   height: 100%;
+  padding: 10px 25px;
+  box-sizing: border-box;
+  app-messages-list {
+    height: 78%;
+  }
+  app-editor, app-message-select {
+    height: 22%;
+  }
 }

@@ -8,14 +8,14 @@ export class ChatService {
   constructor() { }
 
   private activeChat = {
-    id: '1',
+    id: '5e7f36856e44dd07e2d1051d',
     type: 'contact',
     role: 'admin',
     name: 'Chat name'
   };
 
   public setActiveChat({id, type, role, name}) {
-    this.activeChat = { id, type, role, name };
+    // this.activeChat = { id, type, role, name };
   }
 
   public getActiveChat() {

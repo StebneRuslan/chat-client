@@ -16,10 +16,6 @@ export class MessageComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public changeSelectStatus(status: boolean): void {
-    this.message.hover = status;
-  }
-
   public openProfile(event: any): void {
     event.preventDefault();
     event.stopPropagation();

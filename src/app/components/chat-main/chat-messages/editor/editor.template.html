@@ -1,15 +1,17 @@
 <div class="editor-container">
+  <p class="typing" *ngIf="usersTyping.length === 1">{{usersTyping[0]}} is typing...</p>
+  <p class="typing" *ngIf="usersTyping.length > 1">{{usersTyping.length}} persons are typing...</p>
   <div class="editor-input-container">
-    <div class="author-img-container">
-      <app-user-avatar [chatName]="'Test'"></app-user-avatar>
+    <div class="img-container">
+      <app-user-avatar [chatName]="'Test'" (click)="openModal('profile')"></app-user-avatar>
     </div>
     <mat-form-field appearance="fill">
-      <mat-label>Textarea</mat-label>
-      <textarea matInput></textarea>
+      <mat-label>Message</mat-label>
+      <textarea matInput [(ngModel)]="message" (keyup)="typingMessage()" (keydown.enter)="sendMessage($event)"></textarea>
     </mat-form-field>
-    <div class="chat-img-container">
-      <app-user-avatar [chatName]="'Test'"></app-user-avatar>
+    <div class="img-container">
+      <app-user-avatar [chatName]="'Test'" (click)="openModal('chat')"></app-user-avatar>
     </div>
   </div>
-  <button class="chat-name" mat-button>Send</button>
+  <button class="send-message" mat-button (click)="sendMessage()">Send</button>
 </div>

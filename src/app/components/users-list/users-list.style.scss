@@ -3,20 +3,3 @@
     height: 400px;
   }
 }
-
-/* width */
-::-webkit-scrollbar {
-  width: 2px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #dcdce8;
-  border-radius: 2px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #717178;
-  border-radius: 2px;
-}
