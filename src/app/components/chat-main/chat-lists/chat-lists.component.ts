@@ -38,7 +38,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
   }
 
   public addChatToList(chat: any): void {
-    this.filterLists.push(chat);
+    this.filterLists.unshift(chat);
   }
 
   public openChat(chat: any): void {
