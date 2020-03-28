@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ChatPreviewModel } from './chat-preview/chat-preview.model';
 import { chatListMock } from './chat-list.mock';
-import { SELECT_CHAT } from '../../../actions/main.action';
+import { CREATE_NEW_DIALOG, SELECT_CHAT } from '../../../actions/main.action';
 
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-chat-lists',
   templateUrl: './chat-lists.template.html',
   styleUrls: ['./chat-lists.style.scss']
 })
-export class ChatListsComponent implements OnInit {
-
+export class ChatListsComponent implements OnInit, OnDestroy {
+  public activeUser = null;
   public chatLists: ChatPreviewModel[] = chatListMock;
   public filterLists: ChatPreviewModel[] = this.chatLists;
   public selectedChatId;
@@ -22,25 +23,31 @@ export class ChatListsComponent implements OnInit {
   constructor(
     private api: RequestsService,
     private bus: BusService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private userService: AuthService
   ) { }
 
   public ngOnInit(): void {
-    // this.api.get({url: '/user/chats'})
-    //   .then((res) => {
-    //     this.chatLists = this.filterLists = res.data;
-    //   });
+    this.bus.subscribe(SELECT_CHAT, this.openChat, this);
+    this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);
+    this.activeUser = this.userService.getUserId();
+    this.api.get({url: '/chats'})
+      .subscribe((res) => {
+        this.chatLists = this.filterLists = res;
+      });
+  }
+
+  public addChatToList(chat: any): void {
+    this.filterLists.unshift(chat);
   }
 
   public openChat(chat: any): void {
-    this.selectedChatId = chat.id;
-    this.chatService.setActiveChat({
-      id: chat.id,
-      type: 'type',
-      role: 'admin',
-      name: 'chat name'
-    });
-    this.bus.publish(SELECT_CHAT, chat.id);
+    this.selectedChatId = chat._id;
+    this.chatService.setActiveChat(chat);
   }
 
+  public ngOnDestroy(): void {
+    this.bus.unsubscribe(CREATE_NEW_DIALOG, this.addChatToList);
+    this.bus.unsubscribe(SELECT_CHAT, this.openChat);
+  }
 }

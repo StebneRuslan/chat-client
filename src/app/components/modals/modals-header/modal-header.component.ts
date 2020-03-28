@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { EditNameComponent} from '../edit-name/edit-name.component';
+import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { BusService } from '../../../services/bus/bus.service';
+import {RequestsService} from '../../../services/requests/requests.service';
 
 @Component({
   selector: 'app-modal-header',
@@ -9,11 +12,17 @@ import { EditNameComponent} from '../edit-name/edit-name.component';
   styleUrls: ['./modal-header.style.scss']
 })
 export class ModalHeaderComponent implements OnInit {
-
+  public chatTypes = CHAT_TYPES;
   @Input() data: any;
   @Output() closeDialog = new EventEmitter();
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    private bus: BusService,
+    private api: RequestsService,
+    public dialog: MatDialog
+  ) {
+    this.save = this.save.bind(this);
+  }
 
   public ngOnInit(): void {}
 
@@ -24,9 +33,25 @@ export class ModalHeaderComponent implements OnInit {
         oldName: this.data.name,
         oldDescription: this.data.description,
         type: this.data.type,
-        chatId: this.data.chatId
+        chatId: this.data.chatId,
+        callback: this.save
       }
     });
+  }
+
+  public save(oldName: string, oldDescription: string, dialog: any) {
+    const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
+    // TODO: do request for other chat data
+    if (this.data.type === this.chatTypes.profile) {
+      this.api.put({url, body: { username: oldName}})
+        .subscribe(
+          () => {
+            this.bus.publish(UPDATE_CHAT_INFO, {name: oldName});
+            dialog.close();
+          },
+          err => console.log(err.error.message)
+        );
+    }
   }
 
   public closeProfile(): void {

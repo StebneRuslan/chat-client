@@ -20,8 +20,7 @@ export class HeaderComponent implements OnInit {
     private chatService: ChatService
   ) { }
 
-  public ngOnInit() {
-  }
+  public ngOnInit(): void {}
 
   public openChatSetting(): void {
     this.dialog.open(ChatInformationComponent, {
