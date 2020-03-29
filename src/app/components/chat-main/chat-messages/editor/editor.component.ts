@@ -6,10 +6,10 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ChatService } from '../../../../services/chat/chat.service';
 
 import { environment } from '../../../../../environments/environment';
-import { CHAT_TYPES } from '../../../../actions/main.action';
+import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
 
 import { ChatInformationComponent } from '../../../modals/chat-information/chat-information.component';
-import { ChatInformationModel } from '../../../modals/chat-information/chat-information.model';
+import { ChatInformationModel } from '../../../../models/chat-information.model';
 
 @Component({
   selector: 'app-editor',
@@ -39,49 +39,52 @@ export class EditorComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.socket.on('notifyStopTyping', user =>  {
-      const index = this.usersTyping.indexOf(user);
-      if (index > -1) {
-        this.usersTyping.splice(index, 1);
-      }
-    });
+    this.socket.on('notifyStopTyping', username => this.stopTyping(username));
   }
 
-  public openModal(type) {
-    const activeChat = this.chatService.getActiveChat();
+  public stopTyping(username: string): void {
+    const index = this.usersTyping.indexOf(username);
+    if (index > -1) {
+      this.usersTyping.splice(index, 1);
+    }
+  }
+
+  public openModal(type: string): void {
     this.dialog.open(ChatInformationComponent, {
       width: '450px',
       data: new ChatInformationModel(
-        type === 'profile' ? CHAT_TYPES.profile : activeChat.chatType,
-        type === 'profile' || activeChat.role === 'admin',
-        type === 'profile' ? this.authService.getUserId() : activeChat._id
+        type === 'profile' ? ChatTypes.PROFILE : this.chatService.activeChat.chatType,
+        type === 'profile' || this.chatService.activeChat.admins.includes(this.authService.userData.id),
+        type === 'profile' ? this.authService.userData.id : this.chatService.activeChat._id
       )
     });
   }
 
-  public typingMessage() {
+  public typingMessage(): void {
     clearTimeout(this.typingTimeout);
     if (!this.startTyping) {
-      this.socket.emit('typing', this.authService.username);
+      this.socket.emit('typing', this.authService.userData.username);
       this.startTyping = true;
     }
     this.typingTimeout = setTimeout(() => {
-      this.socket.emit('stopTyping', this.authService.username);
+      this.socket.emit('stopTyping', this.authService.userData.username);
       this.startTyping = false;
     }, 3000);
   }
 
-  public sendMessage(event?) {
+  public sendMessage(event?: MouseEvent): void {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
-    this.socket.emit('message', {
-      authorId: this.authService.getUserId(),
-      chatId: this.chatService.getActiveChat()._id,
-      message: this.message
-    });
-    this.message = '';
+    if (this.message.trim()) {
+      this.socket.emit('message', {
+        authorId: this.authService.userData.id,
+        chatId: this.chatService.activeChat._id,
+        message: this.message
+      });
+      this.message = '';
+    }
   }
 
   public ngOnDestroy(): void {

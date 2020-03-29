@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ChanelSettingsComponent implements OnInit {
 
   @Input() editChat: boolean;
+  @Input() description: string;
+  @Input() chatUsers: any;
 
   constructor() { }
 

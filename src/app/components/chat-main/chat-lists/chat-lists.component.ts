@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { ChatPreviewModel } from './chat-preview/chat-preview.model';
-import { CREATE_NEW_DIALOG, SELECT_CHAT } from '../../../actions/main.action';
+import { ChatPreviewModel } from '../../../models/chat-preview.model';
+import { CREATE_NEW_DIALOG, SELECT_CHAT, OPEN_CHAT } from '../../../actions/main.action';
 
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
@@ -23,31 +23,39 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     private api: RequestsService,
     private bus: BusService,
     private chatService: ChatService,
-    private userService: AuthService
+    private authService: AuthService
   ) { }
 
   public ngOnInit(): void {
-    this.bus.subscribe(SELECT_CHAT, this.openChat, this);
+
     this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);
-    this.activeUser = this.userService.getUserId();
-    this.api.get({url: '/chats'})
-      .subscribe(res => {
-        this.chatLists = [...res];
-        this.filterLists = [...res];
-      });
+    this.bus.subscribe(OPEN_CHAT, this.openChat, this);
+
+    this.activeUser = this.authService.userData.id;
+    // TODO: event or smth else (app component can't set userData on time)
+    setTimeout(() => {
+      this.api.get({url: '/chats'})
+        .subscribe(res => {
+          this.chatLists = [...res];
+          this.filterLists = [...res];
+        });
+    }, 1000);
   }
 
   public addChatToList(chat: any): void {
     this.filterLists.unshift(chat);
+    this.chatService.activeChat = chat;
+    this.selectedChatId = chat._id;
+    this.bus.publish(SELECT_CHAT, {id: chat._id, updateChatInfo: false});
   }
 
-  public openChat(chat: any): void {
-    this.selectedChatId = chat._id;
-    this.chatService.setActiveChat(chat);
+  public openChat(chatId: string): void {
+    this.selectedChatId = chatId;
+    this.bus.publish(SELECT_CHAT, {chatId, updateChatInfo: true});
   }
 
   public ngOnDestroy(): void {
     this.bus.unsubscribe(CREATE_NEW_DIALOG, this.addChatToList);
-    this.bus.unsubscribe(SELECT_CHAT, this.openChat);
+    this.bus.unsubscribe(OPEN_CHAT, this.openChat);
   }
 }

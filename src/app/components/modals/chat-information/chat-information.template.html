@@ -3,7 +3,7 @@
     editChat: data.editChat,
     title: data.title,
     name: chatName,
-    description: 'Test description',
+    description: channelDescription,
     type: data.type,
     chatId: data.chatId
   }"
@@ -19,8 +19,13 @@
   }">
 </app-header-info>
 
-<app-profile-settings *ngIf="data.type === chatTypes.profile"></app-profile-settings>
-<app-contact-settings *ngIf="data.type === chatTypes.contact" [contactId]="data.chatId" [username]="chatName"></app-contact-settings>
-<app-chat-settings *ngIf="data.type === chatTypes.chat" [editChat]="data.editChat"></app-chat-settings>
-<app-chanel-settings *ngIf="data.type === chatTypes.channel" [editChat]="data.editChat"></app-chanel-settings>
+<app-profile-settings *ngIf="data.type === chatTypes.PROFILE"></app-profile-settings>
+<app-contact-settings *ngIf="data.type === chatTypes.DIALOG" [contactId]="data.chatId" [username]="chatName"></app-contact-settings>
+<app-chat-settings *ngIf="data.type === chatTypes.GROUP" [editChat]="data.editChat" [chatUsers]="chatUsers"></app-chat-settings>
+<app-chanel-settings
+  *ngIf="data.type === chatTypes.CHANNEL"
+  [editChat]="data.editChat"
+  [description]="channelDescription"
+  [chatUsers]="chatUsers"
+></app-chanel-settings>
 

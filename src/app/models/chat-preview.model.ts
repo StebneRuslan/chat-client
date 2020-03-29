@@ -4,9 +4,8 @@ export class ChatPreviewModel {
   public chatType: string;
   public author: string;
   public users: any;
-  public avatar?: string;
-  public role?: string;
-  public lastMessage: string;
-  public lastMessageAuthor: string;
+  public avatar?: any;
+  public admins?: any;
+  public lastMessage: any;
   public createdAt: string;
 }

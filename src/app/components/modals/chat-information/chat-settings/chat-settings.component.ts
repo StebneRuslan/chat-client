@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { RequestsService } from '../../../../services/requests/requests.service';
@@ -9,9 +9,8 @@ import { ChatService } from '../../../../services/chat/chat.service';
 import { ChatInformationComponent } from '../chat-information.component';
 import { NewChatComponent } from '../../new-chat/new-chat.component';
 
-import { ChatUsersMock } from './chat-users.mock';
-import { CHAT_TYPES } from '../../../../actions/main.action';
-import { ChatInformationModel } from '../chat-information.model';
+import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
+import { ChatInformationModel } from '../../../../models/chat-information.model';
 
 @Component({
   selector: 'app-chat-settings',
@@ -20,9 +19,10 @@ import { ChatInformationModel } from '../chat-information.model';
 })
 export class ChatSettingsComponent implements OnInit {
 
-  @Input() editChat: boolean;
+  public userId;
 
-  public chatUsers = ChatUsersMock;
+  @Input() editChat: boolean;
+  @Input() chatUsers: any;
 
   constructor(
     private api: RequestsService,
@@ -31,13 +31,15 @@ export class ChatSettingsComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.userId = this.authService.userData.id;
+  }
 
   public openProfile(id): void {
-    const ifProfile = this.authService.getUserId() === id;
+    const ifProfile = this.userId === id;
     this.dialog.open(ChatInformationComponent, {
       width: '450px',
-      data: new ChatInformationModel(ifProfile ? CHAT_TYPES.profile : CHAT_TYPES.contact, ifProfile, id)
+      data: new ChatInformationModel(ifProfile ? ChatTypes.PROFILE : ChatTypes.DIALOG, ifProfile, id)
     });
   }
 
@@ -45,7 +47,8 @@ export class ChatSettingsComponent implements OnInit {
     this.dialog.open(NewChatComponent, {
       width: '450px',
       data: {
-        type: 'Contacts'
+        type: 'Contacts',
+        contacts: this.chatUsers
       }
     });
   }

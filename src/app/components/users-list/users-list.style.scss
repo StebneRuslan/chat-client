@@ -1,5 +1,7 @@
 .search-users-container {
-  cdk-virtual-scroll-viewport {
-    height: 400px;
+  height: 400px;
+  overflow-y: auto;
+  .blurred {
+    pointer-events: none;
   }
 }

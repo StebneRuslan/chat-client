@@ -3,4 +3,5 @@ export class UserModel {
   public username = '';
   public avatar = '';
   public selected = false;
+  public blurred?;
 }

@@ -2,7 +2,7 @@
   <div class="profile-header-info-container">
     <div class="profile-image-container" [ngClass]="{'with-remove-icon': showRemoveIcon}" (mouseover)="handleRemoveIcon(true)" (mouseout)="handleRemoveIcon(false)">
       <div class="img-container">
-        <div class="remove-image" (click)="removeImage()">x</div>
+        <div *ngIf="data.editChat" class="remove-image" (click)="removeImage()">x</div>
         <app-user-avatar [chatName]="data.name" [avatarUrl]="imageSrc || data.image" [type]="'profile'"></app-user-avatar>
       </div>
     </div>

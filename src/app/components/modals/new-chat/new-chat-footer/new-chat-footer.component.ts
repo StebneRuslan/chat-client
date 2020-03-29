@@ -8,7 +8,9 @@ import { CREATE_NEW_CHAT, ADD_MEMBERS } from '../../../../actions/main.action';
   styleUrls: ['./new-chat-footer.style.scss']
 })
 export class NewChatFooterComponent implements OnInit {
+
   @Input() type: string;
+
   constructor(private bus: BusService) { }
 
   public ngOnInit() {}

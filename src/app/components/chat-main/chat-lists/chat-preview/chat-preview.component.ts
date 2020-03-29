@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
+
 @Component({
   selector: 'app-chat-preview',
   templateUrl: './chat-preview.template.html',
