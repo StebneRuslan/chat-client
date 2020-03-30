@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BusService } from '../../../../services/bus/bus.service';
-import { CREATE_NEW_CHAT, ADD_MEMBERS } from '../../../../actions/main.action';
+import {
+  CREATE_NEW_CHAT,
+  ADD_MEMBERS,
+  CLOSE_NEW_CHAT_MODAL
+} from '../../../../actions/main.action';
 
 @Component({
   selector: 'app-new-chat-footer',
@@ -19,6 +23,8 @@ export class NewChatFooterComponent implements OnInit {
     this.bus.publish(this.type === 'Contacts' ? ADD_MEMBERS : CREATE_NEW_CHAT);
   }
 
-  public close() {}
+  public close() {
+    this.bus.publish(CLOSE_NEW_CHAT_MODAL);
+  }
 
 }

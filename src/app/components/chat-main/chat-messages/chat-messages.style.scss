@@ -6,10 +6,10 @@
   padding: 10px 25px 10px 0;
   box-sizing: border-box;
   app-messages-list {
-    height: 78%;
+    height: calc(100% - 165px);
   }
   app-editor, app-message-select {
-    height: 22%;
+    height: 165px
   }
 }
 
