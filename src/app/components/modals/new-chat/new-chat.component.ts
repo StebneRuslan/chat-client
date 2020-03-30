@@ -41,7 +41,9 @@ export class NewChatComponent implements OnInit, OnDestroy {
     this.modalType = this.data.type;
     this.api.get({url: '/contacts'})
       .subscribe(res => {
-        res.forEach(contact => contact.blurred = !this.data.contacts.includes(contact._id));
+        res.forEach(contact => {
+          contact.blurred = !!this.data.contacts.find(existContact => existContact._id === contact._id);
+        });
         this.users = [...res];
         this.usersFilter = [...res];
       });

@@ -26,7 +26,7 @@ export class AuthService {
   public userData: ActiveUserModel = new ActiveUserModel();
 
   public setUserData(res: any): void {
-    this.userData = new ActiveUserModel(res._id, res.username, res.avatar.url || '');
+    this.userData = new ActiveUserModel(res._id, res.username, res.avatar && res.avatar.url ? res.avatar.url : '');
     this.cookieService.set('token', res.apiKey);
     this.router.navigate(['']);
   }
