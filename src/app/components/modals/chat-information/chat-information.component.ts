@@ -31,7 +31,6 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    debugger;
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
     const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
       ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
