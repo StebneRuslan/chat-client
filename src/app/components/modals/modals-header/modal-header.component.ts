@@ -2,9 +2,11 @@ import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { EditNameComponent} from '../edit-name/edit-name.component';
-import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
+
 import { BusService } from '../../../services/bus/bus.service';
-import {RequestsService} from '../../../services/requests/requests.service';
+import { RequestsService } from '../../../services/requests/requests.service';
 
 @Component({
   selector: 'app-modal-header',
@@ -12,7 +14,8 @@ import {RequestsService} from '../../../services/requests/requests.service';
   styleUrls: ['./modal-header.style.scss']
 })
 export class ModalHeaderComponent implements OnInit {
-  public chatTypes = CHAT_TYPES;
+  public chatTypes = ChatTypes;
+
   @Input() data: any;
   @Output() closeDialog = new EventEmitter();
 
@@ -30,8 +33,8 @@ export class ModalHeaderComponent implements OnInit {
     this.dialog.open(EditNameComponent, {
       width: '450px',
       data: {
-        oldName: this.data.name,
-        oldDescription: this.data.description,
+        name: this.data.name,
+        description: this.data.description,
         type: this.data.type,
         chatId: this.data.chatId,
         callback: this.save
@@ -39,19 +42,17 @@ export class ModalHeaderComponent implements OnInit {
     });
   }
 
-  public save(oldName: string, oldDescription: string, dialog: any) {
-    const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
-    // TODO: do request for other chat data
-    if (this.data.type === this.chatTypes.profile) {
-      this.api.put({url, body: { username: oldName}})
-        .subscribe(
-          () => {
-            this.bus.publish(UPDATE_CHAT_INFO, {name: oldName});
-            dialog.close();
-          },
-          err => console.log(err.error.message)
-        );
-    }
+  public save(name: string, description: string, dialog: any): any {
+    const url = this.data.type === this.chatTypes.PROFILE ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
+    const body = this.data.type === this.chatTypes.PROFILE ? { username: name } : { chatName: name, description };
+    this.api.put({url, body })
+      .subscribe(
+        () => {
+          this.bus.publish(UPDATE_CHAT_INFO, {name, description});
+          dialog.close();
+        },
+        err => console.log(err.error.message)
+      );
   }
 
   public closeProfile(): void {

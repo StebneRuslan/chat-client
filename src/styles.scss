@@ -65,3 +65,20 @@ a, a:active, a:visited {
     color: #5580A3;
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #dcdce8;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #717178;
+  border-radius: 2px;
+}

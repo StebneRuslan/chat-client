@@ -1,11 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { RequestsService } from '../../../services/requests/requests.service';
-import { BusService } from '../../../services/bus/bus.service';
-import { ChatService } from '../../../services/chat/chat.service';
-
-import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
   selector: 'app-edit-name',
@@ -14,13 +10,11 @@ import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
 })
 export class EditNameComponent implements OnInit {
 
-  public chatTypes = CHAT_TYPES;
+  public chatTypes = ChatTypes;
   public updateError = '';
 
   // todo create model for data
   constructor(
-    private api: RequestsService,
-    private bus: BusService,
     public dialogRef: MatDialogRef<EditNameComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
@@ -28,7 +22,7 @@ export class EditNameComponent implements OnInit {
   public ngOnInit(): void {}
 
   public create(): void {
-    this.data.callback(this.data.oldName, this.data.oldDescription, this.dialogRef);
+    this.data.callback(this.data.name, this.data.description, this.dialogRef);
   }
 
   public close() {

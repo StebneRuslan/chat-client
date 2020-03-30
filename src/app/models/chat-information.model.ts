@@ -1,4 +1,4 @@
-import { CHAT_TYPES } from '../../../actions/main.action';
+import { ChatTypes } from '../services/interfaces/chat-types.interfaces';
 
 export class ChatInformationModel {
   public type: string;
@@ -10,7 +10,7 @@ export class ChatInformationModel {
     this.type = type;
     this.editChat = editChat;
     this.chatId = chatId;
-    this.title = type === CHAT_TYPES.profile ? 'Settings' : this.type + ' info';
+    this.title = type === ChatTypes.PROFILE ? 'Settings' : this.type + ' info';
   }
 
 }

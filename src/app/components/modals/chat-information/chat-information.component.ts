@@ -5,8 +5,9 @@ import { RequestsService } from '../../../services/requests/requests.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
 
-import { ChatInformationModel } from './chat-information.model';
-import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { ChatInformationModel } from '../../../models/chat-information.model';
+import { UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
   selector: 'app-chat-information',
@@ -15,8 +16,10 @@ import { CHAT_TYPES, UPDATE_CHAT_INFO } from '../../../actions/main.action';
 })
 export class ChatInformationComponent implements OnInit, OnDestroy {
 
-  public chatTypes = CHAT_TYPES;
-  public chatName = 'Test';
+  public chatTypes = ChatTypes;
+  public chatName = '';
+  public channelDescription = '';
+  public chatUsers;
   public image = '';
 
   constructor(
@@ -28,20 +31,24 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    const activeChat = this.chatService.getActiveChat();
-    const url = this.data.type === this.chatTypes.profile ? `/users/${this.data.chatId}` : `/chats/${activeChat._id}`;
+    this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
+    const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
+      ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
+
     this.api.get({ url })
       .subscribe(
         res => {
-          this.image = res.avatar ? res.avatar.url : '';
+          this.image = (res.avatar && res.avatar.url) ? res.avatar.url : '';
           this.chatName = res.username || res.chatName;
-          },
-          err => console.log('error', err));
-    this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
+          this.channelDescription = res.description || '';
+          this.chatUsers = res.users;
+        },
+        err => console.log('error', err));
   }
 
   public changeChatInfo(data: any): void {
     this.chatName = data.name;
+    this.channelDescription = data.description;
   }
 
   public closeModel(): void {

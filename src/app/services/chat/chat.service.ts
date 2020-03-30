@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { RequestsService } from '../requests/requests.service';
+
 import { ChatTypes } from '../interfaces/chat-types.interfaces';
-import {Observable} from 'rxjs';
+import { ChatPreviewModel } from '../../models/chat-preview.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +13,9 @@ export class ChatService {
 
   constructor(private api: RequestsService) { }
 
-  private activeChat = {
-    _id: '1',
-    type: 'contact',
-    role: 'admin',
-    name: 'Chat name',
-    chatName: ''
-  };
+  // TODO: think about private
 
-  public setActiveChat(chat) {
-    this.activeChat = chat;
-  }
-
-  public getActiveChat() {
-    return this.activeChat;
-  }
+  public activeChat: ChatPreviewModel = new ChatPreviewModel();
 
   public addMembers(users: string[]): Observable<any> {
     return this.api.post({
@@ -33,10 +24,10 @@ export class ChatService {
     });
   }
 
-  public createChat(title: string, type: string, description: string, users: string[]): Observable<any> {
+  public createChat(chatName: string, chatType: string, description: string, users: string[]): Observable<any> {
     return this.api.post({
       url: `/chats`,
-      body: {chatName: title, chatType: type, users}
+      body: {chatName, chatType, description, users}
     });
   }
 }

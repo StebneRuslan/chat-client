@@ -7,8 +7,8 @@ import { NewChatComponent } from '../../modals/new-chat/new-chat.component';
 import { ChatInformationComponent } from '../../modals/chat-information/chat-information.component';
 import { UserContactsComponent } from '../../modals/user-contacts/user-contacts.component';
 
-import { CHAT_TYPES } from '../../../actions/main.action';
-import { ChatInformationModel } from '../../modals/chat-information/chat-information.model';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
+import { ChatInformationModel } from '../../../models/chat-information.model';
 
 @Component({
   selector: 'app-menu',
@@ -28,7 +28,7 @@ export class MenuComponent implements OnInit {
     if (type === 'Settings') {
       this.dialog.open(ChatInformationComponent, {
         width: '450px',
-        data: new ChatInformationModel(CHAT_TYPES.profile, true, this.authService.getUserId())
+        data: new ChatInformationModel(ChatTypes.PROFILE, true, this.authService.userData.id)
       });
     } else if (type === 'Contacts') {
       this.dialog.open(UserContactsComponent, {
@@ -37,7 +37,10 @@ export class MenuComponent implements OnInit {
     } else {
       this.dialog.open(NewChatComponent, {
         width: '450px',
-        data: { type }
+        data: {
+          type,
+          contacts: []
+        }
       });
     }
   }

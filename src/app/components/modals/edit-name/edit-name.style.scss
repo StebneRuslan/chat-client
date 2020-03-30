@@ -8,14 +8,12 @@
   }
   .edit-name-controls {
     display: flex;
+    justify-content: flex-end;
     .edit-name-button {
       width: 80px;
       text-align: center;
       display: flex;
       justify-content: center;
-    }
-    .cancel {
-      margin: 0 0 0 auto;
     }
   }
 }

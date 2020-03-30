@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material';
 import { CookieService } from 'ngx-cookie-service';
 
 import { RequestsService } from '../requests/requests.service';
+import { ChatService } from '../chat/chat.service';
+
+import { ActiveUserModel } from '../../models/active-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,19 +19,16 @@ export class AuthService {
     private http: HttpClient,
     private dialogRef: MatDialog,
     private cookieService: CookieService,
-    private api: RequestsService
+    private api: RequestsService,
+    private chatService: ChatService
   ) { }
 
-  private userId = '1';
+  public userData: ActiveUserModel = new ActiveUserModel();
 
   public setUserData(res: any): void {
-    this.userId = res._id;
+    this.userData = new ActiveUserModel(res._id, res.username, res.avatar && res.avatar.url ? res.avatar.url : '');
     this.cookieService.set('token', res.apiKey);
     this.router.navigate(['']);
-  }
-
-  public getUserId(): string {
-    return this.userId;
   }
 
   public getToken(): any {
@@ -48,7 +48,8 @@ export class AuthService {
   }
 
   public clearUserData(): void {
-    this.userId = '';
+    this.userData = null;
+    this.chatService.activeChat = null;
     this.cookieService.delete('token');
     this.dialogRef.closeAll();
     this.router.navigate(['/login']);

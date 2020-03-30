@@ -3,10 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { EditNameComponent } from '../edit-name/edit-name.component';
 
 // configs
-import { UserModel } from '../../users-list/user/user.model';
-import { UsersListModel } from '../../users-list/users-list.model';
+import { UserModel } from '../../../models/user.model';
+import { UsersListMock } from '../../../models/mock/users-list.mock';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
-import { CREATE_NEW_CHAT, CHAT_TYPES, CREATE_NEW_DIALOG, ADD_MEMBERS } from '../../../actions/main.action';
+import { CREATE_NEW_CHAT, CREATE_NEW_DIALOG, ADD_MEMBERS } from '../../../actions/main.action';
 
 // services
 import { RequestsService } from '../../../services/requests/requests.service';
@@ -19,10 +19,11 @@ import { BusService } from '../../../services/bus/bus.service';
   styleUrls: ['./new-chat.style.scss']
 })
 export class NewChatComponent implements OnInit, OnDestroy {
-  public chatTypes = CHAT_TYPES;
-  public users: UserModel[] = new UsersListModel().users;
-  public usersFilter: UserModel[] = this.users;
+
+  public users: UserModel[] = [];
+  public usersFilter: UserModel[] = [];
   public modalType = '';
+
   constructor(
     private dialog: MatDialog,
     private api: RequestsService,
@@ -40,6 +41,9 @@ export class NewChatComponent implements OnInit, OnDestroy {
     this.modalType = this.data.type;
     this.api.get({url: '/contacts'})
       .subscribe(res => {
+        res.forEach(contact => {
+          contact.blurred = !!this.data.contacts.find(existContact => existContact._id === contact._id);
+        });
         this.users = [...res];
         this.usersFilter = [...res];
       });
@@ -59,9 +63,9 @@ export class NewChatComponent implements OnInit, OnDestroy {
       width: '450px',
       data: {
         action: 'create',
-        oldName: '',
-        oldDescription: '',
-        type: this.data.type === 'New channel' ? this.chatTypes.channel : this.chatTypes.chat,
+        name: '',
+        description: '',
+        type: this.data.type === 'New channel' ? ChatTypes.CHANNEL : ChatTypes.GROUP,
         callback: this.createChat
       }
     });

@@ -5,8 +5,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { RequestsService } from '../../../services/requests/requests.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
-import { SELECT_CHAT } from '../../../actions/main.action';
+import { OPEN_CHAT } from '../../../actions/main.action';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
   selector: 'app-header-info',
@@ -24,7 +26,8 @@ export class HeaderInfoComponent implements OnInit {
     private bus: BusService,
     private dialogRef: MatDialog,
     private chatService: ChatService,
-    private api: RequestsService
+    private api: RequestsService,
+    public authService: AuthService
   ) {}
 
   public ngOnInit(): void {}
@@ -41,16 +44,24 @@ export class HeaderInfoComponent implements OnInit {
         body: event.target.files[0]
       })
       .subscribe(
-          data => this.data.image = data.url,
+          data => {
+            this.data.image = data.url;
+            this.data.type === ChatTypes.PROFILE ?
+              this.authService.userData.avatar = data.url : this.chatService.activeChat.avatar.url = data.url;
+          },
           error => console.log(error)
       );
     }
   }
 
   public removeImage(): void {
-    this.api.delete({ url: `/avatars/${this.data.chatId}?type=${this.data.chatId}`})
+    this.api.delete({ url: `/avatars/${this.data.chatId}?type=${this.data.type}`})
       .subscribe(
-        () => this.data.image = this.imageSrc = '',
+        () => {
+          this.data.image = this.imageSrc = '';
+          this.data.type === ChatTypes.PROFILE ?
+            this.authService.userData.avatar = '' : this.chatService.activeChat.avatar.url = '';
+        },
         error => console.log(error)
       );
   }
@@ -60,8 +71,8 @@ export class HeaderInfoComponent implements OnInit {
   }
 
   public openChat() {
-    if (this.data.chatId !== this.chatService.getActiveChat().id) {
-      this.bus.publish(SELECT_CHAT, this.data.chatId);
+    if (this.data.chatId !== this.chatService.activeChat._id) {
+      this.bus.publish(OPEN_CHAT, this.data.chatId);
     }
     this.dialogRef.closeAll();
   }
