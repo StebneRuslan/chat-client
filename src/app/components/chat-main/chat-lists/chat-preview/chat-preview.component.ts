@@ -14,15 +14,7 @@ export class ChatPreviewComponent implements OnInit {
   @Input() activeUser;
   @Input() set chat(chat) {
     this.activeChat = chat;
-    this.chatName = chat.chatType === ChatTypes.DIALOG
-      ? (chat.author === this.activeUser
-        ? chat.users
-          ? chat.users[0].username
-          : 'Test'
-        : chat.users
-          ? chat.users[1].username
-          : 'Test')
-      : chat.chatName;
+    this.chatName = chat.chatName;
   }
 
   constructor() { }

@@ -32,9 +32,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       width: '450px',
       data: new ChatInformationModel(
         this.chatService.activeChat.chatType,
-        this.chatService.activeChat.chatType === ChatTypes.PROFILE ||
-          this.chatService.activeChat.admins.includes(this.authService.userData.id),
-        this.chatService.activeChat._id
+        this.chatService.activeChat.chatType === ChatTypes.PROFILE
+        || this.chatService.activeChat.admins.includes(this.authService.userData.id),
+        this.chatService.activeChat.chatType === ChatTypes.DIALOG
+          ? this.chatService.activeChat.recipientId
+          : this.chatService.activeChat._id
       )
     });
   }
