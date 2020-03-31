@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 import { RequestsService } from '../requests/requests.service';
 
-import { ChatTypes } from '../interfaces/chat-types.interfaces';
 import { ChatPreviewModel } from '../../models/chat-preview.model';
 
 @Injectable({

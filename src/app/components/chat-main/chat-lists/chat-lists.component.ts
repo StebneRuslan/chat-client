@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import * as io from 'socket.io-client';
 
 import { ChatPreviewModel } from '../../../models/chat-preview.model';
 import { CREATE_NEW_DIALOG, SELECT_CHAT, OPEN_CHAT } from '../../../actions/main.action';
@@ -7,6 +8,7 @@ import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-chat-lists',
@@ -14,17 +16,21 @@ import { AuthService } from '../../../services/auth/auth.service';
   styleUrls: ['./chat-lists.style.scss']
 })
 export class ChatListsComponent implements OnInit, OnDestroy {
+
   public activeUser = null;
   public chatLists: ChatPreviewModel[] = [];
   public filterLists: ChatPreviewModel[] = [];
   public selectedChatId;
+  private socket;
 
   constructor(
     private api: RequestsService,
     private bus: BusService,
     private chatService: ChatService,
     private authService: AuthService
-  ) { }
+  ) {
+    this.socket = io(environment.api);
+  }
 
   public ngOnInit(): void {
 
@@ -38,6 +44,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.chatLists = [...res];
           this.filterLists = [...res];
+          this.socket.emit('join-chats', this.authService.userData.id);
         });
     }, 1000);
   }

@@ -88,6 +88,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.socket.off('notifyTyping');
+    this.socket.off('notifyStopTyping');
     clearTimeout(this.typingTimeout);
   }
 
