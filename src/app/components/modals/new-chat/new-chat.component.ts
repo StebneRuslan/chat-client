@@ -6,7 +6,12 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
 import { UserModel } from '../../../models/user.model';
 import { UsersListMock } from '../../../models/mock/users-list.mock';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
-import { CREATE_NEW_CHAT, CREATE_NEW_DIALOG, ADD_MEMBERS } from '../../../actions/main.action';
+import {
+  CREATE_NEW_CHAT,
+  CREATE_NEW_DIALOG,
+  ADD_MEMBERS,
+  CLOSE_NEW_CHAT_MODAL
+} from '../../../actions/main.action';
 
 // services
 import { RequestsService } from '../../../services/requests/requests.service';
@@ -37,6 +42,7 @@ export class NewChatComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.bus.subscribe(CREATE_NEW_CHAT, this.openCreateChatWindow, this);
+    this.bus.subscribe(CLOSE_NEW_CHAT_MODAL, this.closeModal, this);
     this.bus.subscribe(ADD_MEMBERS, this.addMembers, this);
     this.modalType = this.data.type;
     this.api.get({url: '/contacts'})
@@ -49,7 +55,7 @@ export class NewChatComponent implements OnInit, OnDestroy {
       });
   }
 
-  public closeModel(): void {
+  public closeModal(): void {
     this.dialogRef.close();
   }
 
@@ -93,12 +99,13 @@ export class NewChatComponent implements OnInit, OnDestroy {
           this.bus.publish(CREATE_NEW_DIALOG, data.chat);
         },
           err => {
-          console.log('error', err);
+            console.log('error', err);
         });
   }
 
   public ngOnDestroy(): void {
     this.bus.unsubscribe(CREATE_NEW_CHAT, this.openCreateChatWindow);
+    this.bus.unsubscribe(CLOSE_NEW_CHAT_MODAL, this.closeModal);
     this.bus.unsubscribe(ADD_MEMBERS, this.addMembers);
   }
 }

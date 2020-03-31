@@ -6,6 +6,7 @@ export class ChatPreviewModel {
   public users: any;
   public avatar?: any;
   public admins?: any;
+  public recipientId?: string;
   public lastMessage: any;
   public createdAt: string;
 }

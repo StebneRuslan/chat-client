@@ -55,7 +55,11 @@ export class EditorComponent implements OnInit, OnDestroy {
       data: new ChatInformationModel(
         type === 'profile' ? ChatTypes.PROFILE : this.chatService.activeChat.chatType,
         type === 'profile' || this.chatService.activeChat.admins.includes(this.authService.userData.id),
-        type === 'profile' ? this.authService.userData.id : this.chatService.activeChat._id
+        type === 'profile' ? this.chatService.activeChat.chatType === ChatTypes.DIALOG
+          ? this.chatService.activeChat.recipientId : this.authService.userData.id
+          : this.chatService.activeChat.chatType === ChatTypes.DIALOG
+          ? this.chatService.activeChat.recipientId
+          : this.chatService.activeChat._id
       )
     });
   }
