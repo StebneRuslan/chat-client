@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import * as io from 'socket.io-client';
 
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
 import { SELECT_CHAT, CLEAR_SELECT_MESSAGE } from '../../../actions/main.action';
-import { environment } from '../../../../environments/environment';
+
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
@@ -17,8 +17,6 @@ import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
   styleUrls: ['./chat-messages.style.scss']
 })
 export class ChatMessagesComponent implements OnInit, OnDestroy {
-
-  private socket;
   public selectedMessages = [];
   public messages: MessageModel[] = [];
   public showEditor = true;
@@ -27,23 +25,25 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     private api: RequestsService,
     private bus: BusService,
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    private socketsService: SocketsService
   ) {
-    this.socket = io(environment.api);
+    // this.socket = io(environment.api);
   }
 
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
 
-    this.socket.on('notifyMessage', message => {
-      console.log('MESSAGE', message)
-      this.messages.unshift(message);
-    });
-    this.socket.on('notifyDeleteMessage', messages => {
-      this.messages = this.messages.filter(el => !messages.includes(el._id));
-      this.selectedMessages = [];
-    });
+    this.socketsService.onMessage('notifyMessage')
+      .subscribe(message => {
+        this.messages.unshift(message);
+      });
+    this.socketsService.onMessage('notifyDeleteMessage')
+      .subscribe(messages => {
+        this.messages = this.messages.filter(el => !messages.includes(el._id));
+        this.selectedMessages = [];
+      });
   }
 
   public getChatData(data): void {
@@ -83,8 +83,8 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.socket.off('notifyMessage');
-    this.socket.off('notifyDeleteMessage');
+    // this.socket.off('notifyMessage');
+    // this.socket.off('notifyDeleteMessage');
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
     this.bus.unsubscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage);
   }

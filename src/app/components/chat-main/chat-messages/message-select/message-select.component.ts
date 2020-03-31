@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import * as io from 'socket.io-client';
 
+import { SocketsService } from '../../../../services/sockets/sockets.service';
 import { BusService } from '../../../../services/bus/bus.service';
 import { ChatService } from '../../../../services/chat/chat.service';
 
@@ -9,8 +9,8 @@ import { MessageModalComponent } from '../../../modals/message-modal/message-mod
 
 import { MessageModalModel } from '../../../modals/message-modal/message-modal.model';
 import { MessageModel } from '../../../../models/message.model';
+import { SocketMessageModel } from '../../../../models/socket.message.model';
 import { CLEAR_SELECT_MESSAGE } from '../../../../actions/main.action';
-import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-message-select',
@@ -26,10 +26,9 @@ export class MessageSelectComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private bus: BusService,
-    private chatService: ChatService
-  ) {
-    this.socket = io(environment.api);
-  }
+    private chatService: ChatService,
+    private socketsService: SocketsService
+  ) {}
 
   public ngOnInit(): void {}
 
@@ -41,10 +40,10 @@ export class MessageSelectComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(res  => {
         if (res) {
-          this.socket.emit('deleteMessages', {
+          this.socketsService.send(new SocketMessageModel('deleteMessages', {
             messages: this.messages.map(el => el._id),
             chatId: this.chatService.activeChat._id
-          });
+          }));
         }
       });
   }

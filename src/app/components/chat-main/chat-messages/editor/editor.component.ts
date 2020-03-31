@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import * as io from 'socket.io-client';
 
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ChatService } from '../../../../services/chat/chat.service';
+import { SocketsService } from '../../../../services/sockets/sockets.service';
 
-import { environment } from '../../../../../environments/environment';
 import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
 
 import { ChatInformationComponent } from '../../../modals/chat-information/chat-information.component';
 import { ChatInformationModel } from '../../../../models/chat-information.model';
+import { SocketMessageModel } from '../../../../models/socket.message.model';
 
 @Component({
   selector: 'app-editor',
@@ -17,8 +17,6 @@ import { ChatInformationModel } from '../../../../models/chat-information.model'
   styleUrls: ['./editor.style.scss']
 })
 export class EditorComponent implements OnInit, OnDestroy {
-
-  private socket;
   public message: string;
   public usersTyping = [];
   public typingTimeout = null;
@@ -28,18 +26,18 @@ export class EditorComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private chatService: ChatService,
     public dialog: MatDialog,
-  ) {
-    this.socket = io(environment.api);
-  }
+    public socketsService: SocketsService
+  ) {}
 
   public ngOnInit() {
-    this.socket.on('notifyTyping', user => {
+    this.socketsService.onMessage('notifyTyping').subscribe(user => {
       if (!this.usersTyping.includes(user)) {
         this.usersTyping.push(user);
       }
     });
-
-    this.socket.on('notifyStopTyping', username => this.stopTyping(username));
+    this.socketsService.onMessage('notifyTyping').subscribe(username => {
+      this.stopTyping(username);
+    });
   }
 
   public stopTyping(username: string): void {
@@ -67,11 +65,11 @@ export class EditorComponent implements OnInit, OnDestroy {
   public typingMessage(): void {
     clearTimeout(this.typingTimeout);
     if (!this.startTyping) {
-      this.socket.emit('typing', this.authService.userData.username);
+      this.socketsService.send(new SocketMessageModel('typing', this.authService.userData.username));
       this.startTyping = true;
     }
     this.typingTimeout = setTimeout(() => {
-      this.socket.emit('stopTyping', this.authService.userData.username);
+      this.socketsService.send(new SocketMessageModel('stopTyping', this.authService.userData.username));
       this.startTyping = false;
     }, 3000);
   }
@@ -82,18 +80,18 @@ export class EditorComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     if (this.message.trim()) {
-      this.socket.emit('message', {
+      this.socketsService.send(new SocketMessageModel('message', {
         authorId: this.authService.userData.id,
         chatId: this.chatService.activeChat._id,
         message: this.message
-      });
+      }));
       this.message = '';
     }
   }
 
   public ngOnDestroy(): void {
-    this.socket.off('notifyTyping');
-    this.socket.off('notifyStopTyping');
+    // this.socket.off('notifyTyping');
+    // this.socket.off('notifyStopTyping');
     clearTimeout(this.typingTimeout);
   }
 
