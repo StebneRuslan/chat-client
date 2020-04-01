@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RequestsService } from '../../../services/requests/requests.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
+import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { ChatInformationModel } from '../../../models/chat-information.model';
 import { UPDATE_CHAT_INFO } from '../../../actions/main.action';
@@ -26,11 +27,24 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
     private api: RequestsService,
     private chatService: ChatService,
     private bus: BusService,
+    private socketsService: SocketsService,
     public dialogRef: MatDialogRef<ChatInformationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ChatInformationModel
   ) {}
 
   public ngOnInit(): void {
+    this.socketsService.onMessage('notify-add-members')
+      .subscribe(users => {
+        this.chatUsers = this.chatUsers.concat(users);
+      });
+    this.socketsService.onMessage('notify-remove-members')
+      .subscribe(res => {
+        this.chatUsers.forEach((user, index) => {
+          if (user._id === res.userId && this.chatService.activeChat._id === res.chatId) {
+            this.chatUsers.splice(index, 1);
+          }
+        });
+      });
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
     const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
       ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;

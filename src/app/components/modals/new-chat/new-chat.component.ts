@@ -4,6 +4,7 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
 
 // configs
 import { UserModel } from '../../../models/user.model';
+import { SocketMessageModel } from '../../../models/socket.message.model';
 import { UsersListMock } from '../../../models/mock/users-list.mock';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 import {
@@ -17,6 +18,7 @@ import {
 import { RequestsService } from '../../../services/requests/requests.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
+import { SocketsService } from '../../../services/sockets/sockets.service';
 
 @Component({
   selector: 'app-new-chat',
@@ -34,6 +36,7 @@ export class NewChatComponent implements OnInit, OnDestroy {
     private api: RequestsService,
     private bus: BusService,
     private chatService: ChatService,
+    private socketsService: SocketsService,
     public dialogRef: MatDialogRef<NewChatComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -78,12 +81,11 @@ export class NewChatComponent implements OnInit, OnDestroy {
   }
 
   public addMembers(): void {
-    this.chatService.addMembers(this.users.filter(user => user.selected).map(user => user._id))
-      .subscribe(data => {
-        console.log('data', data);
-      }, err => {
-        console.log('error', err);
-      });
+    this.socketsService.send(new SocketMessageModel('add-members', {
+      chatId: this.chatService.activeChat._id,
+      users: this.users.filter(user => user.selected).map(user => user._id)
+    }));
+    this.dialogRef.close();
   }
 
   public createChat(title: string, description: string, dialog: any): void {

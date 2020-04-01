@@ -7,6 +7,7 @@ import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { AuthService } from '../../../services/auth/auth.service';
+import { SocketsService } from '../../../services/sockets/sockets.service';
 
 @Component({
   selector: 'app-chat-lists',
@@ -24,11 +25,31 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     private api: RequestsService,
     private bus: BusService,
     private chatService: ChatService,
+    private socketsService: SocketsService,
     private authService: AuthService,
   ) {}
 
   public ngOnInit(): void {
-
+    this.socketsService.onMessage('notify-remove-members')
+      .subscribe(res => {
+        // TODO add optimization
+        if (this.activeUser === res.userId && this.chatService.activeChat._id === res.chatId) {
+          this.chatLists.forEach((chat, index) => {
+            if (chat._id === res.chatId) {
+              this.chatLists.splice(index, 1);
+              if (this.chatLists.length > 0) {
+                // TODO select chat
+                this.openChat(this.chatLists[0]._id);
+              }
+            }
+          });
+          this.filterLists.forEach((chat, index) => {
+            if (chat._id === res.chatId) {
+              this.filterLists.splice(index, 1);
+            }
+          });
+        }
+      });
     this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);
     this.bus.subscribe(OPEN_CHAT, this.openChat, this);
 

@@ -11,6 +11,8 @@ import { NewChatComponent } from '../../new-chat/new-chat.component';
 
 import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
 import { ChatInformationModel } from '../../../../models/chat-information.model';
+import { SocketsService } from '../../../../services/sockets/sockets.service';
+import { SocketMessageModel } from '../../../../models/socket.message.model';
 
 @Component({
   selector: 'app-chat-settings',
@@ -28,6 +30,7 @@ export class ChatSettingsComponent implements OnInit {
     private api: RequestsService,
     private authService: AuthService,
     public chatService: ChatService,
+    public socketsService: SocketsService,
     public dialog: MatDialog
   ) { }
 
@@ -44,17 +47,26 @@ export class ChatSettingsComponent implements OnInit {
   }
 
   public openContacts() {
-    this.dialog.open(NewChatComponent, {
+    const dialogRef = this.dialog.open(NewChatComponent, {
       width: '450px',
       data: {
         type: 'Contacts',
         contacts: this.chatUsers
       }
     });
+    dialogRef.afterClosed()
+      .subscribe(users => {
+        console.log('####', users);
+      });
   }
 
-  public removeUser(id, deleteChat) {
-    // this.api.delete({url: ''})
+  public removeUser(userId, deleteChat) {
+    if (!deleteChat) {
+      this.socketsService.send(new SocketMessageModel('remove-members', {
+        chatId: this.chatService.activeChat._id,
+        userId
+      }));
+    }
   }
 
 }
