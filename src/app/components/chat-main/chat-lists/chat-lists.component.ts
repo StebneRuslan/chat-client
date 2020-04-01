@@ -4,11 +4,9 @@ import { ChatPreviewModel } from '../../../models/chat-preview.model';
 import { CREATE_NEW_DIALOG, SELECT_CHAT, OPEN_CHAT } from '../../../actions/main.action';
 
 import { RequestsService } from '../../../services/requests/requests.service';
-import { SocketsService } from '../../../services/sockets/sockets.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { AuthService } from '../../../services/auth/auth.service';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-chat-lists',
@@ -27,10 +25,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     private bus: BusService,
     private chatService: ChatService,
     private authService: AuthService,
-    private socketsService: SocketsService
-  ) {
-    socketsService.initSocket(this.authService.userData.id);
-  }
+  ) {}
 
   public ngOnInit(): void {
 
@@ -38,15 +33,11 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.bus.subscribe(OPEN_CHAT, this.openChat, this);
 
     this.activeUser = this.authService.userData.id;
-    // TODO: event or smth else (app component can't set userData on time)
-    setTimeout(() => {
-      this.api.get({url: '/chats'})
-        .subscribe(res => {
-          this.chatLists = [...res];
-          this.filterLists = [...res];
-          // this.socket.emit('join-chats', this.authService.userData.id);
-        });
-    }, 1000);
+    this.api.get({url: '/chats'})
+      .subscribe(res => {
+        this.chatLists = [...res];
+        this.filterLists = [...res];
+      });
   }
 
   public addChatToList(chat: any): void {

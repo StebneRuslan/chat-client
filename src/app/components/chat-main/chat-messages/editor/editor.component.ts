@@ -35,7 +35,7 @@ export class EditorComponent implements OnInit, OnDestroy {
         this.usersTyping.push(user);
       }
     });
-    this.socketsService.onMessage('notifyTyping').subscribe(username => {
+    this.socketsService.onMessage('notifyStopTyping').subscribe(username => {
       this.stopTyping(username);
     });
   }
@@ -64,12 +64,16 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   public typingMessage(): void {
     clearTimeout(this.typingTimeout);
+    const messageData = {
+      username: this.authService.userData.username,
+      chatId: this.chatService.activeChat._id
+    };
     if (!this.startTyping) {
-      this.socketsService.send(new SocketMessageModel('typing', this.authService.userData.username));
+      this.socketsService.send(new SocketMessageModel('typing', messageData));
       this.startTyping = true;
     }
     this.typingTimeout = setTimeout(() => {
-      this.socketsService.send(new SocketMessageModel('stopTyping', this.authService.userData.username));
+      this.socketsService.send(new SocketMessageModel('stopTyping', messageData));
       this.startTyping = false;
     }, 3000);
   }

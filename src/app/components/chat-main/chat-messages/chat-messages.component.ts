@@ -27,9 +27,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private authService: AuthService,
     private socketsService: SocketsService
-  ) {
-    // this.socket = io(environment.api);
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
@@ -68,7 +66,8 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   }
 
   public setShowEditorSettings() {
-    this.showEditor = !(this.chatService.activeChat.chatType === ChatTypes.CHANNEL && !this.chatService.activeChat.admins.includes(this.authService.userData.id));
+    this.showEditor = !(this.chatService.activeChat.chatType === ChatTypes.CHANNEL &&
+      !this.chatService.activeChat.admins.includes(this.authService.userData.id));
   }
 
   public selectMessage(messageId: string): void {
