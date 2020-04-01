@@ -8,6 +8,7 @@ import { RequestsService } from '../requests/requests.service';
 import { ChatService } from '../chat/chat.service';
 
 import { ActiveUserModel } from '../../models/active-user.model';
+import { SocketsService } from '../sockets/sockets.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,14 @@ export class AuthService {
     private dialogRef: MatDialog,
     private cookieService: CookieService,
     private api: RequestsService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private socketsService: SocketsService
   ) { }
 
   public userData: ActiveUserModel = new ActiveUserModel();
 
   public setUserData(res: any): void {
+    this.socketsService.initSocket(res._id);
     this.userData = new ActiveUserModel(res._id, res.username, res.avatar && res.avatar.url ? res.avatar.url : '');
     this.cookieService.set('token', res.apiKey);
     this.router.navigate(['']);

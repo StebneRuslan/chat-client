@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { RequestsService } from '../requests/requests.service';
+import { SocketsService } from '../sockets/sockets.service';
 
-import { ChatTypes } from '../interfaces/chat-types.interfaces';
 import { ChatPreviewModel } from '../../models/chat-preview.model';
 
 @Injectable({
@@ -11,7 +11,10 @@ import { ChatPreviewModel } from '../../models/chat-preview.model';
 })
 export class ChatService {
 
-  constructor(private api: RequestsService) { }
+  constructor(
+    private socketsService: SocketsService,
+    private api: RequestsService
+  ) { }
 
   // TODO: think about private
 

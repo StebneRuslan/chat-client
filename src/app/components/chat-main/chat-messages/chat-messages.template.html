@@ -1,7 +1,7 @@
 <div class="chat-messages-container" *ngIf="chatService.activeChat && chatService.activeChat._id">
-  <app-messages-list (selectMessage)="selectMessage($event)" [messages]="messages"></app-messages-list>
-  <app-editor *ngIf="!selectedMessages.length"></app-editor>
-  <app-message-select *ngIf="selectedMessages.length" [messages]="selectedMessages"></app-message-select>
+  <app-messages-list [ngClass]="{'without-editor': !showEditor}" (selectMessage)="selectMessage($event)" [messages]="messages"></app-messages-list>
+  <app-editor *ngIf="!selectedMessages.length && showEditor"></app-editor>
+  <app-message-select *ngIf="selectedMessages.length && showEditor" [messages]="selectedMessages"></app-message-select>
 </div>
 <div class="select-chat" *ngIf="!chatService.activeChat || !chatService.activeChat._id">
   <p>Please select a chat to start messaging</p>
