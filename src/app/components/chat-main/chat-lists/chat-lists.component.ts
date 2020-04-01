@@ -34,20 +34,19 @@ export class ChatListsComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         // TODO add optimization
         if (this.activeUser === res.userId && this.chatService.activeChat._id === res.chatId) {
-          this.chatLists.forEach((chat, index) => {
-            if (chat._id === res.chatId) {
-              this.chatLists.splice(index, 1);
-              if (this.chatLists.length > 0) {
-                // TODO select chat
-                this.openChat(this.chatLists[0]._id);
-              }
-            }
-          });
-          this.filterLists.forEach((chat, index) => {
-            if (chat._id === res.chatId) {
-              this.filterLists.splice(index, 1);
-            }
-          });
+          const chatListIndex = this.chatLists.findIndex(chat => chat._id === res.chatId);
+          const filterListsIndex = this.filterLists.findIndex(chat => chat._id === res.chatId);
+          if (chatListIndex > -1) {
+            this.chatLists.splice(chatListIndex, 1);
+          }
+          if (filterListsIndex > -1) {
+            this.filterLists.splice(filterListsIndex, 1);
+          }
+          this.filterLists.splice(filterListsIndex, 1);
+          if (this.chatLists.length > 0) {
+            // TODO select chat
+            this.openChat(this.chatLists[0]._id);
+          }
         }
       });
     this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);

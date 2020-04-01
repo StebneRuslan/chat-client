@@ -47,17 +47,13 @@ export class ChatSettingsComponent implements OnInit {
   }
 
   public openContacts() {
-    const dialogRef = this.dialog.open(NewChatComponent, {
+    this.dialog.open(NewChatComponent, {
       width: '450px',
       data: {
         type: 'Contacts',
         contacts: this.chatUsers
       }
     });
-    dialogRef.afterClosed()
-      .subscribe(users => {
-        console.log('####', users);
-      });
   }
 
   public removeUser(userId, deleteChat) {

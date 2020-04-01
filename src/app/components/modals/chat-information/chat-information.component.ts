@@ -39,11 +39,10 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
       });
     this.socketsService.onMessage('notify-remove-members')
       .subscribe(res => {
-        this.chatUsers.forEach((user, index) => {
-          if (user._id === res.userId && this.chatService.activeChat._id === res.chatId) {
-            this.chatUsers.splice(index, 1);
-          }
-        });
+        const userIndex = this.chatUsers.findIndex(user => user._id === res.userId && this.chatService.activeChat._id === res.chatId);
+        if (userIndex > -1) {
+          this.chatUsers.splice(userIndex, 1);
+        }
       });
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
     const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
