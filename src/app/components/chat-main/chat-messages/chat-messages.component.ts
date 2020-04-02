@@ -7,7 +7,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
-import { SELECT_CHAT, CLEAR_SELECT_MESSAGE } from '../../../actions/main.action';
+import { SELECT_CHAT, CLEAR_SELECT_MESSAGE, UPDATE_CHAT_MESSAGE } from '../../../actions/main.action';
 
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
@@ -36,6 +36,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.socketsService.onMessage('notifyMessage')
       .subscribe(message => {
         this.messages.unshift(message);
+        this.bus.publish(UPDATE_CHAT_MESSAGE, message);
       });
     this.socketsService.onMessage('notifyDeleteMessage')
       .subscribe(messages => {
@@ -46,7 +47,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   public getChatData(data): void {
     if (data.updateChatInfo) {
-      this.api.get({url: `/chats/${data.chatId}`})
+      this.api.get({url: `/chats/${data.chatId}?lastMessage=''`})
         .subscribe(chat => {
           this.chatService.activeChat = chat;
           this.setShowEditorSettings();
@@ -55,7 +56,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       this.api.get({url: `/messages/${data.chatId}`})
         .subscribe(res => {
           // TODO: get messages by chunk, sorting by date
-          this.messages = res.sort((prev, next) => +new Date(next.date) - +new Date(prev.date));
+          this.messages = res;
           this.selectedMessages = [];
         });
     } else {
@@ -63,6 +64,13 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       this.selectedMessages = [];
       this.setShowEditorSettings();
     }
+  }
+
+  public getMessages() {
+    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
+      .subscribe(res => {
+        this.messages = res;
+      });
   }
 
   public setShowEditorSettings() {
