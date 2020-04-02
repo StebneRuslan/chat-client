@@ -1,5 +1,5 @@
 <div class="chat-messages-container" *ngIf="chatService.activeChat && chatService.activeChat._id">
-  <app-messages-list (selectMessage)="selectMessage($event)" [messages]="messages" (scrollMessages)="getMessages()"></app-messages-list>
+  <app-messages-list [ngClass]="{'without-editor': !showEditor}" (selectMessage)="selectMessage($event)" [messages]="messages" (scrollMessages)="getMessages()"></app-messages-list>
   <app-editor *ngIf="!selectedMessages.length && showEditor"></app-editor>
   <app-message-select *ngIf="selectedMessages.length && showEditor" [messages]="selectedMessages"></app-message-select>
 </div>
