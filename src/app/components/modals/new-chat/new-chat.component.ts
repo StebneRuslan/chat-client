@@ -9,7 +9,8 @@ import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 import {
   CREATE_NEW_CHAT,
   ADD_MEMBERS,
-  CLOSE_NEW_CHAT_MODAL
+  CLOSE_NEW_CHAT_MODAL,
+  ADD_NEW_CHAT
 } from '../../../actions/main.action';
 
 // services
@@ -95,9 +96,10 @@ export class NewChatComponent implements OnInit, OnDestroy {
       description,
       this.users.filter(user => user.selected).map(user => user._id))
       .subscribe(
-        () => {
+        (res) => {
           this.dialogRef.close();
           dialog.close();
+          this.bus.publish(ADD_NEW_CHAT, res.chat);
         },
           err => console.log('error', err)
       );

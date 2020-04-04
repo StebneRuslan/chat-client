@@ -12,10 +12,7 @@ export class ChatPreviewComponent implements OnInit {
   public activeChat: null;
 
   @Input() activeUser;
-  @Input() set chat(chat) {
-    this.activeChat = chat;
-    this.chatName = chat.chatName;
-  }
+  @Input() chat;
 
   constructor() { }
 

@@ -7,7 +7,7 @@ import { ChatService } from '../../../services/chat/chat.service';
 import { NewContactComponent } from './new-contact/new-contact.component';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { SELECT_CHAT } from '../../../actions/main.action';
+import { SELECT_CHAT, ADD_NEW_CHAT } from '../../../actions/main.action';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
@@ -42,14 +42,14 @@ export class UserContactsComponent implements OnInit, OnDestroy {
     this.chatService.createChat('', ChatTypes.DIALOG, '', [id])
       .subscribe(
         res => {
-          if (res.message === 'Chat already exist!') {
+          if (res.message !== 'Chat already exist!') {
+            this.bus.publish(ADD_NEW_CHAT, res.chat);
+          } else {
             this.bus.publish(SELECT_CHAT, {chatId: res.chat._id, updateChatInfo: true});
           }
           this.dialogRef.close();
         },
-        err => {
-          console.log('error', err);
-        }
+        err => console.log('error', err)
       );
   }
 
