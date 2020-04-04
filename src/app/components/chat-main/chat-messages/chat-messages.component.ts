@@ -37,7 +37,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       .subscribe(message => this.notifyMessages(message));
 
     this.socketsService.onMessage('notify-delete-message')
-      .subscribe(messages => this.notifyDeleteMessages(messages));
+      .subscribe(res => this.notifyDeleteMessages(res));
 
     this.socketsService.onMessage('notify-add-members')
       .subscribe(res => this.addMembers(res));
@@ -67,6 +67,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO: use for request to get messages by chunk
   public getMessages() {
     this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
       .subscribe(res => {
@@ -74,16 +75,19 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       });
   }
 
-  public notifyMessages(message): void {
+  public notifyMessages(message: any): void {
     if (message.chatId === this.chatService.activeChat._id) {
       this.messages.unshift(message);
     }
     this.bus.publish(UPDATE_CHAT_MESSAGE, message);
   }
 
-  public notifyDeleteMessages(messages): void {
-    this.messages = this.messages.filter(el => !messages.includes(el._id));
-    this.selectedMessages = [];
+  public notifyDeleteMessages(data: any): void {
+    // TODO: update last message if it was deleted and sort by it
+    if (data.chatId === this.chatService.activeChat._id) {
+      this.messages = this.messages.filter(el => !data.messages.includes(el._id));
+      this.selectedMessages = [];
+    }
   }
 
   public setShowEditorSettings(): void {
@@ -102,14 +106,14 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.selectedMessages = [];
   }
 
-  public addMembers(data): void {
+  public addMembers(data: any): void {
     if (this.chatService.activeChat._id === data.chatId) {
       this.bus.publish(UPDATE_MEMBERS, {action: 'add', users: data.users});
       data.users.forEach(user => this.chatService.activeChat.users.push(user._id));
     }
   }
 
-  public removeMembers(data): void {
+  public removeMembers(data: any): void {
     if (this.authService.userData.id !== data.userId && this.chatService.activeChat._id === data.chatId) {
       this.bus.publish(UPDATE_MEMBERS, {action: 'delete', userId: data.userId});
       // TODO: delete from activeChat.users, when normalize users to string
@@ -117,8 +121,6 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    // this.socket.off('notifyMessage');
-    // this.socket.off('notifyDeleteMessage');
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
     this.bus.unsubscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage);
   }
