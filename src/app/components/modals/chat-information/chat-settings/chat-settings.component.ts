@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { RequestsService } from '../../../../services/requests/requests.service';
@@ -56,13 +56,11 @@ export class ChatSettingsComponent implements OnInit {
     });
   }
 
-  public removeUser(userId, deleteChat) {
-    if (!deleteChat) {
-      this.socketsService.send(new SocketMessageModel('remove-members', {
-        chatId: this.chatService.activeChat._id,
-        userId
-      }));
-    }
+  public removeUser(userId) {
+    this.socketsService.send(new SocketMessageModel('remove-members', {
+      chatId: this.chatService.activeChat._id,
+      userId
+    }));
   }
 
 }

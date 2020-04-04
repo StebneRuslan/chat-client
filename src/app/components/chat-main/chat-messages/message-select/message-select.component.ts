@@ -40,7 +40,7 @@ export class MessageSelectComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(res  => {
         if (res) {
-          this.socketsService.send(new SocketMessageModel('deleteMessages', {
+          this.socketsService.send(new SocketMessageModel('delete-messages', {
             messages: this.messages.map(el => el._id),
             chatId: this.chatService.activeChat._id
           }));

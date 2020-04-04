@@ -30,21 +30,11 @@ export class EditorComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
-    this.socketsService.onMessage('notifyTyping').subscribe(user => {
-      if (!this.usersTyping.includes(user)) {
-        this.usersTyping.push(user);
-      }
-    });
-    this.socketsService.onMessage('notifyStopTyping').subscribe(username => {
-      this.stopTyping(username);
-    });
-  }
+    this.socketsService.onMessage('notify-typing')
+      .subscribe(data => this.notifyTyping(data));
 
-  public stopTyping(username: string): void {
-    const index = this.usersTyping.indexOf(username);
-    if (index > -1) {
-      this.usersTyping.splice(index, 1);
-    }
+    this.socketsService.onMessage('notify-stop-typing')
+      .subscribe(data => this.stopTyping(data));
   }
 
   public openModal(type: string): void {
@@ -73,9 +63,24 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.startTyping = true;
     }
     this.typingTimeout = setTimeout(() => {
-      this.socketsService.send(new SocketMessageModel('stopTyping', messageData));
+      this.socketsService.send(new SocketMessageModel('stop-typing', messageData));
       this.startTyping = false;
     }, 3000);
+  }
+
+  public notifyTyping(data: any): void {
+    if (this.chatService.activeChat._id === data.chatId && !this.usersTyping.includes(data.username)) {
+      this.usersTyping.push(data.username);
+    }
+  }
+
+  public stopTyping(data: any): void {
+    if (this.chatService.activeChat._id === data.chatId) {
+      const index = this.usersTyping.indexOf(data.username);
+      if (index > -1) {
+        this.usersTyping.splice(index, 1);
+      }
+    }
   }
 
   public sendMessage(event?: MouseEvent): void {
@@ -94,8 +99,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    // this.socket.off('notifyTyping');
-    // this.socket.off('notifyStopTyping');
     clearTimeout(this.typingTimeout);
   }
 

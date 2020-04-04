@@ -5,11 +5,9 @@ import { EditNameComponent } from '../edit-name/edit-name.component';
 // configs
 import { UserModel } from '../../../models/user.model';
 import { SocketMessageModel } from '../../../models/socket.message.model';
-import { UsersListMock } from '../../../models/mock/users-list.mock';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 import {
   CREATE_NEW_CHAT,
-  CREATE_NEW_DIALOG,
   ADD_MEMBERS,
   CLOSE_NEW_CHAT_MODAL
 } from '../../../actions/main.action';
@@ -29,7 +27,6 @@ export class NewChatComponent implements OnInit, OnDestroy {
 
   public users: UserModel[] = [];
   public usersFilter: UserModel[] = [];
-  public modalType = '';
 
   constructor(
     private dialog: MatDialog,
@@ -44,10 +41,13 @@ export class NewChatComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.getContacts();
     this.bus.subscribe(CREATE_NEW_CHAT, this.openCreateChatWindow, this);
     this.bus.subscribe(CLOSE_NEW_CHAT_MODAL, this.closeModal, this);
     this.bus.subscribe(ADD_MEMBERS, this.addMembers, this);
-    this.modalType = this.data.type;
+  }
+
+  public getContacts() {
     this.api.get({url: '/contacts'})
       .subscribe(res => {
         res.forEach(contact => {
@@ -95,14 +95,12 @@ export class NewChatComponent implements OnInit, OnDestroy {
       description,
       this.users.filter(user => user.selected).map(user => user._id))
       .subscribe(
-        data => {
+        () => {
           this.dialogRef.close();
           dialog.close();
-          this.bus.publish(CREATE_NEW_DIALOG, data.chat);
         },
-          err => {
-            console.log('error', err);
-        });
+          err => console.log('error', err)
+      );
   }
 
   public ngOnDestroy(): void {

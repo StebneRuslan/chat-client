@@ -33,16 +33,11 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
 
-    this.socketsService.onMessage('notifyMessage')
-      .subscribe(message => {
-        this.messages.unshift(message);
-        this.bus.publish(UPDATE_CHAT_MESSAGE, message);
-      });
-    this.socketsService.onMessage('notifyDeleteMessage')
-      .subscribe(messages => {
-        this.messages = this.messages.filter(el => !messages.includes(el._id));
-        this.selectedMessages = [];
-      });
+    this.socketsService.onMessage('notify-message')
+      .subscribe(message => this.notifyMessages(message));
+
+    this.socketsService.onMessage('notify-delete-message')
+      .subscribe(messages => this.notifyDeleteMessages(messages));
   }
 
   public getChatData(data): void {
@@ -66,14 +61,26 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getMessages() {
-    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
-      .subscribe(res => {
-        this.messages = res;
-      });
+  // public getMessages() {
+  //   this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
+  //     .subscribe(res => {
+  //       this.messages = res;
+  //     });
+  // }
+
+  public notifyMessages(message): void {
+    if (message.chatId === this.chatService.activeChat._id) {
+      this.messages.unshift(message);
+    }
+    this.bus.publish(UPDATE_CHAT_MESSAGE, message);
   }
 
-  public setShowEditorSettings() {
+  public notifyDeleteMessages(messages): void {
+    this.messages = this.messages.filter(el => !messages.includes(el._id));
+    this.selectedMessages = [];
+  }
+
+  public setShowEditorSettings(): void {
     this.showEditor = !(this.chatService.activeChat.chatType === ChatTypes.CHANNEL &&
       !this.chatService.activeChat.admins.includes(this.authService.userData.id));
   }
