@@ -1,4 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input, OnDestroy } from '@angular/core';
+
+import { BusService } from '../../../../services/bus/bus.service';
+
 import { MessageModel } from '../../../../models/message.model';
 
 @Component({
@@ -7,14 +10,25 @@ import { MessageModel } from '../../../../models/message.model';
   styleUrls: ['./messages-list.style.scss']
 })
 
-export class MessagesListComponent implements OnInit {
+export class MessagesListComponent implements OnInit, OnDestroy {
+
   @Output() selectMessage = new EventEmitter();
+  @Output() scrollMessages = new EventEmitter();
   @Input() messages: MessageModel[];
-  constructor() { }
+
+  constructor(
+    private bus: BusService
+  ) { }
 
   public ngOnInit(): void {}
+
+  public onScroll(): void {
+    this.scrollMessages.emit();
+  }
 
   public select(messageId: string): void {
     this.selectMessage.emit(messageId);
   }
+
+  public ngOnDestroy(): void {}
 }

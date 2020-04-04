@@ -20,13 +20,6 @@ export class ChatService {
 
   public activeChat: ChatPreviewModel = new ChatPreviewModel();
 
-  public addMembers(users: string[]): Observable<any> {
-    return this.api.post({
-      url: `/chats/${this.activeChat._id}/add-members`,
-      body: { users }
-    });
-  }
-
   public createChat(chatName: string, chatType: string, description: string, users: string[]): Observable<any> {
     return this.api.post({
       url: `/chats`,

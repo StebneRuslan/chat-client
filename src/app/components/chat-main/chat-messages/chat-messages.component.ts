@@ -7,7 +7,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
-import { SELECT_CHAT, CLEAR_SELECT_MESSAGE } from '../../../actions/main.action';
+import { SELECT_CHAT, CLEAR_SELECT_MESSAGE, UPDATE_CHAT_MESSAGE, UPDATE_MEMBERS } from '../../../actions/main.action';
 
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
@@ -33,15 +33,17 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
 
-    this.socketsService.onMessage('notifyMessage')
-      .subscribe(message => {
-        this.messages.unshift(message);
-      });
-    this.socketsService.onMessage('notifyDeleteMessage')
-      .subscribe(messages => {
-        this.messages = this.messages.filter(el => !messages.includes(el._id));
-        this.selectedMessages = [];
-      });
+    this.socketsService.onMessage('notify-message')
+      .subscribe(message => this.notifyMessages(message));
+
+    this.socketsService.onMessage('notify-delete-message')
+      .subscribe(res => this.notifyDeleteMessages(res));
+
+    this.socketsService.onMessage('notify-add-members')
+      .subscribe(res => this.addMembers(res));
+
+    this.socketsService.onMessage('notify-remove-members')
+      .subscribe(res => this.removeMembers(res));
   }
 
   public getChatData(data): void {
@@ -55,7 +57,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       this.api.get({url: `/messages/${data.chatId}`})
         .subscribe(res => {
           // TODO: get messages by chunk, sorting by date
-          this.messages = res.sort((prev, next) => +new Date(next.date) - +new Date(prev.date));
+          this.messages = res;
           this.selectedMessages = [];
         });
     } else {
@@ -65,7 +67,30 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setShowEditorSettings() {
+  // TODO: use for request to get messages by chunk
+  public getMessages() {
+    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
+      .subscribe(res => {
+        this.messages = res;
+      });
+  }
+
+  public notifyMessages(message: any): void {
+    if (message.chatId === this.chatService.activeChat._id) {
+      this.messages.unshift(message);
+    }
+    this.bus.publish(UPDATE_CHAT_MESSAGE, message);
+  }
+
+  public notifyDeleteMessages(data: any): void {
+    // TODO: update last message if it was deleted and sort by it
+    if (data.chatId === this.chatService.activeChat._id) {
+      this.messages = this.messages.filter(el => !data.messages.includes(el._id));
+      this.selectedMessages = [];
+    }
+  }
+
+  public setShowEditorSettings(): void {
     this.showEditor = !(this.chatService.activeChat.chatType === ChatTypes.CHANNEL &&
       !this.chatService.activeChat.admins.includes(this.authService.userData.id));
   }
@@ -81,9 +106,21 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     this.selectedMessages = [];
   }
 
+  public addMembers(data: any): void {
+    if (this.chatService.activeChat._id === data.chatId) {
+      this.bus.publish(UPDATE_MEMBERS, {action: 'add', users: data.users});
+      data.users.forEach(user => this.chatService.activeChat.users.push(user._id));
+    }
+  }
+
+  public removeMembers(data: any): void {
+    if (this.authService.userData.id !== data.userId && this.chatService.activeChat._id === data.chatId) {
+      this.bus.publish(UPDATE_MEMBERS, {action: 'delete', userId: data.userId});
+      // TODO: delete from activeChat.users, when normalize users to string
+    }
+  }
+
   public ngOnDestroy(): void {
-    // this.socket.off('notifyMessage');
-    // this.socket.off('notifyDeleteMessage');
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
     this.bus.unsubscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage);
   }

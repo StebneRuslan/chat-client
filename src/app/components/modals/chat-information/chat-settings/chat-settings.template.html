@@ -10,8 +10,8 @@
         <app-user-avatar [avatarUrl]="user.avatar.url" [chatName]="user.username" [type]="'chat'"></app-user-avatar>
         <div class="user-info">
           <p class="link" (click)="openProfile(user._id)">{{user.username}}</p>
-          <p *ngIf="editChat && userId !== user._id" (click)="removeUser(user._id, false)" class="link">Remove</p>
-          <p *ngIf="userId === user._id" (click)="removeUser(user._id, true)" class="link">Delete and exit</p>
+          <p *ngIf="editChat && userId !== user._id" (click)="removeUser(user._id)" class="link">Remove</p>
+          <p *ngIf="userId === user._id" (click)="removeUser(user._id)" class="link">Delete and exit</p>
         </div>
       </li>
     </ul>

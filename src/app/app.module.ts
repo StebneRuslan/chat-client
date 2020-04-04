@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {
   MatFormFieldModule,
@@ -106,7 +107,8 @@ import { UserContactsComponent } from './components/modals/user-contacts/user-co
     MaterialFileInputModule,
     FormsModule,
     ReactiveFormsModule,
-    ScrollingModule
+    ScrollingModule,
+    InfiniteScrollModule
   ],
   providers: [
     CookieService,

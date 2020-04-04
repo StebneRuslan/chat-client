@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ChatPreviewModel } from '../../../models/chat-preview.model';
-import { CREATE_NEW_DIALOG, SELECT_CHAT, OPEN_CHAT } from '../../../actions/main.action';
+import { SELECT_CHAT, OPEN_CHAT, UPDATE_CHAT_MESSAGE, CLOSE_CHAT_SETTINGS_MODAL, ADD_NEW_CHAT } from '../../../actions/main.action';
+import { MessageModel } from '../../../models/message.model';
 
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
@@ -26,31 +27,10 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     private bus: BusService,
     private chatService: ChatService,
     private socketsService: SocketsService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
-    this.socketsService.onMessage('notify-remove-members')
-      .subscribe(res => {
-        // TODO add optimization
-        if (this.activeUser === res.userId && this.chatService.activeChat._id === res.chatId) {
-          const chatListIndex = this.chatLists.findIndex(chat => chat._id === res.chatId);
-          const filterListsIndex = this.filterLists.findIndex(chat => chat._id === res.chatId);
-          if (chatListIndex > -1) {
-            this.chatLists.splice(chatListIndex, 1);
-          }
-          if (filterListsIndex > -1) {
-            this.filterLists.splice(filterListsIndex, 1);
-          }
-          this.filterLists.splice(filterListsIndex, 1);
-          if (this.chatLists.length > 0) {
-            // TODO select chat
-            this.openChat(this.chatLists[0]._id);
-          }
-        }
-      });
-    this.bus.subscribe(CREATE_NEW_DIALOG, this.addChatToList, this);
-    this.bus.subscribe(OPEN_CHAT, this.openChat, this);
 
     this.activeUser = this.authService.userData.id;
     this.api.get({url: '/chats'})
@@ -58,13 +38,80 @@ export class ChatListsComponent implements OnInit, OnDestroy {
         this.chatLists = [...res];
         this.filterLists = [...res];
       });
+
+    this.socketsService.onMessage('notify-add-chat')
+      .subscribe(res => this.addChatToList(res));
+
+    this.socketsService.onMessage('notify-remove-members')
+      .subscribe(res => this.removeMembers(res));
+
+    this.socketsService.onMessage('notify-update-chat')
+      .subscribe(res => this.updateChatInfo(res));
+
+    this.socketsService.onMessage('notify-update-avatar')
+      .subscribe(res => this.updateAvatar(res));
+
+    this.bus.subscribe(OPEN_CHAT, this.openChat, this);
+    this.bus.subscribe(UPDATE_CHAT_MESSAGE, this.updateChatMessage, this);
+    this.bus.subscribe(ADD_NEW_CHAT, this.addNewChat, this);
   }
 
-  public addChatToList(chat: any): void {
-    this.filterLists.unshift(chat);
+  public removeMembers(data: any): void {
+    if (this.activeUser === data.userId) {
+      this.chatLists = this.chatLists.filter(chat => chat._id !== data.chatId);
+      this.filterLists = this.filterLists.filter(chat => chat._id !== data.chatId);
+      // show 'Select chat...' screen and  close settings modal
+      if (this.chatService.activeChat._id === data.chatId) {
+        this.chatService.activeChat = new ChatPreviewModel();
+        this.bus.publish(CLOSE_CHAT_SETTINGS_MODAL);
+      }
+    }
+  }
+
+  // TODO: optimization updating function to one
+  public updateChatInfo(data): void {
+    if (data.chatId === this.chatService.activeChat._id) {
+      this.chatService.activeChat.chatName = data.chatData.chatName;
+      this.chatService.activeChat.description = data.chatData.description;
+    }
+    const chatIndex = this.chatLists.findIndex(chat => chat._id === data.chatId);
+    this.chatLists[chatIndex].chatName =  data.chatData.chatName;
+    this.chatLists[chatIndex].description =  data.chatData.description;
+    // TODO: filterLists
+    this.filterLists = [...this.chatLists];
+  }
+
+  public updateAvatar(data: any): void {
+    if (data.chatId === this.chatService.activeChat._id) {
+      this.chatService.activeChat.avatar = { url: data.url} ;
+    }
+    const chatIndex = this.chatLists.findIndex(chat => chat._id === data.chatId);
+    this.chatLists[chatIndex].avatar = { url: data.url };
+    // TODO: filterLists
+    this.filterLists = [...this.chatLists];
+  }
+
+  public updateChatMessage(message: MessageModel): void {
+    const chatIndex = this.chatLists.findIndex(chat => chat._id === message.chatId);
+    const chat = this.chatLists.splice(chatIndex, 1)[0];
+    chat.lastMessage = this.normalizeMessage(message);
+    this.chatLists.unshift(chat);
+    // TODO: filterLists
+    this.filterLists = [...this.chatLists];
+  }
+
+  // for author of new chat
+  public addNewChat(chat) {
     this.chatService.activeChat = chat;
     this.selectedChatId = chat._id;
-    this.bus.publish(SELECT_CHAT, {id: chat._id, updateChatInfo: false});
+    this.bus.publish(SELECT_CHAT, {chatId: chat._id, updateChatInfo: false});
+  }
+
+  // for all members in new chat
+  public addChatToList(chat: ChatPreviewModel): void {
+    // TODO: filterLists
+    this.chatLists.unshift(chat);
+    this.filterLists.unshift(chat);
   }
 
   public openChat(chatId: string): void {
@@ -72,8 +119,22 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.bus.publish(SELECT_CHAT, {chatId, updateChatInfo: true});
   }
 
+  public normalizeMessage(message: MessageModel): any {
+    return  {
+      _id: message._id,
+      chatId: message.chatId,
+      message: message.message,
+      createdAt: message.date,
+      authorId: {
+        _id: message.user._id,
+        username: message.user.username
+      }
+    };
+  }
+
   public ngOnDestroy(): void {
-    this.bus.unsubscribe(CREATE_NEW_DIALOG, this.addChatToList);
+    this.bus.unsubscribe(ADD_NEW_CHAT, this.addNewChat);
+    this.bus.unsubscribe(UPDATE_CHAT_MESSAGE, this.updateChatMessage);
     this.bus.unsubscribe(OPEN_CHAT, this.openChat);
   }
 }

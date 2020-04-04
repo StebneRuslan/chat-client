@@ -4,10 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RequestsService } from '../../../services/requests/requests.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { BusService } from '../../../services/bus/bus.service';
-import { SocketsService } from '../../../services/sockets/sockets.service';
+import { AuthService } from '../../../services/auth/auth.service';
 
 import { ChatInformationModel } from '../../../models/chat-information.model';
-import { UPDATE_CHAT_INFO } from '../../../actions/main.action';
+import { UPDATE_CHAT_INFO, CLOSE_CHAT_SETTINGS_MODAL, UPDATE_MEMBERS } from '../../../actions/main.action';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
@@ -20,31 +20,28 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   public chatTypes = ChatTypes;
   public chatName = '';
   public channelDescription = '';
-  public chatUsers;
+  public chatUsers = [];
   public image = '';
 
   constructor(
     private api: RequestsService,
     private chatService: ChatService,
+    private authService: AuthService,
     private bus: BusService,
-    private socketsService: SocketsService,
     public dialogRef: MatDialogRef<ChatInformationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ChatInformationModel
   ) {}
 
   public ngOnInit(): void {
-    this.socketsService.onMessage('notify-add-members')
-      .subscribe(users => {
-        this.chatUsers = this.chatUsers.concat(users);
-      });
-    this.socketsService.onMessage('notify-remove-members')
-      .subscribe(res => {
-        const userIndex = this.chatUsers.findIndex(user => user._id === res.userId && this.chatService.activeChat._id === res.chatId);
-        if (userIndex > -1) {
-          this.chatUsers.splice(userIndex, 1);
-        }
-      });
+
+    this.getChatInformation();
+
     this.bus.subscribe(UPDATE_CHAT_INFO, this.changeChatInfo, this);
+    this.bus.subscribe(CLOSE_CHAT_SETTINGS_MODAL, this.closeModel, this);
+    this.bus.subscribe(UPDATE_MEMBERS, this.updateMembers, this);
+  }
+
+  public getChatInformation() {
     const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
       ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
 
@@ -54,9 +51,13 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
           this.image = (res.avatar && res.avatar.url) ? res.avatar.url : '';
           this.chatName = res.username || res.chatName;
           this.channelDescription = res.description || '';
-          this.chatUsers = res.users;
+          this.chatUsers = res.users || [];
         },
         err => console.log('error', err));
+  }
+
+  public updateMembers(data: any): void {
+    this.chatUsers = data.action === 'add' ? this.chatUsers.concat(data.users) : this.chatUsers.filter(user => user._id !== data.userId);
   }
 
   public changeChatInfo(data: any): void {
@@ -69,6 +70,8 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.bus.unsubscribe(UPDATE_MEMBERS, this.updateMembers);
+    this.bus.unsubscribe(CLOSE_CHAT_SETTINGS_MODAL, this.closeModel);
     this.bus.unsubscribe(UPDATE_CHAT_INFO, this.changeChatInfo);
   }
 

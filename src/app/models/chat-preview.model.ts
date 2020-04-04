@@ -1,6 +1,7 @@
 export class ChatPreviewModel {
-  public '_id': string;
+  public '_id': string = '';
   public chatName: string;
+  public description?: string;
   public chatType: string;
   public author: string;
   public users: any;

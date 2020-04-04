@@ -46,8 +46,10 @@ export class HeaderInfoComponent implements OnInit {
       .subscribe(
           data => {
             this.data.image = data.url;
-            this.data.type === ChatTypes.PROFILE ?
-              this.authService.userData.avatar = data.url : this.chatService.activeChat.avatar.url = data.url;
+            // active chat avatar is updating by event
+            if (this.data.type === ChatTypes.PROFILE) {
+              this.authService.userData.avatar = data.url;
+            }
           },
           error => console.log(error)
       );
@@ -59,8 +61,10 @@ export class HeaderInfoComponent implements OnInit {
       .subscribe(
         () => {
           this.data.image = this.imageSrc = '';
-          this.data.type === ChatTypes.PROFILE ?
-            this.authService.userData.avatar = '' : this.chatService.activeChat.avatar.url = '';
+          // active chat avatar is updating by event
+          if (this.data.type === ChatTypes.PROFILE) {
+            this.authService.userData.avatar = '';
+          }
         },
         error => console.log(error)
       );
