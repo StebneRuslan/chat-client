@@ -45,6 +45,9 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.socketsService.onMessage('notify-remove-members')
       .subscribe(res => this.removeMembers(res));
 
+    this.socketsService.onMessage('notify-delete-chat')
+      .subscribe(res => this.removeMembers(res, true));
+
     this.socketsService.onMessage('notify-update-chat')
       .subscribe(res => this.updateChatInfo(res));
 
@@ -56,13 +59,13 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.bus.subscribe(ADD_NEW_CHAT, this.addNewChat, this);
   }
 
-  public removeMembers(data: any): void {
-    if (this.activeUser === data.userId) {
+  public removeMembers(data: any, isDelete?): void {
+    if (this.activeUser === data.userId || isDelete) {
       this.chatLists = this.chatLists.filter(chat => chat._id !== data.chatId);
       this.filterLists = this.filterLists.filter(chat => chat._id !== data.chatId);
       // show 'Select chat...' screen and  close settings modal
       if (this.chatService.activeChat._id === data.chatId) {
-        this.chatService.activeChat = new ChatPreviewModel();
+        this.chatService.setActiveChat();
         this.bus.publish(CLOSE_CHAT_SETTINGS_MODAL);
       }
     }
@@ -102,7 +105,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
 
   // for author of new chat
   public addNewChat(chat) {
-    this.chatService.activeChat = chat;
+    this.chatService.setActiveChat(chat);
     this.selectedChatId = chat._id;
     this.bus.publish(SELECT_CHAT, {chatId: chat._id, updateChatInfo: false});
   }
@@ -114,9 +117,13 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.filterLists.unshift(chat);
   }
 
-  public openChat(chatId: string): void {
-    this.selectedChatId = chatId;
-    this.bus.publish(SELECT_CHAT, {chatId, updateChatInfo: true});
+  public openChat(data): void {
+    if (data.isDialog) {
+      const dialog = this.chatLists.find(chat => chat.recipientId === data.chatId);
+      data.chatId = dialog._id;
+    }
+    this.selectedChatId = data.chatId;
+    this.bus.publish(SELECT_CHAT, {chatId: data.chatId, updateChatInfo: true});
   }
 
   public normalizeMessage(message: MessageModel): any {

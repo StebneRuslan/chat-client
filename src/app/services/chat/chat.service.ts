@@ -20,6 +20,15 @@ export class ChatService {
 
   public activeChat: ChatPreviewModel = new ChatPreviewModel();
 
+  public setActiveChat(chat?) {
+    if (chat) {
+      this.activeChat = chat;
+      this.activeChat.users = this.activeChat.users.length;
+    } else {
+      this.activeChat = new ChatPreviewModel();
+    }
+  }
+
   public createChat(chatName: string, chatType: string, description: string, users: string[]): Observable<any> {
     return this.api.post({
       url: `/chats`,

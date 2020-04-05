@@ -7,5 +7,9 @@
     <mat-icon>reorder</mat-icon>
     <span class="link" (click)="leaveChannel()">Leave channel</span>
   </div>
-  <app-chat-settings *ngIf="editChat" [chatUsers]="chatUsers" [editChat]="editChat"></app-chat-settings>
+  <div *ngIf="editChat" class="channel-actions">
+    <mat-icon>remove_circle</mat-icon>
+    <span class="link" (click)="deleteChannel()">Delete channel</span>
+  </div>
+  <app-chat-settings *ngIf="editChat" [chatUsers]="chatUsers" [editChat]="editChat" [isChannel]="true"></app-chat-settings>
 </div>

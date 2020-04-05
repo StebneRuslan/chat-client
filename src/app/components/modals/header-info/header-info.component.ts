@@ -74,9 +74,9 @@ export class HeaderInfoComponent implements OnInit {
     this.showRemoveIcon = (this.data.image || this.imageSrc) && status;
   }
 
-  public openChat() {
-    if (this.data.chatId !== this.chatService.activeChat._id) {
-      this.bus.publish(OPEN_CHAT, this.data.chatId);
+  public openChat(): void {
+    if (this.data.chatId !== (this.data.type === ChatTypes.DIALOG ? this.chatService.activeChat.recipientId : this.chatService.activeChat._id)) {
+      this.bus.publish(OPEN_CHAT, { chatId: this.data.chatId, isDialog: this.data.type === ChatTypes.DIALOG });
     }
     this.dialogRef.closeAll();
   }

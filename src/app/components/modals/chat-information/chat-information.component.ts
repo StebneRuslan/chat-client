@@ -41,7 +41,7 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
     this.bus.subscribe(UPDATE_MEMBERS, this.updateMembers, this);
   }
 
-  public getChatInformation() {
+  public getChatInformation(): void {
     const url = (this.data.type === this.chatTypes.PROFILE || this.data.type === this.chatTypes.DIALOG)
       ? `/users/${this.data.chatId}` : `/chats/${this.data.chatId}`;
 
@@ -57,7 +57,8 @@ export class ChatInformationComponent implements OnInit, OnDestroy {
   }
 
   public updateMembers(data: any): void {
-    this.chatUsers = data.action === 'add' ? this.chatUsers.concat(data.users) : this.chatUsers.filter(user => user._id !== data.userId);
+    this.chatUsers = data.action === 'add' ?
+      this.chatUsers.concat(data.users) : this.chatUsers.filter(user => user._id !== data.userId);
   }
 
   public changeChatInfo(data: any): void {

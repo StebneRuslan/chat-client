@@ -16,30 +16,25 @@ export class ContactSettingsComponent implements OnInit {
 
   constructor(private api: RequestsService) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.api.get({url: `/contacts/${this.contactId}`})
       .subscribe(
         res => this.isContact = res.data
       );
   }
 
-  public addContact() {
+  public addContact(): void {
     this.api.post({url: `/contacts/${this.username}`, body: {}})
       .subscribe(
         () => this.isContact = true
       );
   }
 
-  // TODO: think about chat history and redirecting after delete
-  public deleteContact() {
+  public deleteContact(): void {
     this.api.delete({url: `/contacts/${this.contactId}`})
       .subscribe(
         res => console.log('Delete', res)
       );
-  }
-
-  public clearHistory() {
-
   }
 
 }

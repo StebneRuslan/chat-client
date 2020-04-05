@@ -38,11 +38,15 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   public openModal(type: string): void {
+    console.log('!', type, this.authService.userData.id, )
     this.dialog.open(ChatInformationComponent, {
       width: '450px',
       data: new ChatInformationModel(
         type === 'profile' ? ChatTypes.PROFILE : this.chatService.activeChat.chatType,
-        type === 'profile' || this.chatService.activeChat.admins.includes(this.authService.userData.id),
+
+        type === 'profile' || (this.chatService.activeChat.admins.includes(this.authService.userData.id)
+        && this.chatService.activeChat.chatType !== ChatTypes.DIALOG),
+
         type === 'profile' ? this.chatService.activeChat.chatType === ChatTypes.DIALOG
           ? this.chatService.activeChat.recipientId : this.authService.userData.id
           : this.chatService.activeChat.chatType === ChatTypes.DIALOG

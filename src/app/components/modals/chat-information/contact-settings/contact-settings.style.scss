@@ -5,14 +5,7 @@
     font-size: 30px;
     margin-right: 20px;
   }
-  .contact-action {
+  span {
     margin-top: 5px;
-    li {
-      margin-bottom: 15px;
-      cursor: pointer;
-      &:hover {
-        color: #5580A3;
-      }
-    }
   }
 }

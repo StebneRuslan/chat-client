@@ -50,7 +50,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     if (data.updateChatInfo) {
       this.api.get({url: `/chats/${data.chatId}`})
         .subscribe(chat => {
-          this.chatService.activeChat = chat;
+          this.chatService.setActiveChat(chat);
           this.setShowEditorSettings();
         });
 
@@ -109,14 +109,14 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   public addMembers(data: any): void {
     if (this.chatService.activeChat._id === data.chatId) {
       this.bus.publish(UPDATE_MEMBERS, {action: 'add', users: data.users});
-      data.users.forEach(user => this.chatService.activeChat.users.push(user._id));
+      data.users.forEach(() => this.chatService.activeChat.users += 1);
     }
   }
 
   public removeMembers(data: any): void {
     if (this.authService.userData.id !== data.userId && this.chatService.activeChat._id === data.chatId) {
       this.bus.publish(UPDATE_MEMBERS, {action: 'delete', userId: data.userId});
-      // TODO: delete from activeChat.users, when normalize users to string
+      this.chatService.activeChat.users -= 1;
     }
   }
 
