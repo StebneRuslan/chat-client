@@ -9,6 +9,7 @@ import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
   selector: 'app-chat-lists',
@@ -120,7 +121,13 @@ export class ChatListsComponent implements OnInit, OnDestroy {
   public openChat(data): void {
     if (data.isDialog) {
       const dialog = this.chatLists.find(chat => chat.recipientId === data.chatId);
-      data.chatId = dialog._id;
+      if (dialog) {
+        data.chatId = dialog._id;
+      } else {
+        this.chatService.createChat('', ChatTypes.DIALOG, '', [data.chatId])
+          .subscribe((res) => this.addNewChat(res.chat));
+        return;
+      }
     }
     this.selectedChatId = data.chatId;
     this.bus.publish(SELECT_CHAT, {chatId: data.chatId, updateChatInfo: true});

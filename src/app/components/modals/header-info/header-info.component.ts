@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -7,7 +7,7 @@ import { BusService } from '../../../services/bus/bus.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 import { AuthService } from '../../../services/auth/auth.service';
 
-import { OPEN_CHAT } from '../../../actions/main.action';
+import {OPEN_CHAT, SHOW_CHAT_ICON} from '../../../actions/main.action';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
@@ -15,12 +15,13 @@ import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
   templateUrl: './header-info.template.html',
   styleUrls: ['./header-info.style.scss']
 })
-export class HeaderInfoComponent implements OnInit {
+export class HeaderInfoComponent implements OnInit, OnDestroy {
   @Input() data: any;
 
   private fr: FileReader;
   public imageSrc: string | ArrayBuffer;
   public showRemoveIcon = false;
+  public showMessageIcon = false;
 
   constructor(
     private bus: BusService,
@@ -30,7 +31,9 @@ export class HeaderInfoComponent implements OnInit {
     public authService: AuthService
   ) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.bus.subscribe(SHOW_CHAT_ICON, this.toggleMessageIcon, this);
+  }
 
   public selectImage(event: any): void {
     if (event.target.files && event.target.files[0]) {
@@ -70,6 +73,10 @@ export class HeaderInfoComponent implements OnInit {
       );
   }
 
+  public toggleMessageIcon(data) {
+    this.showMessageIcon = data;
+  }
+
   public handleRemoveIcon(status: boolean): void {
     this.showRemoveIcon = (this.data.image || this.imageSrc) && status;
   }
@@ -79,6 +86,10 @@ export class HeaderInfoComponent implements OnInit {
       this.bus.publish(OPEN_CHAT, { chatId: this.data.chatId, isDialog: this.data.type === ChatTypes.DIALOG });
     }
     this.dialogRef.closeAll();
+  }
+
+  public ngOnDestroy(): void {
+    this.bus.unsubscribe(SHOW_CHAT_ICON, this.toggleMessageIcon);
   }
 
 }

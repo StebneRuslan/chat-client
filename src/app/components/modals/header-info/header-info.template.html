@@ -16,7 +16,7 @@
       <ngx-mat-file-input></ngx-mat-file-input>
     </mat-form-field>
   </div>
-  <div *ngIf="!data.editChat" class="select-chat-container">
+  <div *ngIf="!data.editChat && showMessageIcon" class="select-chat-container">
     <mat-icon (click)="openChat()">chat</mat-icon>
   </div>
 </div>
