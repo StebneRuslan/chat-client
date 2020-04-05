@@ -1,3 +1,3 @@
 <div class="message-list-container">
-  <app-message *ngFor="let message of messages" [message]="message" (click)="select(message._id)"></app-message>
+  <app-message *ngFor="let message of messages; let i = index" [ngClass]="{'first-message': i === messages.length - 1}" [message]="message" (click)="select(message._id)"></app-message>
 </div>
