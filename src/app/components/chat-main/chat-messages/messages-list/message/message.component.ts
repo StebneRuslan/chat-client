@@ -8,6 +8,7 @@ import { ChatInformationComponent } from '../../../../modals/chat-information/ch
 import { MessageModel } from '../../../../../models/message.model';
 import { ChatInformationModel } from '../../../../../models/chat-information.model';
 import { ChatTypes } from '../../../../../services/interfaces/chat-types.interfaces';
+import { MessageTypes } from '../../../../../services/interfaces/message-types.interfaces';
 
 @Component({
   selector: 'app-message',
@@ -15,7 +16,7 @@ import { ChatTypes } from '../../../../../services/interfaces/chat-types.interfa
   styleUrls: ['./message.style.scss']
 })
 export class MessageComponent implements OnInit {
-
+  public REPORT: string = MessageTypes.REPORT;
   @Input() message: MessageModel;
 
   constructor(

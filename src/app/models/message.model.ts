@@ -6,5 +6,6 @@ export class MessageModel {
   public user: UserModel;
   public date: string;
   public selected: boolean;
+  public messageType: string;
   public chatId: string;
 }

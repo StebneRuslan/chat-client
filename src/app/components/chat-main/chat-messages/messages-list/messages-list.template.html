@@ -1,3 +1,6 @@
 <div class="message-list-container">
-  <app-message *ngFor="let message of messages" [message]="message" (click)="select(message._id)"></app-message>
+  <app-message
+    *ngFor="let message of messages"
+    [ngClass]="{'report': message.messageType === REPORT}"
+    [message]="message" (click)="select(message._id)">{{message.messageType}}</app-message>
 </div>
