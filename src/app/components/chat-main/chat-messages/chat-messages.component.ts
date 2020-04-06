@@ -50,7 +50,6 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     if (data.updateChatInfo) {
       this.api.get({url: `/chats/${data.chatId}`})
         .subscribe(chat => {
-          debugger;
           this.chatService.setActiveChat(chat);
           this.setShowEditorSettings();
         });
