@@ -7,7 +7,7 @@ import { BusService } from '../../../services/bus/bus.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 import { AuthService } from '../../../services/auth/auth.service';
 
-import {OPEN_CHAT, SHOW_CHAT_ICON} from '../../../actions/main.action';
+import { OPEN_CHAT, SHOW_CHAT_ICON } from '../../../actions/main.action';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
