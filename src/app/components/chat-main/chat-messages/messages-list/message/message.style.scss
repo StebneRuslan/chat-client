@@ -31,6 +31,9 @@
     }
     .message-container {
       display: flex;
+      .report-message {
+        margin: auto;
+      }
     }
   }
 }

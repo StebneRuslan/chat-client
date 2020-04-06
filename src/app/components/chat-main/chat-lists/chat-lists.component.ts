@@ -108,7 +108,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
   public addNewChat(chat) {
     this.chatService.setActiveChat(chat);
     this.selectedChatId = chat._id;
-    this.bus.publish(SELECT_CHAT, {chatId: chat._id, updateChatInfo: false});
+    this.bus.publish(SELECT_CHAT, {chatId: chat._id, updateChatInfo: true});
   }
 
   // for all members in new chat
