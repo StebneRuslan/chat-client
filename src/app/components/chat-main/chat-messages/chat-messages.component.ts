@@ -8,7 +8,13 @@ import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
 import { ScrollModel } from './scroll.model';
-import { SELECT_CHAT, CLEAR_SELECT_MESSAGE, UPDATE_CHAT_MESSAGE, UPDATE_MEMBERS } from '../../../actions/main.action';
+import {
+  SELECT_CHAT,
+  CLEAR_SELECT_MESSAGE,
+  UPDATE_CHAT_MESSAGE,
+  UPDATE_MEMBERS,
+  SCROLL_DOWN
+} from '../../../actions/main.action';
 
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
@@ -37,6 +43,8 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
+    this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
+    this.bus.subscribe(SCROLL_DOWN, this.scrollDown, this);
 
     this.socketsService.onMessage('notify-message')
       .subscribe(message => this.notifyMessages(message));
@@ -51,6 +59,13 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       .subscribe(res => this.removeMembers(res));
   }
 
+  private scrollDown(): void {
+    if (!this.container) {
+      this.container = document.getElementById('msgContainer');
+    }
+    this.container.scrollTop = this.container.scrollHeight;
+  }
+
   public getChatData(data): void {
     if (data.updateChatInfo) {
       this.api.get({url: `/chats/${data.chatId}`})
@@ -63,10 +78,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
           // TODO: get messages by chunk, sorting by date
           this.messages = res;
           this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);
-          setTimeout(() => {
-            this.container = document.getElementById('msgContainer');
-            this.container.scrollTop = this.container.scrollHeight;
-          }, 0)
+          setTimeout(() => this.scrollDown(), 0);
           this.selectedMessages = [];
         });
     } else {
