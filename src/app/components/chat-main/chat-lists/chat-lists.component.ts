@@ -140,7 +140,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
       _id: message._id,
       chatId: message.chatId,
       message: message.message,
-      createdAt: message.date,
+      createdAt: message.createdAt,
       authorId: {
         _id: message.user._id,
         username: message.user.username

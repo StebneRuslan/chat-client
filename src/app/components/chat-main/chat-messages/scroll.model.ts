@@ -1,6 +1,6 @@
 export class ScrollModel {
-  public dateOfLast = new Date().toISOString();
+  public lastMessageDate = new Date().toISOString();
   constructor(dateOfLast?: string) {
-    this.dateOfLast = dateOfLast || new Date().toISOString();
+    this.lastMessageDate = dateOfLast || new Date().toISOString();
   }
 }

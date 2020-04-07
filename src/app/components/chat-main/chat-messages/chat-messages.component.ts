@@ -58,7 +58,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
           this.chatService.setActiveChat(chat);
           this.setShowEditorSettings();
         });
-      this.api.get({url: `/messages/${data.chatId}?lastMessageDate=${this.scrollConfig.dateOfLast}`})
+      this.api.get({url: `/messages/${data.chatId}?lastMessageDate=${this.scrollConfig.lastMessageDate}`})
         .subscribe(res => {
           // TODO: get messages by chunk, sorting by date
           this.messages = res;
@@ -78,7 +78,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   // TODO: use for request to get messages by chunk
   public getMessages() {
-    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessageDate=${this.scrollConfig.dateOfLast}`})
+    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessageDate=${this.scrollConfig.lastMessageDate}`})
       .subscribe(res => {
         this.messages = this.messages.concat(res);
         this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);

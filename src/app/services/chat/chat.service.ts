@@ -32,7 +32,7 @@ export class ChatService {
   }
 
   public updateScrollConfig(oldConfig: ScrollModel, messages: MessageModel[]): ScrollModel {
-    return new ScrollModel((messages && messages.length) ? messages[messages.length - 1].date : oldConfig.dateOfLast);
+    return new ScrollModel((messages && messages.length) ? messages[messages.length - 1].createdAt : oldConfig.lastMessageDate);
   }
 
   public createChat(chatName: string, chatType: string, description: string, users: string[]): Observable<any> {
