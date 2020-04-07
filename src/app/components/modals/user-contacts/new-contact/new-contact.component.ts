@@ -3,6 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { RequestsService } from '../../../../services/requests/requests.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-new-contact',
@@ -17,6 +18,7 @@ export class NewContactComponent implements OnInit, OnDestroy {
 
   constructor(
     private api: RequestsService,
+    private authService: AuthService,
     public dialogRef: MatDialogRef<NewContactComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }

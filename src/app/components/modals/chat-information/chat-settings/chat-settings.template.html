@@ -1,7 +1,7 @@
 <div class="chat-settings">
   <div class="add-member">
     <mat-icon>person</mat-icon>
-    <span (click)="openContacts()">Add members</span>
+    <span class="link" (click)="openContacts()">Add members</span>
   </div>
   <div class="users-chat">
     <mat-icon>reorder</mat-icon>
@@ -11,7 +11,7 @@
         <div class="user-info">
           <p class="link" (click)="openProfile(user._id)">{{user.username}}</p>
           <p *ngIf="editChat && userId !== user._id" (click)="removeUser(user._id)" class="link">Remove</p>
-          <p *ngIf="userId === user._id" (click)="removeUser(user._id)" class="link">Delete and exit</p>
+          <p *ngIf="userId === user._id && !isChannel" (click)="removeUser(user._id)" class="link">Delete and exit</p>
         </div>
       </li>
     </ul>

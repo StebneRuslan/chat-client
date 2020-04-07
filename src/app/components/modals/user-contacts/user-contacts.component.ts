@@ -2,13 +2,11 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
-import { ChatService } from '../../../services/chat/chat.service';
 
 import { NewContactComponent } from './new-contact/new-contact.component';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { SELECT_CHAT, ADD_NEW_CHAT } from '../../../actions/main.action';
-import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
+import { OPEN_CHAT } from '../../../actions/main.action';
 
 @Component({
   selector: 'app-user-contacts',
@@ -24,7 +22,6 @@ export class UserContactsComponent implements OnInit, OnDestroy {
   constructor(
     private bus: BusService,
     private api: RequestsService,
-    private chatService: ChatService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<UserContactsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -39,18 +36,8 @@ export class UserContactsComponent implements OnInit, OnDestroy {
   }
 
   public selectUser(id: string): void {
-    this.chatService.createChat('', ChatTypes.DIALOG, '', [id])
-      .subscribe(
-        res => {
-          if (res.message !== 'Chat already exist!') {
-            this.bus.publish(ADD_NEW_CHAT, res.chat);
-          } else {
-            this.bus.publish(SELECT_CHAT, {chatId: res.chat._id, updateChatInfo: true});
-          }
-          this.dialogRef.close();
-        },
-        err => console.log('error', err)
-      );
+    this.bus.publish(OPEN_CHAT, {chatId: id, isDialog: true});
+    this.dialogRef.close();
   }
 
   public openAddContactWindow(): void {

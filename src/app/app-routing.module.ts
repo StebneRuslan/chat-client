@@ -8,7 +8,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ChatMainComponent } from './components/chat-main/chat-main.component';
 
 const routes: Routes = [
-  { path: '', component: ChatMainComponent },
+  { path: '', component: ChatMainComponent, canActivate: [AuthenticationGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
 ];

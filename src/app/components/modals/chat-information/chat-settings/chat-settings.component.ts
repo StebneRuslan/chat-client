@@ -25,6 +25,7 @@ export class ChatSettingsComponent implements OnInit {
 
   @Input() editChat: boolean;
   @Input() chatUsers: any;
+  @Input() isChannel: boolean;
 
   constructor(
     private api: RequestsService,

@@ -5,6 +5,7 @@ import { SocketMessageModel } from '../../../../models/socket.message.model';
 import { ChatService} from '../../../../services/chat/chat.service';
 import { SocketsService } from '../../../../services/sockets/sockets.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { RequestsService } from '../../../../services/requests/requests.service';
 
 @Component({
   selector: 'app-chanel-settings',
@@ -19,17 +20,23 @@ export class ChanelSettingsComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    public chatService: ChatService,
+    private chatService: ChatService,
+    private api: RequestsService,
     public socketsService: SocketsService,
   ) { }
 
   public ngOnInit() {}
 
-  public leaveChannel() {
+  public leaveChannel(): void {
     this.socketsService.send(new SocketMessageModel('remove-members', {
       chatId: this.chatService.activeChat._id,
       userId: this.authService.userData.id
     }));
+  }
+
+  public deleteChannel(): void {
+    this.api.delete({url: `/chats/${this.chatService.activeChat._id}`})
+      .subscribe(() => console.log('Success'));
   }
 
 }

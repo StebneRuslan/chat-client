@@ -3,8 +3,7 @@
   <button class="chat-name" mat-button (click)="openChatSetting()" *ngIf="chatService.activeChat">
     <span>{{chatService.activeChat.chatName}}</span>
     <span *ngIf="chatService.activeChat.chatType !== 'DIALOG' && chatService.activeChat.users"
-          class="members-count">{{chatService.activeChat.users.length}} members
-    </span>
+          class="members-count">{{chatService.activeChat.users}} members</span>
   </button>
 </mat-toolbar>
 

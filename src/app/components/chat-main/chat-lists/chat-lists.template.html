@@ -1,6 +1,6 @@
 <app-search [data]="chatLists" [fieldToFilter]="'chatName'" (filterData)="filterLists = $event"></app-search>
 <ul class="chat-lists">
-  <li *ngFor="let chat of filterLists" (click)="openChat(chat._id)" [ngClass]="{'active-chat': selectedChatId === chat._id}">
+  <li *ngFor="let chat of filterLists" (click)="openChat({chatId: chat._id})" [ngClass]="{'active-chat': selectedChatId === chat._id}">
     <app-chat-preview [chat]="chat" [activeUser]="activeUser"></app-chat-preview>
   </li>
 </ul>
