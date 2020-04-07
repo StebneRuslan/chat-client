@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
+import { ScrollModel } from './scroll.model';
 import { SELECT_CHAT, CLEAR_SELECT_MESSAGE, UPDATE_CHAT_MESSAGE, UPDATE_MEMBERS } from '../../../actions/main.action';
 
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
@@ -20,6 +21,8 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   public selectedMessages = [];
   public messages: MessageModel[] = [];
   public showEditor = true;
+  private container: HTMLElement;
+  private scrollConfig: ScrollModel;
 
   constructor(
     private api: RequestsService,
@@ -27,7 +30,9 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private authService: AuthService,
     private socketsService: SocketsService
-  ) {}
+  ) {
+    this.scrollConfig = new ScrollModel();
+  }
 
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
@@ -53,11 +58,15 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
           this.chatService.setActiveChat(chat);
           this.setShowEditorSettings();
         });
-
-      this.api.get({url: `/messages/${data.chatId}`})
+      this.api.get({url: `/messages/${data.chatId}?lastMessageDate=${this.scrollConfig.dateOfLast}`})
         .subscribe(res => {
           // TODO: get messages by chunk, sorting by date
           this.messages = res;
+          this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);
+          setTimeout(() => {
+            this.container = document.getElementById('msgContainer');
+            this.container.scrollTop = this.container.scrollHeight;
+          }, 0)
           this.selectedMessages = [];
         });
     } else {
@@ -69,9 +78,10 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   // TODO: use for request to get messages by chunk
   public getMessages() {
-    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
+    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessageDate=${this.scrollConfig.dateOfLast}`})
       .subscribe(res => {
-        this.messages = res;
+        this.messages = this.messages.concat(res);
+        this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);
       });
   }
 

@@ -5,6 +5,8 @@ import { RequestsService } from '../requests/requests.service';
 import { SocketsService } from '../sockets/sockets.service';
 
 import { ChatPreviewModel } from '../../models/chat-preview.model';
+import { ScrollModel } from '../../components/chat-main/chat-messages/scroll.model';
+import { MessageModel } from '../../models/message.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,10 @@ export class ChatService {
     } else {
       this.activeChat = new ChatPreviewModel();
     }
+  }
+
+  public updateScrollConfig(oldConfig: ScrollModel, messages: MessageModel[]): ScrollModel {
+    return new ScrollModel((messages && messages.length) ? messages[messages.length - 1].date : oldConfig.dateOfLast);
   }
 
   public createChat(chatName: string, chatType: string, description: string, users: string[]): Observable<any> {
