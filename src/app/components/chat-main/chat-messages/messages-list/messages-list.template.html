@@ -5,7 +5,7 @@
         [infiniteScrollDistance]="10"
         [infiniteScrollThrottle]="20"
         (scrolledUp)="onScrollUp()"
-        [scrollWindow]="false">>
+        [scrollWindow]="false">
   <app-message
     *ngFor="let message of messages"
     [ngClass]="{'report': message.messageType === REPORT}"
