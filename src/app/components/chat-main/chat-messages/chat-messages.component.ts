@@ -43,7 +43,6 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
-    this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
     this.bus.subscribe(SCROLL_DOWN, this.scrollDown, this);
 
     this.socketsService.onMessage('notify-message')
@@ -67,6 +66,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   }
 
   public getChatData(data): void {
+    this.scrollConfig = new ScrollModel();
     if (data.updateChatInfo) {
       this.api.get({url: `/chats/${data.chatId}`})
         .subscribe(chat => {
@@ -144,6 +144,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
+    this.bus.unsubscribe(SCROLL_DOWN, this.scrollDown);
     this.bus.unsubscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage);
   }
 }
