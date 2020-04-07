@@ -7,7 +7,14 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
 
 import { MessageModel } from '../../../models/message.model';
-import { SELECT_CHAT, CLEAR_SELECT_MESSAGE, UPDATE_CHAT_MESSAGE, UPDATE_MEMBERS } from '../../../actions/main.action';
+import { ScrollModel } from './scroll.model';
+import {
+  SELECT_CHAT,
+  CLEAR_SELECT_MESSAGE,
+  UPDATE_CHAT_MESSAGE,
+  UPDATE_MEMBERS,
+  SCROLL_DOWN
+} from '../../../actions/main.action';
 
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
@@ -20,6 +27,8 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
   public selectedMessages = [];
   public messages: MessageModel[] = [];
   public showEditor = true;
+  private container: HTMLElement;
+  private scrollConfig: ScrollModel;
 
   constructor(
     private api: RequestsService,
@@ -27,11 +36,14 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private authService: AuthService,
     private socketsService: SocketsService
-  ) {}
+  ) {
+    this.scrollConfig = new ScrollModel();
+  }
 
   public ngOnInit(): void {
     this.bus.subscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage, this);
     this.bus.subscribe(SELECT_CHAT, this.getChatData, this);
+    this.bus.subscribe(SCROLL_DOWN, this.scrollDown, this);
 
     this.socketsService.onMessage('notify-message')
       .subscribe(message => this.notifyMessages(message));
@@ -46,18 +58,27 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
       .subscribe(res => this.removeMembers(res));
   }
 
+  private scrollDown(): void {
+    if (!this.container) {
+      this.container = document.getElementById('msgContainer');
+    }
+    this.container.scrollTop = this.container.scrollHeight * 2;
+  }
+
   public getChatData(data): void {
+    this.scrollConfig = new ScrollModel();
     if (data.updateChatInfo) {
       this.api.get({url: `/chats/${data.chatId}`})
         .subscribe(chat => {
           this.chatService.setActiveChat(chat);
           this.setShowEditorSettings();
         });
-
-      this.api.get({url: `/messages/${data.chatId}`})
+      this.api.get({url: `/messages/${data.chatId}?lastMessageDate=${this.scrollConfig.lastMessageDate}`})
         .subscribe(res => {
           // TODO: get messages by chunk, sorting by date
           this.messages = res;
+          this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);
+          setTimeout(() => this.scrollDown(), 0);
           this.selectedMessages = [];
         });
     } else {
@@ -69,9 +90,10 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   // TODO: use for request to get messages by chunk
   public getMessages() {
-    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessage=${this.messages[this.messages.length - 1]._id}`})
+    this.api.get({url: `/messages/${this.chatService.activeChat._id}?lastMessageDate=${this.scrollConfig.lastMessageDate}`})
       .subscribe(res => {
-        this.messages = res;
+        this.messages = this.messages.concat(res);
+        this.scrollConfig = this.chatService.updateScrollConfig(this.scrollConfig, res);
       });
   }
 
@@ -122,6 +144,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.bus.unsubscribe(SELECT_CHAT, this.getChatData);
+    this.bus.unsubscribe(SCROLL_DOWN, this.scrollDown);
     this.bus.unsubscribe(CLEAR_SELECT_MESSAGE, this.clearSelectMessage);
   }
 }

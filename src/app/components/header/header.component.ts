@@ -28,20 +28,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   public openChatSetting(): void {
-    this.dialog.open(ChatInformationComponent, {
-      width: '450px',
-      data: new ChatInformationModel(
-        this.chatService.activeChat.chatType,
-
-        this.chatService.activeChat.chatType === ChatTypes.PROFILE
-        || (this.chatService.activeChat.admins.includes(this.authService.userData.id)
-        && this.chatService.activeChat.chatType !== ChatTypes.DIALOG),
-
-        this.chatService.activeChat.chatType === ChatTypes.DIALOG
-          ? this.chatService.activeChat.recipientId
-          : this.chatService.activeChat._id
-      )
-    });
+    if (this.chatService.activeChat._id) {
+      this.dialog.open(ChatInformationComponent, {
+        width: '450px',
+        data: new ChatInformationModel(
+          this.chatService.activeChat.chatType,
+          this.chatService.activeChat.chatType === ChatTypes.PROFILE
+          || (this.chatService.activeChat.admins.includes(this.authService.userData.id)
+          && this.chatService.activeChat.chatType !== ChatTypes.DIALOG),
+          this.chatService.activeChat.chatType === ChatTypes.DIALOG
+            ? this.chatService.activeChat.recipientId
+            : this.chatService.activeChat._id
+        )
+      });
+    }
   }
 
   public ngOnDestroy(): void {}

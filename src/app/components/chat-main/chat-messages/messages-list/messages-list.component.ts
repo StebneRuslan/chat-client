@@ -24,7 +24,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {}
 
-  public onScroll(): void {
+  public onScrollUp(): void {
     this.scrollMessages.emit();
   }
 

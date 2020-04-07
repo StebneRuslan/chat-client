@@ -4,7 +4,7 @@ export class MessageModel {
   public '_id': string;
   public message: string;
   public user: UserModel;
-  public date: string;
+  public createdAt: string;
   public selected: boolean;
   public messageType: string;
   public chatId: string;
