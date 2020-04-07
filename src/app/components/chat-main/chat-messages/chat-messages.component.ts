@@ -62,7 +62,7 @@ export class ChatMessagesComponent implements OnInit, OnDestroy {
     if (!this.container) {
       this.container = document.getElementById('msgContainer');
     }
-    this.container.scrollTop = this.container.scrollHeight;
+    this.container.scrollTop = this.container.scrollHeight * 2;
   }
 
   public getChatData(data): void {
