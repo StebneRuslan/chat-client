@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { ChatPreviewModel } from '../../../models/chat-preview.model';
-import { SELECT_CHAT, OPEN_CHAT, UPDATE_CHAT_MESSAGE, CLOSE_CHAT_SETTINGS_MODAL, ADD_NEW_CHAT } from '../../../actions/main.action';
-import { MessageModel } from '../../../models/message.model';
-
 import { RequestsService } from '../../../services/requests/requests.service';
 import { BusService } from '../../../services/bus/bus.service';
 import { ChatService } from '../../../services/chat/chat.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SocketsService } from '../../../services/sockets/sockets.service';
+
+import { ChatPreviewModel } from '../../../models/chat-preview.model';
+import { MessageModel } from '../../../models/message.model';
+import { SELECT_CHAT, OPEN_CHAT, UPDATE_CHAT_MESSAGE, CLOSE_CHAT_SETTINGS_MODAL, ADD_NEW_CHAT } from '../../../actions/main.action';
 import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
@@ -108,7 +108,7 @@ export class ChatListsComponent implements OnInit, OnDestroy {
   public addNewChat(chat) {
     this.chatService.setActiveChat(chat);
     this.selectedChatId = chat._id;
-    this.bus.publish(SELECT_CHAT, {chatId: chat._id, updateChatInfo: true});
+    this.bus.publish(SELECT_CHAT, { chatId: chat._id, updateChatInfo: true });
   }
 
   // for all members in new chat
@@ -118,14 +118,16 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     this.filterLists.unshift(chat);
   }
 
-  public openChat(data): void {
+  public openChat(data: any): void {
     if (data.isDialog) {
       const dialog = this.chatLists.find(chat => chat.recipientId === data.chatId);
       if (dialog) {
         data.chatId = dialog._id;
       } else {
         this.chatService.createChat('', ChatTypes.DIALOG, '', [data.chatId])
-          .subscribe((res) => this.addNewChat(res.chat));
+          .subscribe(
+            res => this.addNewChat(res.chat)
+          );
         return;
       }
     }
