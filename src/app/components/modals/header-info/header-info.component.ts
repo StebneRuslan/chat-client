@@ -43,7 +43,7 @@ export class HeaderInfoComponent implements OnInit, OnDestroy {
       this.fr.readAsDataURL(file);
       this.api.put({
         url: `/avatars/${this.data.chatId}?type=${this.data.type}`,
-        headers: new HttpHeaders({'x-file-name': event.target.files[0].name}),
+        headers: new HttpHeaders({'x-file-name': event.target.files[0].name, 'Content-Type': event.target.files[0].type}),
         body: event.target.files[0]
       })
       .subscribe(

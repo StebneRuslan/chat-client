@@ -13,7 +13,7 @@
   <div *ngIf="data.editChat" class="select-image-container">
     <mat-icon>add_a_photo</mat-icon>
     <mat-form-field class="select-image-field" (change)="selectImage($event)">
-      <ngx-mat-file-input></ngx-mat-file-input>
+      <ngx-mat-file-input accept="'.png,.jpg,.jpeg.gif'"></ngx-mat-file-input>
     </mat-form-field>
   </div>
   <div *ngIf="!data.editChat && showMessageIcon" class="select-chat-container">
