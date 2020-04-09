@@ -6,12 +6,11 @@ import { ChatService } from '../../../../services/chat/chat.service';
 import { SocketsService } from '../../../../services/sockets/sockets.service';
 import { BusService } from '../../../../services/bus/bus.service';
 
-import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
-
 import { ChatInformationComponent } from '../../../modals/chat-information/chat-information.component';
+
 import { ChatInformationModel } from '../../../../models/chat-information.model';
 import { SocketMessageModel } from '../../../../models/socket.message.model';
-
+import { ChatTypes } from '../../../../services/interfaces/chat-types.interfaces';
 import { SCROLL_DOWN } from '../../../../actions/main.action';
 
 @Component({
@@ -96,7 +95,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       event.stopPropagation();
     }
     if (this.message.trim()) {
-      this.bus.publish(SCROLL_DOWN)
+      this.bus.publish(SCROLL_DOWN);
       this.socketsService.send(new SocketMessageModel('message', {
         authorId: this.authService.userData.id,
         chatId: this.chatService.activeChat._id,

@@ -18,8 +18,6 @@ export class ChatService {
     private api: RequestsService
   ) { }
 
-  // TODO: think about private
-
   public activeChat: ChatPreviewModel = new ChatPreviewModel();
 
   public setActiveChat(chat?) {

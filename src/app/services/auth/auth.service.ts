@@ -6,9 +6,9 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { RequestsService } from '../requests/requests.service';
 import { ChatService } from '../chat/chat.service';
+import { SocketsService } from '../sockets/sockets.service';
 
 import { ActiveUserModel } from '../../models/active-user.model';
-import { SocketsService } from '../sockets/sockets.service';
 
 @Injectable({
   providedIn: 'root'

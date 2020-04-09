@@ -13,7 +13,6 @@ export class EditNameComponent implements OnInit {
   public chatTypes = ChatTypes;
   public updateError = '';
 
-  // todo create model for data
   constructor(
     public dialogRef: MatDialogRef<EditNameComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
