@@ -19,8 +19,6 @@ import { CLEAR_SELECT_MESSAGE } from '../../../../actions/main.action';
 })
 export class MessageSelectComponent implements OnInit {
 
-  private socket;
-
   @Input() messages: MessageModel[];
 
   constructor(

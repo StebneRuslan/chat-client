@@ -81,7 +81,6 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     const chatIndex = this.chatLists.findIndex(chat => chat._id === data.chatId);
     this.chatLists[chatIndex].chatName =  data.chatData.chatName;
     this.chatLists[chatIndex].description =  data.chatData.description;
-    // TODO: filterLists
     this.filterLists = [...this.chatLists];
   }
 
@@ -91,7 +90,6 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     }
     const chatIndex = this.chatLists.findIndex(chat => chat._id === data.chatId);
     this.chatLists[chatIndex].avatar = { url: data.url };
-    // TODO: filterLists
     this.filterLists = [...this.chatLists];
   }
 
@@ -100,7 +98,6 @@ export class ChatListsComponent implements OnInit, OnDestroy {
     const chat = this.chatLists.splice(chatIndex, 1)[0];
     chat.lastMessage = this.normalizeMessage(message);
     this.chatLists.unshift(chat);
-    // TODO: filterLists
     this.filterLists = [...this.chatLists];
   }
 
@@ -113,7 +110,6 @@ export class ChatListsComponent implements OnInit, OnDestroy {
 
   // for all members in new chat
   public addChatToList(chat: ChatPreviewModel): void {
-    // TODO: filterLists
     this.chatLists.unshift(chat);
     this.filterLists.unshift(chat);
   }

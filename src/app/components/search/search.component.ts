@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.template.html',
   styleUrls: ['./search.style.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   @Input() data: any;
   @Input() fieldToFilter: string;
@@ -22,6 +22,10 @@ export class SearchComponent implements OnInit {
     this.searchTimeout = setTimeout(() => {
       this.filterData.emit(this.data.filter(el => el[this.fieldToFilter].toLowerCase().startsWith(value.toLowerCase())));
     }, 100);
+  }
+
+  public ngOnDestroy(): void {
+    clearTimeout(this.searchTimeout);
   }
 
 }
