@@ -7,7 +7,7 @@
     </div>
     <mat-form-field appearance="fill">
       <mat-label>Message</mat-label>
-      <textarea matInput [(ngModel)]="message" (keyup)="typingMessage()" (keydown.enter)="sendMessage($event)"></textarea>
+      <textarea matInput [(ngModel)]="message" (keydown)="typingMessage()" (keydown.enter)="sendMessage($event)"></textarea>
     </mat-form-field>
     <div class="img-container">
       <app-user-avatar [chatName]="chatService.activeChat.chatName" [avatarUrl]="chatService.activeChat.avatar.url" (click)="openModal('chat')"></app-user-avatar>
