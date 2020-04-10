@@ -1,0 +1,15 @@
+<div class="channel-settings">
+  <div class="channel-description">
+    <mat-icon>info</mat-icon>
+    <p>{{description || 'Description about channel'}}</p>
+  </div>
+  <div *ngIf="!editChat" class="channel-actions">
+    <mat-icon>reorder</mat-icon>
+    <span class="link" (click)="leaveChannel()">Leave channel</span>
+  </div>
+  <div *ngIf="editChat" class="channel-actions">
+    <mat-icon>remove_circle</mat-icon>
+    <span class="link" (click)="deleteChannel()">Delete channel</span>
+  </div>
+  <app-chat-settings *ngIf="editChat" [chatUsers]="chatUsers" [editChat]="editChat" [isChannel]="true"></app-chat-settings>
+</div>

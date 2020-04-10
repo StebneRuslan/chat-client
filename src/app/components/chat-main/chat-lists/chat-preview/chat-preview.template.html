@@ -1,0 +1,11 @@
+<div class="chat-preview">
+  <app-user-avatar *ngIf="chat || chatName" [avatarUrl]="chat.avatar.url" [chatName]="chat.chatName" [type]="'chat'"></app-user-avatar>
+  <div class="chat-data">
+    <div class="chat-info">
+      <span class="chat-name">{{chat.chatName}}</span>
+      <span class="chat-date">{{chat.lastMessage ? (chat.lastMessage.createdAt | date:'shortTime') : ''}}</span>
+    </div>
+    <p class="chat-message">{{chat.lastMessage ? (chat.lastMessage.authorId.username + ': ' + chat.lastMessage.message) : 'This chat is empty.'}}</p>
+  </div>
+</div>
+

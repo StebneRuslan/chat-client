@@ -1,0 +1,7 @@
+.search-users-container {
+  height: 400px;
+  overflow-y: auto;
+  .blurred {
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,13 @@
+<div
+        class="message-list-container"
+        id="msgContainer"
+        infiniteScroll
+        [infiniteScrollDistance]="10"
+        [infiniteScrollThrottle]="20"
+        (scrolledUp)="onScrollUp()"
+        [scrollWindow]="false">
+  <app-message
+    *ngFor="let message of messages"
+    [ngClass]="{'report': message.messageType === REPORT}"
+    [message]="message" (click)="select(message._id)">{{message.messageType}}</app-message>
+</div>

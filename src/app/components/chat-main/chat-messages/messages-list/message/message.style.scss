@@ -1,0 +1,43 @@
+.single-message-container {
+  display: flex;
+  padding: 15px 5px;
+  &.active {
+    background-color: rgba(174, 174, 189, 0.5);
+  }
+  .message-selector-container {
+    width: 30px;
+    margin: auto;
+    .hover {
+      display: none;
+    }
+  }
+  .message-details-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    .author-container {
+      .author {
+        display: flex;
+        flex-grow: 1;
+        font-size: 16px;
+        margin: auto;
+      }
+      .date {
+        display: flex;
+        font-size: 12px;
+        margin: auto;
+      }
+      display: flex;
+    }
+    .message-container {
+      display: flex;
+      .report-message {
+        margin: auto;
+      }
+    }
+  }
+}
+
+.hover {
+  opacity: 0.8;
+}

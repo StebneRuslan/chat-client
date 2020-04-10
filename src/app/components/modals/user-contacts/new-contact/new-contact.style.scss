@@ -1,0 +1,13 @@
+.new-contact {
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  .new-contact-controls {
+    display: flex;
+    justify-content: flex-end;
+    .new-contact-button {
+      width: 100px;
+      text-align: center;
+    }
+  }
+}

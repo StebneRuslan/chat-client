@@ -1,0 +1,16 @@
+<div class="edit-name-container">
+  <h1>{{(data.action === 'create' ? 'Create ' : 'Edit ') + data.type}}</h1>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field *ngIf="data.type === chatTypes.CHANNEL">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="data.description">
+  </mat-form-field>
+  <p class="error-message">{{updateError}}</p>
+  <div class="edit-name-controls">
+    <button class="edit-name-button" mat-menu-item (click)="create()" [disabled]="!data.name">Save</button>
+    <button class="edit-name-button" mat-menu-item (click)="close()">Cancel</button>
+  </div>
+</div>

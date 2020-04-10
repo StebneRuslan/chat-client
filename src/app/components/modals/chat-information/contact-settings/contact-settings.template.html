@@ -1,0 +1,5 @@
+<div class="contact-info">
+  <mat-icon>reorder</mat-icon>
+  <span class="link" *ngIf="!isContact" (click)="addContact()">Add contact</span>
+  <span class="link" *ngIf="isContact" (click)="deleteContact()">Delete contact</span>
+</div>

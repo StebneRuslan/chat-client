@@ -1,0 +1,2 @@
+<img *ngIf="avatarUrl" [ngClass]="{'header-avatar': type !== 'chat'}" [src]="avatarUrl" class="avatar" alt="avatar">
+<div *ngIf="!avatarUrl" [ngClass]="{'header-avatar': type !== 'chat'}" class="avatar"><span>{{chatName ? chatName[0] : 'T' | uppercase}}</span></div>

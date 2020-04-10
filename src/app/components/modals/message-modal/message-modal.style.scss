@@ -1,0 +1,29 @@
+.message-modal-container {
+  overflow: hidden;
+  height: 250px;
+  margin: auto;
+  padding-top: 20px;
+  text-align: center;
+  h1 {
+    padding: 50px 0;
+  }
+  .controls-container {
+    display: flex;
+    margin: 0 10px;
+    height: 30%;
+    .cancel, .submit {
+      text-align: center;
+      color: #ffffff;
+      width: 100px;
+    }
+    .submit {
+      background-color: #5580a3;
+      margin: 0 0 0 auto;
+    }
+    .cancel {
+      margin-left: 10px;
+      color: #5580a3;
+      border: 1px solid #5580a3;
+    }
+  }
+}

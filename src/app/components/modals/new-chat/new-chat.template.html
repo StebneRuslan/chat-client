@@ -1,0 +1,2 @@
+<app-modal-header [data]="{title: data.type}" (closeDialog)="closeModal()"></app-modal-header>
+<app-select-users [type]="data.type" [users]="users" [usersFilter]="usersFilter" (selectUser)="selectUser($event)"></app-select-users>

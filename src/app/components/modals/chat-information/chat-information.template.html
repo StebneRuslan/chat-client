@@ -1,0 +1,31 @@
+<app-modal-header
+  [data]="{
+    editChat: data.editChat,
+    title: data.title,
+    name: chatName,
+    description: channelDescription,
+    type: data.type,
+    chatId: data.chatId
+  }"
+  (closeDialog)="closeModel()">
+</app-modal-header>
+<app-header-info
+  [data] = "{
+    name: chatName,
+    image: image,
+    editChat: data.editChat,
+    type: data.type,
+    chatId: data.chatId
+  }">
+</app-header-info>
+
+<app-profile-settings *ngIf="data.type === chatTypes.PROFILE"></app-profile-settings>
+<app-contact-settings *ngIf="data.type === chatTypes.DIALOG" [contactId]="data.chatId" [username]="chatName"></app-contact-settings>
+<app-chat-settings *ngIf="data.type === chatTypes.GROUP" [editChat]="data.editChat" [chatUsers]="chatUsers"></app-chat-settings>
+<app-chanel-settings
+  *ngIf="data.type === chatTypes.CHANNEL"
+  [editChat]="data.editChat"
+  [description]="channelDescription"
+  [chatUsers]="chatUsers"
+></app-chanel-settings>
+

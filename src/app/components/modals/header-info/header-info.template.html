@@ -1,0 +1,22 @@
+<div class="profile-header-container">
+  <div class="profile-header-info-container">
+    <div class="profile-image-container" [ngClass]="{'with-remove-icon': showRemoveIcon}" (mouseover)="handleRemoveIcon(true)" (mouseout)="handleRemoveIcon(false)">
+      <div class="img-container">
+        <div *ngIf="data.editChat" class="remove-image" (click)="removeImage()">x</div>
+        <app-user-avatar [chatName]="data.name" [avatarUrl]="imageSrc || data.image" [type]="'profile'"></app-user-avatar>
+      </div>
+    </div>
+    <div class="profile-name-container">
+      <span class="profile-username">{{data.name}}</span>
+    </div>
+  </div>
+  <div *ngIf="data.editChat" class="select-image-container">
+    <mat-icon>add_a_photo</mat-icon>
+    <mat-form-field class="select-image-field" (change)="selectImage($event)">
+      <ngx-mat-file-input accept="'.png,.jpg,.jpeg.gif'"></ngx-mat-file-input>
+    </mat-form-field>
+  </div>
+  <div *ngIf="!data.editChat && showMessageIcon" class="select-chat-container">
+    <mat-icon (click)="openChat()">chat</mat-icon>
+  </div>
+</div>

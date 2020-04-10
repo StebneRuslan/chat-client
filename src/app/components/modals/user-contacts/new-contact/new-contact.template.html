@@ -1,0 +1,12 @@
+<div class="new-contact">
+  <h1>Add new contact</h1>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input type="text" matInput [(ngModel)]="username">
+  </mat-form-field>
+  <p class="error-message">{{addContactError}}</p>
+  <div class="new-contact-controls">
+    <button class="new-contact-button" mat-menu-item (click)="addContact()" [disabled]="!username || username === authService.userData.username">Save</button>
+    <button class="new-contact-button" mat-menu-item (click)="close()">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<div class="search-users-container">
+  <app-user *ngFor="let user of users" [user]="user" (click)="select(user._id)" [ngClass]="{'blurred': user.blurred}"></app-user>
+</div>

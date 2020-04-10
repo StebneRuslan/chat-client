@@ -1,0 +1,16 @@
+.message-select-container {
+  display: flex;
+  height: 100%;
+  .delete-button, .cancel-button {
+    background-color: #5580a3;
+    color: #ffffff;
+    width: 100px;
+    margin: auto;
+    text-align: center;
+  }
+  .cancel-button {
+    background-color: transparent;
+    color: #5580a3;
+    border: 1px solid #5580a3;
+  }
+}
