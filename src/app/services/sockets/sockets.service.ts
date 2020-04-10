@@ -14,7 +14,7 @@ export class SocketsService {
   constructor() { }
 
   public initSocket(userId: string): void {
-    this.socket = io(`${environment.api}?userId=${userId}`);
+    this.socket = io(`${environment.api}?userId=${userId}`, { transports: ['websocket'] });
   }
 
   public send(message: SocketMessageModel) {
