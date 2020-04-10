@@ -94,7 +94,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       event.preventDefault();
       event.stopPropagation();
     }
-    if (this.message.trim()) {
+    if (this.message && this.message.trim()) {
       this.bus.publish(SCROLL_DOWN);
       this.socketsService.send(new SocketMessageModel('message', {
         authorId: this.authService.userData.id,
@@ -102,6 +102,8 @@ export class EditorComponent implements OnInit, OnDestroy {
         message: this.message
       }));
       this.message = '';
+      this.startTyping = false;
+      clearTimeout(this.typingTimeout);
     }
   }
 

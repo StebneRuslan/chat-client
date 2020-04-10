@@ -1,12 +1,13 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { EditNameComponent} from '../edit-name/edit-name.component';
-import { UPDATE_CHAT_INFO } from '../../../actions/main.action';
-import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
-
 import { BusService } from '../../../services/bus/bus.service';
 import { RequestsService } from '../../../services/requests/requests.service';
+
+import { EditNameComponent} from '../edit-name/edit-name.component';
+
+import { UPDATE_CHAT_INFO, EDIT_INFO_ERROR } from '../../../actions/main.action';
+import { ChatTypes } from '../../../services/interfaces/chat-types.interfaces';
 
 @Component({
   selector: 'app-modal-header',
@@ -14,6 +15,7 @@ import { RequestsService } from '../../../services/requests/requests.service';
   styleUrls: ['./modal-header.style.scss']
 })
 export class ModalHeaderComponent implements OnInit {
+
   public chatTypes = ChatTypes;
 
   @Input() data: any;
@@ -51,7 +53,7 @@ export class ModalHeaderComponent implements OnInit {
           this.bus.publish(UPDATE_CHAT_INFO, {name, description});
           dialog.close();
         },
-        err => console.log(err.error.message)
+        err => this.bus.publish(EDIT_INFO_ERROR, err)
       );
   }
 

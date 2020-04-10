@@ -16,7 +16,9 @@ import { MessageTypes } from '../../../../../services/interfaces/message-types.i
   styleUrls: ['./message.style.scss']
 })
 export class MessageComponent implements OnInit {
+
   public REPORT: string = MessageTypes.REPORT;
+
   @Input() message: MessageModel;
 
   constructor(
